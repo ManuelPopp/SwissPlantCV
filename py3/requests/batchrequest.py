@@ -1,0 +1,287 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Wed May 24 16:35:35 2023
+
+Send requests to the APIs of the various CV models tested in this study.
+"""
+__author__ = "Manuel"
+__date__ = "Wed May 24 16:35:35 2023"
+__credits__ = ["Manuel R. Popp"]
+__license__ = "Unlicense"
+__version__ = "1.0.1"
+__maintainer__ = "Manuel R. Popp"
+__email__ = "requests@cdpopp.de"
+__status__ = "Development"
+
+#-----------------------------------------------------------------------------|
+# Imports
+import os, re, glob, time, datetime, random
+import pickle as pk
+os.chdir(os.path.dirname(os.path.realpath(__file__)))
+
+import plantnet, inaturalistcv, localflorid
+
+#-----------------------------------------------------------------------------|
+# Settings
+dir_py = os.path.dirname(os.path.dirname(__file__))
+dir_main = os.path.dirname(dir_py)
+
+IMGDIR = "N:/prj/COMECO/img"
+MULTIIMG = ["florid"]# ["plantnet", "florid"]
+MODELLIST = ["florid"]#["plantnet", "inaturalist", "florid"]
+
+#-----------------------------------------------------------------------------|
+# Functions
+def out_file(name, *subdirs):
+    path = os.path.join(dir_main, "out", *subdirs, name)
+    
+    return path
+
+def read_meta():
+    with open(os.path.join(IMGDIR, "META.pickle"), "rb") as f:
+        metadata = pk.load(f)
+    
+    with open(os.path.join(IMGDIR, "RELEVE.dict"), "rb") as f:
+        relevedict = pk.load(f)
+    
+    return metadata, relevedict
+
+def standard_task(image_path, coordinates, date, organs, cv_model,
+                  return_n = 5):
+    if cv_model == "plantnet":
+        response = plantnet.post_image(image_path, organs = organs)
+        ids = plantnet.species_ranking(response, n = return_n)
+    
+    elif cv_model == "inaturalist":
+        response = inaturalistcv.post_image(image_path, coordinates)
+        ids = inaturalistcv.species_ranking(response, n = return_n)
+    
+    else:
+        response = localflorid.post_image(image_path, coordinates, date)
+        ids = localflorid.species_ranking(response, n = return_n)
+    
+    return [cv_model, ids, response]
+
+#-----------------------------------------------------------------------------|
+# Classes
+class Batchrequest():
+    def __init__(self, out_dir = out_file("log")):
+        past_batches = glob.glob(os.path.join(out_dir, "Batch_*"))
+        
+        if len(past_batches) > 0:
+            ids = [os.path.split(f)[1] for f in past_batches]
+            current_max_id = max([int(re.findall(r"\d+", i)[0]) for i in ids])
+        else:
+            current_max_id = -1
+        
+        self.id = current_max_id + 1
+        self.name = "Batch_" + str(self.id).zfill(10)
+    
+    def run_batch(self, releve_name_list,
+                  start_from_releve = 0,
+                  to_releve = None,
+                  start_from_observation = 0,
+                  to_observation = None):
+        '''
+        Run a batch of requests.
+
+        Parameters
+        ----------
+        releve_name_list : str, list
+            List of releve names to include in the batch.
+        start_from_releve : int, optional, debugging
+            Start the batch from a certain releve index.
+            The default is 0.
+        to_releve : int, optional, debugging
+            Stop the batch at a certain releve index.
+            The default is None.
+        start_from_observation : int, optional, debugging
+            Start with a certain observation within the releve.
+            The default is 0.
+        to_observation : int, optional, debugging
+            Stop at a certain observation index.
+            The default is None.
+        
+        Notes
+        -----
+        The optional parameters might be useful if an error occurred and the
+        process must be started at a specific request.
+
+        Returns
+        -------
+        None.
+
+        '''
+        metadata, relevedict = read_meta()
+        
+        self.parameters = {
+            "releve_name_list" : releve_name_list,
+            "start_from_releve" : start_from_releve,
+            "to_releve" : to_releve,
+            "start_from_observation" : start_from_observation,
+            "to_observation" : to_observation
+            }
+        
+        self.t_start = datetime.datetime.now()
+        self.results = []
+        self.errors = []
+        
+        for releve_index, releve_name in enumerate(
+                releve_name_list[start_from_releve:to_releve]
+                ):
+            
+            ## Extract current releve id based on releve name
+            releve_id = relevedict[releve_name]
+            
+            ## Get list of releve ids from observation metadata
+            observation_releve_ids = [m["releve_id"] for m in metadata]
+            
+            ## Get locations of observations that belong to the current releve
+            locs = [i for i, rid in enumerate(observation_releve_ids) \
+                    if rid == releve_id]
+            
+            ## Get subset of observations that belong to the current releve
+            releve_observations = [metadata[l] for l in locs]
+            
+            if len(releve_observations) == 0:
+                mssg = "No observations found for releve name {0} (= relev" + \
+                    "e_id {1}, index {2} in current batch run.)"
+                
+                self.errors.append({
+                    "index" : releve_index,
+                    "releve_name" : releve_name,
+                    "releve_id" : releve_id,
+                    "error_type" : "No observations found."
+                    })
+                
+                raise Warning(
+                    mssg.format(releve_name, releve_id, releve_index)
+                    )
+                
+                continue
+            
+            for oidx, observation in enumerate(
+                    releve_observations[start_from_observation:to_observation]
+                    ):
+                try:
+                    image_files = observation["file_locations"]
+                    observation_id = observation["obs_id"]
+                    true_taxon_id = observation["taxon_id"]
+                    date = observation["date"]
+                    coordinates = (observation["y"], observation["x"])
+                    img_types = observation["img_types"]
+                
+                except:
+                    mssg = "Failed to read observation information for" + \
+                        " observation {0} in releve {1} (releve_id = {2})."
+                    
+                    self.errors.append({
+                        "index" : releve_index + start_from_releve,
+                        "releve_name" : releve_name,
+                        "releve_id" : releve_id,
+                        "obs_index" : oidx + start_from_observation,
+                        "error_type" : "Failed to read metadata tag."
+                        })
+                    
+                    raise Warning(
+                        mssg.format(oidx, releve_name, releve_id)
+                        )
+                    
+                    continue
+                
+                ## Send single image request to each model in model list
+                for idx, (image_path, organ) in enumerate(
+                        zip(image_files, img_types)
+                        ):
+                    
+                    for CV in MODELLIST:
+                        ### Send request with single image
+                        mod_name, best_matches, full_json = standard_task(
+                            image_path = image_path,
+                            coordinates = coordinates,
+                            date = date,
+                            organs = organ,
+                            cv_model = CV
+                            )
+                    
+                        ### Add response to results
+                        self.results.append({
+                            "question_index" : idx,
+                            "question_type" : "single_image",
+                            "releve_index" : releve_index + start_from_releve,
+                            "releve_name" : releve_name,
+                            "releve_id" : releve_id,
+                            "observation_index" : oidx + start_from_observation,
+                            "observation_id" : observation_id,
+                            "true_taxon_id" : true_taxon_id,
+                            "plant_organ" : organ,
+                            "image_files" : image_path,
+                            "cv_model" : CV,
+                            "taxon_suggestions" : best_matches,
+                            "full_json" : full_json
+                            })
+                    
+                    ### If only testing one CV model, wait for 1.5 s between
+                    ### API requests
+                    if len(MODELLIST) == 1:
+                        time.sleep(1.5)
+                
+                ## Send multi-image request to cv models that support it
+                for CV in MULTIIMG:
+                    ### Increase counter
+                    idx += 1
+                    
+                    ### Select 5 images in case more were provided
+                    ### To this end, first get the first element for each indi-
+                    ### vidual plant organ category.
+                    indices = [img_types.index(t) for t in set(img_types)]
+                    
+                    remaining = list(range(len(image_files)))
+                    
+                    for i in indices:
+                        remaining.remove(i)
+                    
+                    ### Fill up remaining places with random images
+                    indices += random.sample(remaining, k = 5 - len(indices))
+                    indices.sort()
+                    
+                    ### Select subset from photo list
+                    image_paths = [image_files[i] for i in indices]
+                    organs = [img_types[i] for i in indices]
+                    
+                    ### Send requests with selected images
+                    mod_name, best_matches, full_json = standard_task(
+                        image_path = image_paths,
+                        coordinates = coordinates,
+                        date = date,
+                        organs = organs,
+                        cv_model = CV
+                        )
+                    
+                    self.results.append({
+                        "question_index" : idx,
+                        "question_type" : "multi_image",
+                        "releve_index" : releve_index + start_from_releve,
+                        "releve_name" : releve_name,
+                        "releve_id" : releve_id,
+                        "observation_index" : oidx + start_from_observation,
+                        "observation_id" : observation_id,
+                        "true_taxon_id" : true_taxon_id,
+                        "plant_organ" : ";".join(organs),
+                        "image_files" : ";".join(image_paths),
+                        "cv_model" : CV,
+                        "taxon_suggestions" : best_matches,
+                        "full_json" : full_json
+                        })
+                    
+    
+    def save(self):
+        with open(out_file(self.name, "log"), "wb") as f:
+            pk.dump(self, f)
+
+#-----------------------------------------------------------------------------|
+# Run request
+BR = Batchrequest()
+BR.run_batch(releve_name_list = ["L230503B"])
+BR.save()
