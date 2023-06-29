@@ -164,17 +164,11 @@ def add_coords(path, coordinates, replace = False):
         exif_dict = piexif.load(path)
     
     except:
-        o = io.BytesIO()
-        thumb_im = Image.open(path)
-        thumb_im.thumbnail((25, 25), Image.ANTIALIAS)
-        thumb_im.save(o, "jpeg")
-        thumbnail = o.getvalue()
-        
         exif_dict = {"0th" : {},
                      "Exif" : {},
                      "GPS" : {},
                      "1st" : {},
-                     "thumbnail" : thumbnail
+                     "thumbnail" : None
                      }
     
     if exif_dict["GPS"] == {} or replace:
@@ -208,34 +202,22 @@ def add_coords(path, coordinates, replace = False):
             exif_bytes = piexif.dump(exif_dict)
         
         except:
-            o = io.BytesIO()
-            thumb_im = Image.open(path)
-            thumb_im.thumbnail((25, 25), Image.ANTIALIAS)
-            thumb_im.save(o, "jpeg")
-            thumbnail = o.getvalue()
-            
-            exif_dict["thumbnail"] = thumbnail
+            Warning("Failed to write entire exif.")
             
             try:
-                exif_bytes = piexif.dump(exif_dict)
+                exif = {
+                    piexif.ExifIFD.DateTimeOriginal : exif_dict["Exif"][
+                        piexif.ExifIFD.DateTimeOriginal]
+                    }
             
             except:
-                Warning("Failed to write entire exif.")
+                Warning("Original creation time not found.")
                 
-                try:
-                    exif = {
-                        piexif.ExifIFD.DateTimeOriginal : exif_dict["Exif"][
-                            piexif.ExifIFD.DateTimeOriginal]
-                        }
-                
-                except:
-                    Warning("Original creation time not found.")
-                    
-                    exif = {}
-                
-                exif_dict["Exif"] = exif
-                
-                exif_bytes = piexif.dump(exif_dict)
+                exif = {}
+            
+            exif_dict["Exif"] = exif
+            
+            exif_bytes = piexif.dump(exif_dict)
         
         piexif.insert(exif_bytes, path)
     
@@ -295,8 +277,8 @@ def add_creation_time(path, date_time, replace = False):
     
     except:
         o = io.BytesIO()
-        thumb_im = Image.open(path)
-        thumb_im.thumbnail((25, 25), Image.ANTIALIAS)
+        thumb_im = Image.open("foo.jpg")
+        thumb_im.thumbnail((50, 50), Image.ANTIALIAS)
         thumb_im.save(o, "jpeg")
         thumbnail = o.getvalue()
         
@@ -322,8 +304,8 @@ def add_creation_time(path, date_time, replace = False):
     
     except:
         o = io.BytesIO()
-        thumb_im = Image.open(path)
-        thumb_im.thumbnail((20, 20), Image.ANTIALIAS)
+        thumb_im = Image.open("foo.jpg")
+        thumb_im.thumbnail((50, 50), Image.ANTIALIAS)
         thumb_im.save(o, "jpeg")
         thumbnail = o.getvalue()
         

@@ -64,11 +64,10 @@ def post_image(image_files,
     else:
         [lat, lon] = coords
     
-    lat = base.dms_to_dec(lat) if len(lat) == 3 else lat
-    lon = base.dms_to_dec(lon) if len(lon) == 3 else lon
+    lat = base.dms_to_dec(lat) if isinstance(lat, tuple) else lat
+    lon = base.dms_to_dec(lon) if isinstance(lon, tuple) else lon
     
     date_time = base.get_creation_time(file) if date is None else date
-    
     
     img = {
       "images": [base.image_to_b64(f, max_size = IMG_MAXSIZE) for f in files],
@@ -79,7 +78,7 @@ def post_image(image_files,
       "req_taxon_ids" : [0]
     }
     
-    POSTURL = "https://florid.infoflora.ch/api/v1/openapi/identify/images"
+    POSTURL = "http://127.0.0.1:8000/identify/images"# "https://florid.infoflora.ch/api/v1/openapi/identify/images"
     
     response = requests.post(POSTURL, json = img)
     

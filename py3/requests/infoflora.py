@@ -19,7 +19,7 @@ __status__ = "Development"
 
 #-----------------------------------------------------------------------------|
 # Imports
-import os, re, shutil, requests, wget, json, argparse, base64, hashlib
+import os, re, shutil, requests, wget, json, argparse, base64, hashlib, time
 import pickle as pk
 import pandas as pd
 import urllib.request as ulrq
@@ -32,31 +32,34 @@ import base, authentication, dirselect
 def parseArguments():
     parser = argparse.ArgumentParser()
     
-    parser.add_argument("-out_dir", "--output_directory", \
-                        help = "Output directory.", \
+    parser.add_argument("-out_dir", "--output_directory",
+                        help = "Output directory.",
                             type = str, default = None)
-    parser.add_argument("-observers", "--observer_id", \
-                        help = "InfoFlora observer ID.", \
-                            nargs = "+", \
+    parser.add_argument("-observers", "--observer_id",
+                        help = "InfoFlora observer ID.",
+                            nargs = "+",
                             type = int, default = None)
-    parser.add_argument("-projects", "--project_id", \
-                        help = "InfoFlora project ID.", \
-                            nargs = "+", \
+    parser.add_argument("-projects", "--project_id",
+                        help = "InfoFlora project ID.",
+                            nargs = "+",
                             type = int, default = 93662)
-    parser.add_argument("-releves", "--releve_id", \
-                        help = "InfoFlora releve ID.", \
-                            nargs = "+", \
+    parser.add_argument("-releves", "--releve_id",
+                        help = "InfoFlora releve ID.",
+                            nargs = "+",
                             type = int, default = None)
-    parser.add_argument("-releve_names", "--releve_names", \
-                        help = "Releve names.", \
-                            nargs = "+", \
+    parser.add_argument("-releve_names", "--releve_names",
+                        help = "Releve names.",
+                            nargs = "+",
                             type = str, default = None)
-    parser.add_argument("-releve_table", "--releve_table", \
-                        help = "Releve table (overwrites releve_names).", \
+    parser.add_argument("-releve_table", "--releve_table",
+                        help = "Releve table (overwrites releve_names).",
                             type = str, default = None)
-    parser.add_argument("-clear_directory", "--clear_directory", \
+    parser.add_argument("-after", "--obs_after",
+                        help = "Include only observations after a given date",
+                        type = str, default = "2023-04-15")
+    parser.add_argument("-clear_directory", "--clear_directory",
                         help = "Remove existing files and folders of the " + \
-                            "output directory.", \
+                            "output directory.",
                             type = bool, default = False)
     
     args = parser.parse_args()
@@ -80,7 +83,7 @@ if __name__ == "__main__":
 
 max_return = 1000
 max_return_releves = 10
-obs_after = "2023-04-15"
+obs_after = args.obs_after if __name__ == "__main__" else "2023-04-15"
 
 #-----------------------------------------------------------------------------|
 # Classes
@@ -212,12 +215,21 @@ class Observations():
                     idx = releve_df["id"] == releve_id
                     releve_df.loc[idx, "include"] = include_releve
             
-        releve_df.to_excel(file, sheet_name = "Releves", index = False)
+            #### Use pd.ExcelWriter to append an Excel sheet and prevent
+            #### overwriting of other sheets in the workbook.
+            with pd.ExcelWriter(file, mode = "a",
+                                if_sheet_exists = "replace") as writer:
+                releve_df.to_excel(writer, sheet_name = "Releves",
+                                   index = False)
+        
+        ### If not, create a new Excel file
+        else:
+            releve_df.to_excel(file, sheet_name = "Releves", index = False)
         
         return 0
     
     def get_observations(self, projects, observers,
-                         releves = None, releve_names = None):
+                         releves = None, releve_names = None, out = None):
         '''
         Get observations accessible to a user from InfoFlora.ch.
 
@@ -236,6 +248,14 @@ class Observations():
         Returns
         -------
         None.
+        
+        Note
+        ----
+        Currently, the number of releves is limited since the API response con-
+        tains only a limited number of items per "page". A loop is not yet im-
+        plemented at this point. (There are loops for the .update_releve_table
+        method and the observations themselves, though. Thus, the issue only
+        concerns the length of the provided releve list.)
 
         '''
         RELEVEENDPOINT = "https://obs.infoflora.ch/rest/v4/releves"
@@ -248,7 +268,6 @@ class Observations():
         releve_url_updated = releve_url + "&offset={0}"
         
         request_url = OBSENDPOINT + "?limit={0}".format(max_return)
-        request_url_updated = request_url + "&offset={0}"
         
         if not projects == [None]:
             releve_url += "&projects=" + ",".join(map(str, projects))
@@ -263,6 +282,7 @@ class Observations():
         releve_dict = dict()
         offset = 0
         
+        print("Creating releve dictionary...")
         while status == 200:
             if self.token is not None:
                 rresponse = ulrq.urlopen(
@@ -298,61 +318,141 @@ class Observations():
             offset += max_return_releves
             releve_url = releve_url_updated.format(offset)
         
-        if releve_names is None:
+        if releve_names is None and releves is not None:
             releve_names = releve_dict.keys()
         
-        if len(releve_dict) != 0:
+        if len(releve_dict) != 0 and releve_names is not None:
             releves = [releve_dict[r] for r in releve_names]
-            
-        with open(os.path.join(OUT, "RELEVE.dict"), "wb") as f:
-            pk.dump(releve_dict, f)
+        
+        if out is not None:
+            with open(os.path.join(out, "RELEVE.dict"), "wb") as f:
+                pk.dump(releve_dict, f)
         
         print("Found releves:")
         print(releves)
         
         ##--------------------------------------------------------------------|
         
-        if not releves == [None]:
+        if not releves is None:
             request_url += "&releves_ids=" + ",".join(map(str, releves))
         
         print("Using request url: " + request_url)
         
-        if self.token is not None:
-            response = ulrq.urlopen(
-                ulrq.Request(request_url, headers = {
-                    "accept" : "application/json",
-                    "authorization" : self.token["token_type"] + " " + \
-                        self.token["access_token"]
-                    })
-                )
-        else:
-            request = ulrq.Request(request_url)
-            b64str = base64.b64encode(bytes("%s:%s" % self.auth, "ascii"))
-            request.add_header(
-                "authorization", "Basic %s" % b64str.decode("utf-8")
+        self.observations = []
+        self.n_observations = 0
+        request_url += "&offset={0}"
+        offset = 0
+        response_data = ["PLACEHOLDER"]
+        
+        while response_data != []:
+            
+            print("Loading request page {0}. Offset = {1} observations." \
+                  .format(int(offset / max_return), offset)
                 )
             
-            response = ulrq.urlopen(request)
+            if self.token is not None:
+                response = ulrq.urlopen(
+                    ulrq.Request(request_url.format(offset), headers = {
+                        "accept" : "application/json",
+                        "authorization" : self.token["token_type"] + " " + \
+                            self.token["access_token"]
+                        })
+                    )
+            else:
+                request = ulrq.Request(request_url.format(offset))
+                b64str = base64.b64encode(bytes("%s:%s" % self.auth, "ascii"))
+                request.add_header(
+                    "authorization", "Basic %s" % b64str.decode("utf-8")
+                    )
+                
+                response = ulrq.urlopen(request)
+            
+            self.url = response.url
+            print("Response code: " + str(response.getcode()))
+            
+            if response.getcode() == 200:
+                content = json.load(response)
+                
+                print("Content total count: " + str(content["total_count"]))
+                print("Content filtered count: " + str(
+                    content["filtered_count"]))
+                
+                response_data = content["data"]
+                self.observations += response_data
+                self.n_observations += content["total_count"]
+                
+            elif response.getcode() == 401:
+                response_data = []
+                
+                raise Exception("Authentication failed.")
+                
+            else:
+                response_data = []
+                
+                raise Warning(response.text)
+            
+            offset += max_return
+            time.sleep(0.5)
+    
+    def get_releves(self):
+        '''
+        Output releve data.
+
+        Raises
+        ------
+        Exception
+            Missing data error.
+
+        Returns
+        -------
+        releves : pandas.DataFrame
+            Pandas DataFrame containing releve information.
+        '''
+        try:
+            obs_zero = self.observations[0]
         
-        self.url = response.url
-        print("Response code: " + str(response.getcode()))
+        except:
+            
+            mssg = "Instance of class 'Observation' currently stores no" + \
+                " observations. Use .get_observations() to load observati" + \
+                    "ons from Info Flora and retry."
+            
+            raise Exception(mssg)
         
-        if response.getcode() == 200:
-            content = json.load(response)
-            
-            print("Content total count: " + str(content["total_count"]))
-            print("Content filtered count: " + str(content["filtered_count"]))
-            
-            self.observations = content["data"]
-            self.n_observations = content["total_count"]
-            
-        elif response.getcode() == 401:
-            raise Warning("Authentication failed.")
-            
-        else:
-            self.observations = None
-            
-            raise Warning(response.text)
+        releve_data = []
+        
+        for observation in self.observations:
+            if observation["releve_type"] == 923:
+                if pd.isna(observation["releve_id"]):
+                    
+                    mssg = "Releve ID missing from observation {0}."
+                    Warning(mssg.format(observation["obs_id"]))
+                
+                releve_data.append(
+                    {"releve_id" : int(observation["releve_id"]),
+                     "releve_type" : int(observation["releve_type"]),
+                     "date" : observation["date"],
+                     "location" : (observation["y"], observation["x"]),
+                     "habitat_id" : int(observation["habitat_id"]) if \
+                         observation["habitat_id"] is not None else None
+                     }
+                    )
+        
+        df = pd.DataFrame.from_records(releve_data)
+        
+        df = df.groupby(
+                ["releve_id", "releve_type", "habitat_id"]
+                ).aggregate(
+                    {"date" : lambda x: x.iloc[0],
+                     "location" : lambda x: x.iloc[0]
+                     }
+                    ).reset_index()
+        
+        df = df.astype({"releve_id" : "int",
+                        "releve_type" : "int",
+                        "habitat_id" : "int"})
+        
+        return df
     
     def _get_image_urls(self, observation):
         obs = self.observations[observation] if \
@@ -397,6 +497,7 @@ class Observations():
         for observation in self.observations:
             ## Create folder
             obs_id = observation["obs_id"]
+            obs_ids.append(obs_id)
             
             releve_id = observation["releve_id"]
             
@@ -440,6 +541,18 @@ class Observations():
                 print(response)
                 
                 disc_locations.append(dest)
+                
+                print("Image disc location appended to META.")
+                
+                ## Add plot coordinates as image coordinates if image location
+                ## is missing
+                base.add_coords(dest, (observation["y"], observation["x"]),
+                                replace = True)
+                
+                ### Add creation date (for some files, this tag might have
+                ### been lost on the way)
+                base.add_creation_time(dest, observation["date"],
+                                       replace = True)
             
             self._set_observation_meta(observation,
                                        "img_types",
@@ -486,7 +599,8 @@ if __name__ == "__main__":
     # Run
     my_obs = Observations()
     my_obs.get_observations(PROJECT, USER,
-                            releves = RELEVES, releve_names = RELEVENAMES)
+                            releves = RELEVES, releve_names = RELEVENAMES,
+                            out = OUT)
     
     print("Starting downloads...")
     my_obs.download_images(directory = OUT, remove = REMOVE)

@@ -14,12 +14,14 @@ __status__ = "Development"
 
 #-----------------------------------------------------------------------------|
 # Imports
-import os
+import os, sys
 this_file = os.path.dirname(os.path.realpath(__file__))
 
 dir_py = os.path.dirname(this_file)
+dir_req = os.path.join(dir_py, "requests")
 
-os.chdir(os.path.join(dir_py, "requests"))
+os.chdir(dir_req)
+sys.path.append(dir_req)
 
 import infoflora
 

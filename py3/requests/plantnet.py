@@ -4,6 +4,8 @@
 Created on Sun Apr 30 16:42:00 2023
 
 Predict taxon names using the Pl@ntNet API
+
+Pl@ntNet currently uses Inceptionv3 
 """
 __author__ = "Manuel"
 __date__ = "Sun Apr 30 16:42:00 2023"
@@ -20,16 +22,16 @@ __status__ = "Development"
 
 #-----------------------------------------------------------------------------|
 # Imports
-import os, json
+import os, json, time
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
-import requests
+import authentication, requests
 
 #-----------------------------------------------------------------------------|
 # General settings/variables
 IMG_MAXSIZE = 1600
-API_KEY = "2b10ZfcibrJnVEJkivyWiuAO"
-PROJECT = "weurope"
+API_KEY = authentication.from_arbitrary_dict("PlantNet")["API_KEY"]
+PROJECT = "all"# "k-middle-europe"
 api_endp = "https://my-api.plantnet.org/v2/identify/{0}?api-key={1}"
 POSTURL = api_endp.format(PROJECT, API_KEY)
 
@@ -65,7 +67,6 @@ def post_image(files, organs = "auto"):
     response : requests.response
         Response type opject.
     '''
-    
     img_files = [("images", (f, open(f, "rb"))) for f in files] if \
         isinstance(files, list) else [("images", (files, open(files, "rb")))]
     
@@ -84,10 +85,42 @@ def post_image(files, organs = "auto"):
                            data = data)
     
     prepared_req = req.prepare()
-    session = requests.Session()
-    response = session.send(prepared_req)
     
-    json_result = json.loads(response.text)
+    for a in range(3):
+        try:
+            session = requests.Session()
+            response = session.send(prepared_req)
+            
+            json_result = json.loads(response.text)
+            
+            if "results" in json_result.keys():
+                break
+            
+            else:
+                raise Warning("Request failed.")
+        
+        except:
+            print("Request failed at attempt {0}.".format(a))
+            
+            if "statusCode" in json_result.keys():
+                print("Status code: " + str(json_result["statusCode"]))
+                print(json_result["message"])
+            
+            time.sleep(5)
+    
+    if not response.ok:
+        Warning(response.text)
+    
+    else:
+        try:
+            remaining_ids = json_result["remainingIdentificationRequests"]
+            print("Remaining PlantNet IDs for today: {0}\n" \
+                  .format(remaining_ids))
+        
+        except:
+            Warning("Failed to get number of remaining PlantNet IDs.")
+            print("Response:\n")
+            print(json_result)
     
     return json_result
 

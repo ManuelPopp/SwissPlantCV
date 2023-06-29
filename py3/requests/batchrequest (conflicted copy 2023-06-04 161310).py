@@ -16,13 +16,12 @@ __status__ = "Development"
 
 #-----------------------------------------------------------------------------|
 # Imports
-import os, re, glob, time, random, argparse, platform
+import os, re, glob, time, datetime, random, argparse
 import pandas as pd
 import pickle as pk
-from datetime import datetime, timedelta
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
-import base, plantnet, inaturalistcv, localflorid, floraincognita
+import plantnet, inaturalistcv, localflorid
 
 #-----------------------------------------------------------------------------|
 # Settings
@@ -30,8 +29,8 @@ dir_py = os.path.dirname(os.path.dirname(__file__))
 dir_main = os.path.dirname(dir_py)
 
 IMGDIR = "N:/prj/COMECO/img"
-MULTIIMG = ["florid", "floraincognita", "plantnet"]
-MODELLIST = ["florid", "floraincognita", "inaturalist", "plantnet"]
+MULTIIMG = ["florid", "plantnet"]
+MODELLIST = ["florid", "inaturalist", "plantnet"]
 OUT = os.path.join(dir_main, "out")
 
 # Number of samples for multi-image predictions
@@ -57,16 +56,6 @@ def parseArguments():
     parser.add_argument("-from_checkpoint", "--from_cpt",
                         help = "Load previous instance of Batchrequest.",
                             type = bool, default = False)
-    parser.add_argument("-shutdown", "--shutdown",
-                        help = "Shutdown computer after batch is finished.",
-                            action = "store_true")
-    parser.add_argument("-r", "--overwrite",
-                        help = "Overwrite results for listed CV models.",
-                            nargs = "+", type = str, default = None)
-    parser.add_argument("-f", "--filename",
-                        help = "Filename of a specific saved batchrequest" + \
-                            " to be loaded and continued/edited.",
-                        type = str, default = None)
     
     args = parser.parse_args()
     
@@ -79,8 +68,6 @@ if __name__ == "__main__":
         else [args.releve_names]
     RELEVETABLE = args.releve_table
     FROMCPT = args.from_cpt
-    OVERWRITE = args.overwrite
-    LOADFILE = args.filename
     
     if RELEVETABLE == "standard":
         print("Attempting to use standard releve table...")
@@ -96,10 +83,6 @@ if __name__ == "__main__":
         
         ## Overwrite RELEVENAMES list with selection from table
         RELEVENAMES = releve_df.loc[idx, "name"]
-    
-    if OVERWRITE is not None:
-        MULTIIMG = [i for i in MULTIIMG if i in OVERWRITE]
-        MODELLIST = [i for i in MODELLIST if i in OVERWRITE]
 
 #-----------------------------------------------------------------------------|
 # Functions
@@ -146,18 +129,70 @@ def read_meta():
     
     return metadata, relevedict
 
-def load_checkpoint(file = None, from_error = "assert"):
+def standard_task(image_path, coordinates, date, organs, cv_model,
+                  return_n = NTOP):
+    '''
+    Run standard task (identify species and return the N best matches in a
+    standardised format).
+
+    Parameters
+    ----------
+    image_path : str
+        Path to the image file.
+    coordinates : list
+        List of coordinates of the observation location (lat, lon).
+    date : str
+        Date of the observation in format "yyyy-mm-dd".
+    organs : str
+        Tags for plant organ/part. Must be in ["f", "i", "s", "t", "v"] where
+        "f" = infructescence
+        "i" = inflorescence
+        "s" = several parts
+        "t" = trunk
+        "v" = vegetative parts
+    cv_model : str
+        Computer vision model/API to call. Options are "plantnet",
+        "inaturalist", "florid".
+    return_n : int, optional
+        Number of species suggestions to return. The default is 5.
+
+    Returns
+    -------
+    list
+        List containing CV model name, N best matches, and the full response
+        json.
+    '''
+    if cv_model == "plantnet":
+        response = plantnet.post_image(image_path, organs = organs)
+        ids = plantnet.species_ranking(response, n = return_n)
+        
+        ## Since PlantNet only allows 500 IDs on the base subscription (without
+        ## additional payment or exception status), we wait for 24 hrs in case
+        ## the quota is reached
+        if response["remainingIdentificationRequests"] <= 0:
+            mssg = "PlantNet API quota reached. I will sleep for 24 hrs " + \
+                "and continue the batch then."
+            
+            print(mssg)
+            
+            time.sleep(24 * 60 * 60)
+    
+    elif cv_model == "inaturalist":
+        response = inaturalistcv.post_image(image_path, coordinates)
+        
+        ids = inaturalistcv.species_ranking(response, n = return_n)
+    
+    else:
+        response = localflorid.post_image(image_path, coordinates, date)
+        ids = localflorid.species_ranking(response, n = return_n)
+    
+    return [cv_model, ids, response]
+
+def load_checkpoint():
     '''
     Load pickled checkpoint of the last Batchrequest instance that has been
     running.
-    
-    Parameters
-    ----------
-    from_error : str/bool
-        Restart from last error. (Alternative: Restart from last finished
-        observation.) Default: "assert"; i.e., use the most recent checkpoint
-        irrespective of checkpoint type.
-    
+
     Returns
     -------
     br_cpt : Batchrequest
@@ -167,21 +202,9 @@ def load_checkpoint(file = None, from_error = "assert"):
     ----
     Consider that you probably want to exclude previously finished releves from
     the releve_name_list when running a batch request using a checkpoint.
+    
     '''
-    if file is not None:
-        name = file
-    
-    else:
-        if isinstance(from_error, bool):
-            name = "at_last_exception" if from_error else "cpt.save"
-        
-        else:
-            cpt_names = os.listdir(out_file("log"))
-            cpt_dirs = [out_file(n, "log") for n in cpt_names]
-            
-            name = os.path.split(max(cpt_dirs, key = os.path.getctime))[1]
-    
-    with open(out_file(name, "log"), "rb") as f:
+    with open(out_file("cpt.save", "log"), "rb") as f:
         br_cpt = pk.load(f)
     
     return br_cpt
@@ -195,7 +218,6 @@ class Batchrequest():
         if len(past_batches) > 0:
             ids = [os.path.split(f)[1] for f in past_batches]
             current_max_id = max([int(re.findall(r"\d+", i)[0]) for i in ids])
-        
         else:
             current_max_id = -1
         
@@ -203,17 +225,13 @@ class Batchrequest():
         self.name = "Batch_" + str(self.id).zfill(10)
         self.finished_releves = []
         self.last_observation_index = 0
-        self.t_start = datetime.now()
-        self.results = []
-        self.errors = []
     
     def run_batch(self, releve_name_list,
                   start_from_releve = 0,
                   to_releve = None,
                   start_from_observation = None,
                   to_observation = None,
-                  continue_batch = True,
-                  overwrite = False):
+                  continue_batch = True):
         '''
         Run a batch of requests.
 
@@ -246,6 +264,7 @@ class Batchrequest():
         Returns
         -------
         None.
+
         '''
         metadata, relevedict = read_meta()
         
@@ -256,6 +275,10 @@ class Batchrequest():
             "start_from_observation" : start_from_observation,
             "to_observation" : to_observation
             }
+        
+        self.t_start = datetime.datetime.now()
+        self.results = []
+        self.errors = []
         
         ## Remove previously finished releves from releve name list
         if continue_batch:
@@ -350,18 +373,15 @@ class Batchrequest():
                         ### Handle warnings (in particular, the iNaturalist
                         ### VisionAPI quota limit warning)
                         try:
-                            mod_name, best_matches, full_json = \
-                                self._standard_task(
-                                    image_path = image_path,
-                                    coordinates = coordinates,
-                                    date = date,
-                                    organs = organ,
-                                    cv_model = CV,
-                                    batch = self.name
-                                    )
-                        
+                            mod_name, best_matches, full_json = standard_task(
+                                image_path = image_path,
+                                coordinates = coordinates,
+                                date = date,
+                                organs = organ,
+                                cv_model = CV
+                                )
                         except:
-                            mssg = "Current obs.: {0}\nCurrent releve idx: {1}"
+                            mssg = "Current obs.: {0}\nCurrent releve idx´: {1}"
                             print(mssg.format(oidx, releve_index))
                             self._checkpoint("at_last_exception")
                             
@@ -369,7 +389,7 @@ class Batchrequest():
                             raise Exception(mssg)
                     
                         ### Add response to results
-                        result_dict = {
+                        self.results.append({
                             "question_index" : idx,
                             "question_type" : "single_image",
                             "releve_index" : releve_index + start_from_releve,
@@ -383,32 +403,12 @@ class Batchrequest():
                             "cv_model" : CV,
                             "taxon_suggestions" : best_matches,
                             "full_json" : full_json
-                            }
-                        
-                        ### Append results list if overwriting is deactivated
-                        if not overwrite:
-                            self.results.append(result_dict)
-                        
-                        else:
-                            ### Overwrite results if an entry for the same releve,
-                            ### request, and model is present in the existing
-                            ### results list.
-                            rm = [str(r["releve_id"]) + str(r["cv_model"]) + \
-                                  str(r["image_files"]) for r in self.results]
-                            
-                            curr_entr = str(result_dict["releve_id"]) + \
-                                    str(result_dict["cv_model"]) + image_path
-                            
-                            if curr_entr in rm:
-                                self.results[rm.index(curr_entr)] = result_dict
-                            
-                            else:
-                                self.results.append(result_dict)
+                            })
                     
-                    ### If only testing one CV model, wait for 3 s between
+                    ### If only testing one CV model, wait for 1.5 s between
                     ### API requests
                     if len(MODELLIST) == 1:
-                        time.sleep(3)
+                        time.sleep(1.5)
                 
                 ## Send multi-image request to cv models that support it
                 for CV in MULTIIMG:
@@ -440,39 +440,19 @@ class Batchrequest():
                     indices.sort()
                     
                     ### Select subset from photo list
-                    #### Select random images
                     image_paths = [image_files[i] for i in indices]
                     organs = [img_types[i] for i in indices]
                     
-                    replace_original = False
-                    
-                    if overwrite:
-                        #### If entries are to be replaced, look up which
-                        #### images have been used and replace random selection
-                        rm = [str(r["releve_id"]) + str(r["cv_model"]) \
-                              for r in self.results]
-                        
-                        curr_entr = str(result_dict["releve_id"]) + \
-                                str(result_dict["cv_model"])
-                        
-                        if curr_entr in rm:
-                            r = self.results[rm.index(curr_entr)]
-                            image_paths = r["image_files"].split("; ")
-                            organs = r["plant_organ"].split("; ")
-                            
-                            replace_original = True
-                    
                     ### Send requests with selected images
-                    mod_name, best_matches, full_json = self._standard_task(
+                    mod_name, best_matches, full_json = standard_task(
                         image_path = image_paths,
                         coordinates = coordinates,
                         date = date,
                         organs = organs,
-                        cv_model = CV,
-                        batch = self.name
+                        cv_model = CV
                         )
                     
-                    result_dict = {
+                    self.results.append({
                         "question_index" : idx,
                         "question_type" : "multi_image",
                         "releve_index" : releve_index + start_from_releve,
@@ -486,18 +466,7 @@ class Batchrequest():
                         "cv_model" : CV,
                         "taxon_suggestions" : best_matches,
                         "full_json" : full_json
-                        }
-                    
-                    ### Replace results list entry if overwriting is activated
-                    if replace_original:
-                        ### Overwrite results if an entry for the same releve,
-                        ### request, and model is present in the existing
-                        ### results list.
-                        self.results[rm.index(curr_entr)] = result_dict
-                    
-                    else:
-                        ### Else, append results list
-                        self.results.append(result_dict)
+                        })
                 
                 self.last_observation_index = oidx
             
@@ -505,87 +474,6 @@ class Batchrequest():
             
             # Save as checkpoint to reduce data loss in case of error
             self._checkpoint()
-    
-    def _standard_task(self, image_path, coordinates, date, organs, cv_model,
-                      return_n = NTOP, batch = None):
-        '''
-        Run standard task (identify species and return the N best matches in a
-        standardised format).
-
-        Parameters
-        ----------
-        image_path : str
-            Path to the image file.
-        coordinates : list
-            List of coordinates of the observation location (lat, lon).
-        date : str
-            Date of the observation in format "yyyy-mm-dd".
-        organs : str
-            Tags for plant organ. Must be in ["f", "i", "s", "t", "v"] where
-            "f" = infructescence
-            "i" = inflorescence
-            "s" = several parts
-            "t" = trunk
-            "v" = vegetative parts
-        cv_model : str
-            Computer vision model/API to call. Options are "plantnet",
-            "inaturalist", "florid".
-        return_n : int, optional
-            Number of species suggestions to return. The default is 5.
-
-        Returns
-        -------
-        list
-            List containing CV model name, N best matches, and the full
-            response json.
-        
-        Notes
-        -----
-        This was a standalone function in the first verion. I made it a method
-        in order to be able to access "self" and save checkpoints when running
-        out of free API requests.
-        '''
-        if cv_model == "plantnet":
-            response = plantnet.post_image(image_path, organs = organs)
-            ids = plantnet.species_ranking(response, n = return_n)
-            
-            ## Since PlantNet only allows 500 IDs on the base subscription
-            ## (without additional payment or exception status), we wait for
-            ## 24 hrs in case the quota is reached
-            if int(response["remainingIdentificationRequests"]) <= 0:
-                mssg = "Daily PlantNet API quota reached. I will sleep for" + \
-                    " %s hours, %s minutes, and %s seconds to continue " + \
-                        "the batch at midnight."
-                
-                now = datetime.now()
-                tomorrow = now + timedelta(days = 1)
-                midnight = datetime(
-                    tomorrow.year, tomorrow.month, tomorrow.day, 0, 0, 0, 0
-                    )
-                
-                d = midnight - now
-                
-                print(mssg % tuple(str(d).split(":")))
-                
-                self._checkpoint()
-                
-                time.sleep(d)
-        
-        elif cv_model == "inaturalist":
-            response = inaturalistcv.post_image(image_path, coordinates)
-            
-            ids = inaturalistcv.species_ranking(response, n = return_n)
-        
-        elif cv_model == "florid":
-            response = localflorid.post_image(image_path, coordinates, date)
-            ids = localflorid.species_ranking(response, n = return_n)
-        
-        else:
-            floraincognita.post_image(image_path, batch)
-            response = []
-            ids = []
-        
-        return [cv_model, ids, response]
     
     def _checkpoint(self, name = "cpt.save"):
         '''
@@ -614,71 +502,9 @@ class Batchrequest():
             pk.dump(self, f)
         
         print("Output saved at {0}.".format(str(out_file(self.name, "log"))))
-    
-    def to_df(self):
-        df = pd.DataFrame(BR.results)
-        
-        colnames = ["first", "second", "third", "forth", "fifth"]
-        taxa = pd.DataFrame(df["taxon_suggestions"].to_list(),
-                            columns = colnames)
-        
-        main = df[["question_index", "question_type", "releve_index",
-                   "releve_name", "releve_id", "observation_index",
-                   "observation_id", "true_taxon_id", "plant_organ",
-                   "image_files", "cv_model"]]
-        
-        out = pd.concat([main, taxa], axis = 1)
-        
-        return out
 
 #-----------------------------------------------------------------------------|
 # Run request
-if FROMCPT:
-    BR = load_checkpoint()
-    BR.run_batch(releve_name_list = RELEVENAMES)
-
-elif OVERWRITE is not None:
-    BR = load_checkpoint(file = LOADFILE)
-    
-    print("Overwriting entries for " + ", ".join(MODELLIST))
-    
-    BR.run_batch(releve_name_list = RELEVENAMES, overwrite = True,
-                 continue_batch = False)
-
-else:
-    BR = Batchrequest()
-    BR.run_batch(releve_name_list = RELEVENAMES)
-
+BR = load_checkpoint() if FROMCPT else Batchrequest()
+BR.run_batch(releve_name_list = RELEVENAMES)
 BR.save()
-
-# Export data as Excel sheet
-df = BR.to_df()
-
-## Add species names (using the Info Flora taxonomic backbone)
-SD = base.SpeciesDecoder("comeco_local")
-
-df["true_taxon_name"] = [SD.decode(tid) for tid in df["true_taxon_id"]]
-
-df_d = df
-'''
-df = df_d.drop_duplicates(subset = ["releve_name", "observation_id",
-                                    "true_taxon_id", "plant_organ",
-                                    "image_files", "cv_model"],
-                          keep = "last")
-'''
-## Save to Excel file
-if os.path.isfile(out_file("Responses.xlsx")):
-    with pd.ExcelWriter(out_file("Responses.xlsx"), mode = "a",
-                        if_sheet_exists = "replace") as writer:
-        df.to_excel(writer, sheet_name = BR.name, index = False)
-    
-else:
-    df.to_excel(out_file("Responses.xlsx"), sheet_name = BR.name,
-                index = False)
-
-# Shutdown system if wanted
-if args.shutdown:
-    cmd = "shutdown /s /t 1" if platform.system() == "Windows" \
-        else "systemctl poweroff"
-    
-    os.system(cmd)
