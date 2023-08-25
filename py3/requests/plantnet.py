@@ -29,7 +29,6 @@ import authentication, requests
 
 #-----------------------------------------------------------------------------|
 # General settings/variables
-IMG_MAXSIZE = 1600
 API_KEY = authentication.from_arbitrary_dict("PlantNet")["API_KEY"]
 PROJECT = "all"# "k-middle-europe"
 api_endp = "https://my-api.plantnet.org/v2/identify/{0}?api-key={1}"

@@ -16,12 +16,14 @@ __status__ = "Development"
 
 #-----------------------------------------------------------------------------|
 # Imports
-import os
+import os, sys
 
-os.chdir(os.path.join(
+dir_req = os.path.join(
     os.path.dirname(os.path.dirname(os.path.realpath(__file__))),
     "requests")
-    )
+
+sys.path.append(dir_req)
+os.chdir(dir_req)
 
 import base, authentication, dirselect
 from infoflora import Observations
