@@ -18,7 +18,7 @@ graph TD
     X --> L[/SingleImages.csv/]
     L --> M[Data Control Center\n=Check_misclassifications.py=]
     M --> J
-    M --> D
+    M --> |Fix responses\nmanually if\nnecessary| D
     M --> |User action:\nEdit if necessary| B
     X --> Z[/Results\nPlots, Statistics/]
 classDef empty width:0px,height:0px;
