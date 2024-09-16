@@ -6,7 +6,7 @@ Testing state-of-the-art vascular plant species identification computer vision m
 graph TD
     A[Field sampling] --> |FlorApp| B[(InfoFlora<br>Fieldbook)]
     B --> |infoflora.py| C[/Images + metadata/]
-    D[(<br>BatchRequest Object<br>=batchrequest_v102.py=)] <--> E[Plant ID<br>service API]
+    D[(<br>BatchRequest Object<br>=batchrequest_v201.py=)] <--> E[Plant ID<br>service API]
     C --> D
     D --> F[/Responses.xlsx/]
     F --- G[ ]:::empty
@@ -16,7 +16,7 @@ graph TD
     J --- G
     H --> X[Data analysis<br>=Data_analysis.R=]
     X --> L[/SingleImages.csv/]
-    L --> M[Data Control Center<br>=Check_misclassifications.py=]
+    L --> M[Data Control Center]
     M --> J
     M --> |Fix responses<br>manually if<br>necessary| D
     M --> |User action:<br>Edit if necessary| B
