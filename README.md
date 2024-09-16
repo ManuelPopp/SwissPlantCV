@@ -16,7 +16,7 @@ graph TD
     J --- G
     H --> X[Data analysis<br>=Data_analysis.R=]
     X --> L[/SingleImages.csv/]
-    L --> M[Data Control Center]
+    L --> M[Data Control Center<br>=Check_misclassifications.py=]
     M --> J
     M --> |Fix responses<br>manually if<br>necessary| D
     M --> |User action:<br>Edit if necessary| B
