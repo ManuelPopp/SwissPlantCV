@@ -12,7 +12,7 @@ graph TD
     F --- G[ ]:::empty
     G --> |"taxonomy.py"| H[/Final.xlsx/]
     I[WFO API] <--> J[(Taxonomy<br>Database<br><i>taxonomy.py</i>)]
-    K[User input] --> J
+    K[User input] <--> J
     J --- G
     H --> X[Data analysis<br><i>Data_analysis.R</i>]
     X --> L[/SingleImages.csv/]
