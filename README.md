@@ -10,7 +10,8 @@ graph TD
     C --> D
     D --> F[/Responses.xlsx/]
     F --- G[ ]:::empty
-    G --> H[/Final.xlsx/]
+    G --- T|taxonomy.py|
+    T --> H[/Final.xlsx/]
     I[WFO API] <--> J[(Taxonomy\nDatabase\n=taxonomy.py=)]
     K[User input] --> J
     J --- G
