@@ -9,7 +9,7 @@ graph TD
     D[(\nBatchRequest Object\n=batchrequest_v102.py=)] <--> E[Plant ID\nservice API]
     C --> D
     D --> F[/Responses.xlsx/]
-    F --- G[ ]:::empty
+    F --- G[""]
     G --- T|taxonomy.py|
     T --> H[/Final.xlsx/]
     I[WFO API] <--> J[(Taxonomy\nDatabase\n=taxonomy.py=)]
