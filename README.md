@@ -11,12 +11,12 @@ graph TD
     D --> F[/Responses.xlsx/]
     F --- G[ ]:::empty
     G --> |"taxonomy.py"| H[/Final.xlsx/]
-    I[WFO API] <--> J[(Taxonomy<br>Database<br>=taxonomy.py=)]
+    I[WFO API] <--> J[(Taxonomy<br>Database<br><i>taxonomy.py</i>)]
     K[User input] --> J
     J --- G
-    H --> X[Data analysis<br>=Data_analysis.R=]
+    H --> X[Data analysis<br><i>Data_analysis.R</i>]
     X --> L[/SingleImages.csv/]
-    L --> M[Data Control Center<br>=Check_misclassifications.py=]
+    L --> M[Data Control Center<br><i>Check_misclassifications.py</i>]
     M --> J
     M --> |Fix responses<br>manually if<br>necessary| D
     M --> |User action:<br>Edit if necessary| B
