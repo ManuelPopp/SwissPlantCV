@@ -8,7 +8,7 @@ graph TD
     B --> |infoflora.py| C[/Images + metadata/]
     D[(<br>BatchRequest Object<br><i>batchrequest_v201.py</i>)] <--> E[Plant ID<br>service API]
     C --> D
-    D --> F[/Responses.xlsx/]
+    D --- F[/Responses.xlsx/]
     F --- G[ ]:::empty
     G --> |"taxonomy.py"| H[/Final.xlsx/]
     I[WFO API] <--> J[(Taxonomy<br>Database<br><i>taxonomy.py</i>)]
