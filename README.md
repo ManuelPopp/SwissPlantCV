@@ -13,7 +13,6 @@ graph TD
     I[WFO API] <--> J
     J --> H[/Final.xlsx/]
     K[User input] <--> J
-    J --- G
     H --> X[Data analysis<br><i>Data_analysis.R</i>]
     X --> L[/SingleImages.csv/]
     L --> M[Data Control Center<br><i>Check_misclassifications.py</i>]
