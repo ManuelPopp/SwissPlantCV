@@ -30,4 +30,4 @@ graph TD
     X --> Z[/Results<br>Plots, Statistics/]
 classDef empty width:0px,height:0px;
 ```
-**Figure 1:** Overview of the data collection and processing workflow.
+**Figure 1:** Overview of the data collection and processing workflow. Additional steps involved manual insertion of Flora Incognita and FlorID "vision only" results into the BatchRequest objects, resp. the Responses.xlsx via additional scripts. This is due to the circumstance that Flora Incognita did not provide direct access to their API but ran the model locally and sent us the results as json. For the vision only version of FlorID, the information was separately extracted from the responses (already present in the Batchrequest objects, but not stored separately from the combined model output).
