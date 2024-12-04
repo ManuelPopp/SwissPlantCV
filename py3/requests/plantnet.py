@@ -14,11 +14,13 @@ __license__ = "Unlicense"
 __version__ = "1.0.1"
 __maintainer__ = "Manuel R. Popp"
 __email__ = "requests@cdpopp.de"
-__status__ = "Development"
+__status__ = "Production"
 
 # Sources
 #https://my.plantnet.org/doc/openapi
 #https://github.com/plantnet/my.plantnet/blob/master/examples/post/run.py
+#https://my.plantnet.org/doc/newfloras
+# Mathias Chouet, PlantNet, pers. comm. (emails, e.g. from 2023-11-22)
 
 #-----------------------------------------------------------------------------|
 # Imports
@@ -30,9 +32,11 @@ import authentication, requests
 #-----------------------------------------------------------------------------|
 # General settings/variables
 API_KEY = authentication.from_arbitrary_dict("PlantNet")["API_KEY"]
-PROJECT = "all"# "k-middle-europe"
-api_endp = "https://my-api.plantnet.org/v2/identify/{0}?api-key={1}"
-POSTURL = api_endp.format(PROJECT, API_KEY)
+PROJECT = "k-middle-europe"# "k-middle-europe" or "all"
+TYPE = "kt"# "kt" or "legacy"# As of Oct 1st, 2023, "kt" is the default.
+
+POSTURL = f"https://my-api.plantnet.org/v2/identify/{PROJECT}?" + \
+    f"type={TYPE}&api-key={API_KEY}"
 
 organs_dict = {"i" : "flower",
                "v" : "leaf",

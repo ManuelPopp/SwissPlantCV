@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 """
 Created on Wed May 24 16:35:35 2023
@@ -12,7 +12,7 @@ __license__ = "Unlicense"
 __version__ = "2.0.1"
 __maintainer__ = "Manuel R. Popp"
 __email__ = "requests@cdpopp.de"
-__status__ = "Development"
+__status__ = "Production"
 
 #-----------------------------------------------------------------------------|
 # Imports
@@ -33,6 +33,7 @@ dir_py = os.path.dirname(os.path.dirname(__file__))
 dir_main = os.path.dirname(dir_py)
 
 IMGDIR = "N:/prj/COMECO/img"
+TAXONTABLE = os.path.join(dir_main, "dat", "Taxonomic_backbone_wHier_2022.csv")
 MULTIIMG = ["florid", "floraincognita", "plantnet"]
 MODELLIST = ["florid", "floraincognita", "inaturalist", "plantnet"]
 OUT = os.path.join(dir_main, "out")
@@ -56,7 +57,7 @@ def parseArguments():
                             type = str, default = None)
     parser.add_argument("-releve_table", "--releve_table",
                         help = "Releve table (overwrites releve_names).",
-                            type = str, default = None)
+                            type = str, default = "standard")
     parser.add_argument("-from_checkpoint", "--from_cpt",
                         help = "Load previous instance of Batchrequest.",
                             type = bool, default = False)
@@ -71,10 +72,20 @@ def parseArguments():
                         help = "Insert Flora Incognita results into an " + \
                             "existing Batrchrequest save.",
                         type = str, default = None)
+    parser.add_argument("-manual_update", "--mupdate",
+                        help = "Edit entries in existing Batrchrequest save.",
+                        type = str, default = None, nargs = "+")
     parser.add_argument("-r", "--repeat",
                         help = "Repeat requests for specific CV models.",
                         nargs = "+",
-                        type = str, default = None)
+                        type = str, default = [])
+    parser.add_argument("-u", "--update_fixed",
+                        help = "Update plant part and taxon information." +
+                        " Note: When -u is set, no requests will be started." +
+                        " In order to continue an interrupted batch, run " +
+                        "again without the -u flag after updating fixed " +
+                        "InfoFlora entries.",
+                        action = "store_true")
     
     args = parser.parse_args()
     
@@ -90,7 +101,9 @@ if __name__ == "__main__":
     FROMCPT = args.from_cpt
     LOADFILE = args.filename
     FLORINC = args.florinc
-    REPEAT = args.repeat
+    MANUALUPDATE = args.mupdate
+    REPEAT = args.repeat if isinstance(args.repeat, list) else [args.repeat]
+    UPDATEFIXED = args.update_fixed
     
     if FLORINC is not None:
         RELEVETABLE = ""
@@ -162,6 +175,7 @@ class Batchrequest():
         self.version = "2.0.1"
         
         self.set_image_dir(img_dir)
+        self.florid_taxonomy = None
     
     @property
     def _image_meta(self):
@@ -239,7 +253,7 @@ class Batchrequest():
     
     @property
     def completed_releves(self):
-        pending = set([p[0] for p in self.pending()])
+        pending = set([p[0] for p in self.pending])
         
         completed = [n for n in self.total_releve_names if n not in pending]
         
@@ -297,6 +311,39 @@ class Batchrequest():
             relevedict = pk.load(f)
         
         return metadata, relevedict
+    
+    def translate_id(self, infoflora_id, id_table = TAXONTABLE):
+        '''
+        Translate Info Flora taxon ID to FlorID taxon ID.
+        
+        Parameters
+        ----------
+        infoflora_id : int
+            Info FLora taxon ID.
+        id_table : str, optional
+            Path to the FLorID taxonomic backbone table. The default is
+            TAXONTABLE (= [main dir]/dat/Taxonomic_backbone_wHier_2022.csv).
+        
+        Returns
+        -------
+        taxon_id : int
+            FlorID taxon ID.
+        '''
+        if not isinstance(self.florid_taxonomy, pd.core.frame.DataFrame):
+            self.florid_taxonomy = pd.read_table(TAXONTABLE, sep = ",")
+        
+        try:
+            taxon_id = self.florid_taxonomy["COMECO_ID"][
+                self.florid_taxonomy["ID"] == infoflora_id
+                ].values[0]
+        
+        except:
+            mssg = "Info Flora ID {0} not found in taxonomy backbone."
+            print(mssg.format(infoflora_id))
+            
+            taxon_id = None
+        
+        return taxon_id
     
     def add_releves(self, releve_name_list):
         '''
@@ -722,7 +769,17 @@ class Batchrequest():
         
         models_single = self._list_input(models_single)
         models_multi = self._list_input(models_multi)
+        
+        ## Overwrite model lists if no models are specified (assuming all
+        ## requests for the given observations are to be repeated).
+        if models_single == models_multi == []:
+            models_single = self.single
+            models_multi = self.multi
+        
         releve_names = self._list_input(releve_names)
+        
+        ## Overwrite releve names if none are specified (assuming all releves
+        ## are to be repeated).
         releve_names = releve_names if releve_names != [] else \
             self.total_releve_names
         
@@ -758,6 +815,9 @@ class Batchrequest():
                          ])
         
         self.to_repeat = sorted(repeat, key = lambda x: x[0])
+        N = len(self.to_repeat)
+        
+        print(f"Found {N} requests to repeat.")
         
         self.run_batch(checkpoints = checkpoints, cp_freq = cp_freq,
                        repeat = True)
@@ -801,6 +861,9 @@ class Batchrequest():
                 pass
         
         if len(observations) > 0:
+            if any(isinstance(v, str) for v in observations):
+                print("Warning: Observation keys should be of type int.")
+            
             for releve_name, releve in zip(list(self.results.keys()),
                                         list(self.results.values())):
                 keys = releve.keys()
@@ -849,8 +912,11 @@ class Batchrequest():
             Number of species suggestions to return. The default is 5.
         req_id : int, optional
             Add a taxon ID for which probabilities should be returned
-            regardless whether it is amongst the top 5 suggestions.
-
+            regardless whether it is amongst the top 5 suggestions. Note: Since
+            data originates from the Info Flora online fieldbook, Info Flora
+            IDs are entered here. They will be translated to FlorID IDs for
+            FlorID requests.
+        
         Returns
         -------
         list
@@ -911,6 +977,7 @@ class Batchrequest():
             ids = inaturalistcv.species_ranking(response, n = return_n)
         
         elif cv_model == "florid":
+            ### Translate InfoFlora ID to FlorID ID
             response = florid.post_image(image_path, coordinates, date,
                                          true_id = req_id
                                          )
@@ -924,10 +991,18 @@ class Batchrequest():
         
         return [cv_model, ids, response]
     
-    def _insert_manual(self):
+    def _insert_manual(self, source = "floraincognita", **kwargs):
         '''
         Insert results from manually generated Flora Incognita results .json
-        into a previously generated Batchrequest object.
+        or input prompt into a previously generated Batchrequest object.
+        
+        Parameters
+        ----------
+        source : str {"floraincognita" or "prompt"}, optional
+            Data source. The default is "floraincognita".
+        
+        **kwargs : dict
+            Additional arguments required to locate and edit a result.
         
         Raises
         ------
@@ -940,13 +1015,216 @@ class Batchrequest():
         -------
         None.
         '''
-        if len(self.results) > 0:
-            insert_florinc(self)
-        
+        if source == "floraincognita":
+            if len(self.results) > 0:
+                insert_florinc(self)
+            
+            else:
+                raise Exception(
+                    "Batchrequest object contains no editable results."
+                    )
         else:
-            raise Exception(
-                "Batchrequest object contains no editable results."
-                )
+            if all(arg in kwargs for arg in [
+                    "releve_name", "obs_id", "image", "cv_model"
+                    ]):
+                releve_name = kwargs["releve_name"]
+                obs_id = kwargs["obs_id"]
+                image = kwargs["image"]
+                cv_model = kwargs["cv_model"]
+                
+                if "new_response" in kwargs:
+                    updates = {"taxon_suggestions" : kwargs["new_response"]}
+                
+                elif "new_true_id" in kwargs:
+                    updates = {"true_taxon_id" : kwargs["new_true_id"]}
+                
+                else:
+                    raise Exception(
+                        "Missing arguments. Provide either 'new_response'" + \
+                            " or 'new_true_id' to change an entry."
+                            )
+                try:
+                    self.results[releve_name][int(obs_id)][image][cv_model] \
+                        .update(updates)
+                
+                except KeyError:
+                    image = image.replace("\\", "/")
+                    self.results[releve_name][int(obs_id)][image][cv_model] \
+                        .update(updates)
+            else:
+                raise Exception("Missing arguments. Entry cannot be located.")
+    
+    def _update_fixed_taxon_ids(self):
+        self.update_image_dicts()
+        
+        mssg = "Replacing previous taxon id {0} by new taxon id {1}."
+        N = 0
+        for k0 in self.results.keys():
+            for k1 in self.results[k0].keys():
+                metadata = self._image_meta[k1]
+                taxon_id = metadata["taxon_id"]
+                
+                for k2 in self.results[k0][k1].keys():
+                    for k3 in self.results[k0][k1][k2].keys():
+                        old_id = self.results[k0][k1][k2][k3]["true_taxon_id"]
+                        if old_id != taxon_id:
+                            print(mssg.format(old_id, taxon_id))
+                            self.results[k0][k1][k2][k3][
+                                "true_taxon_id"
+                                ] = taxon_id
+                            
+                            N += 1
+        print(f"Replaced true taxon IDs in {N} responses.")
+    
+    def _update_fixed_plant_organs(self):
+        self.update_image_dicts()
+        
+        N = 0
+        res_k = list(self.results.keys())
+        for k0 in res_k:
+            old_k0_k = list(self.results[k0].keys())
+            
+            for k1 in old_k0_k:
+                image_dict_vals = self._get_image_dict(k1).values()
+                paths = [x["disc_location"] for x in image_dict_vals]
+                p_sansext = [x.rsplit("_", 1)[0] for x in paths]
+                parts = [x["organ"] for x in image_dict_vals]
+                
+                old_k1_k = list(self.results[k0][k1].keys())
+                
+                for old_img_dir in old_k1_k:
+                    old_sansext = os.path.splitext(
+                        str(old_img_dir)
+                        )[0].rsplit("_", 1)[0]
+                    
+                    first_key = list(
+                        self.results[k0][k1][old_img_dir].keys()
+                        )[0]
+                    
+                    old_parts = self.results[k0][k1][old_img_dir][first_key][
+                        "plant_organ"
+                        ]
+                    
+                    if not (old_sansext in p_sansext):
+                        continue
+                    
+                    elif not old_parts == parts[p_sansext.index(old_sansext)]:
+                        d = {a : (b, c) for a, b, c in zip(
+                            p_sansext, paths, parts
+                            )}
+                        
+                        (new_img_dir, plnt_org) = d[old_sansext]
+                        
+                        self.results[k0][k1][new_img_dir] = self \
+                            .results[k0][k1][old_img_dir]
+                        
+                        for cvm in self.results[k0][k1][new_img_dir].keys():
+                            self.results[k0][k1][new_img_dir][cvm][
+                                "image_files"
+                                ] = new_img_dir
+                            
+                            self.results[k0][k1][new_img_dir][cvm][
+                                "plant_organ"
+                                ] = plnt_org
+                        
+                        del self.results[k0][k1][old_img_dir]
+                        
+                        if "multi" in self.results[k0][k1].keys():
+                            for cvm in self.results[k0][k1]["multi"].keys():
+                                results = self.results[k0][k1]["multi"][cvm]
+                                
+                                mult_imgs = results["image_files"]
+                                mult_parts = results["plant_organ"]
+                                
+                                pattern = fr"{old_sansext}_(\w+).jpg"
+                                replacement = new_img_dir
+                                imgf = re.sub(pattern, replacement, mult_imgs)
+                                
+                                self.results[k0][k1]["multi"][cvm][
+                                    "image_files"
+                                    ] = imgf
+                                
+                                mult_list = imgf.split(";")
+                                
+                                if replacement in mult_list:
+                                    loc = mult_list.index(replacement)
+                                
+                                    parts_list = mult_parts.split(";")
+                                    parts_list[loc] = plnt_org
+                                    
+                                    self.results[k0][k1]["multi"][cvm][
+                                        "plant_organ"
+                                        ] = ";".join(parts_list)
+                        
+                        print(f"Changed {old_img_dir} to {new_img_dir}.")
+                        N += 1
+        
+        print(f"Changed file locations and plant organ keys for {N} results.")
+        
+        return
+    
+    def _cleanup_duplicates(self):
+        '''
+        Try to replace duplicate dictionary keys whith "duplicate" meaning keys
+        that refer to the same image but with different paths (either foreward
+        slashes or double backslash).
+        
+        Notes
+        -----
+        This function is "stupid" as it will update the first occurrence
+        dictionary values with the second one without doing more sophisticated
+        checks. (E.g., it does not check whether the respective dictionary
+        entries have a date that could be used to replace the earlier entry
+        with the later one. Such things don't happen here, which has to be
+        kept in mind.)
+        
+        Returns
+        -------
+        None.
+        '''
+        mssg = "Found duplicated key:\n{0}\n{1}\nKeep: {1}."
+        N = 0
+        M = 0
+        for k0 in self.results.keys():
+            for k1 in self.results[k0].keys():
+                image_keys = list(self.results[k0][k1].keys())
+                image_keys_norm = [k.replace("\\", "/") for k in image_keys]
+                
+                # Resolve duplicate key issues
+                duplicates = []
+                if len(set(image_keys)) > len(set(image_keys_norm)):
+                    for e in image_keys_norm:
+                        dup = [
+                            i for i, x in enumerate(image_keys_norm) if x == e
+                            ]
+                        
+                        if len(dup) > 1:
+                            if dup not in duplicates:
+                                duplicates.append(dup)
+                
+                for d in duplicates:
+                    first = image_keys[d[0]]
+                    second = image_keys[d[1]]
+                    
+                    second_result = self.results[k0][k1][second]
+                    
+                    print(mssg.format(first, second))
+                    self.results[k0][k1][first].update(second_result)
+                    del self.results[k0][k1][second]
+                    N += 1
+                
+                # Rename dictionary keys
+                image_keys_updated = list(self.results[k0][k1].keys())
+                
+                for k in image_keys_updated:
+                    if "\\" in k:
+                        k_n = k.replace("\\", "/")
+                        self.results[k0][k1][k_n] = self.results[k0][k1].pop(k)
+                        M += 1
+        print(
+            f"Resolved {N} duplicate dictionary entries.\n" +
+            f"Normalized {M} dictionary keys."
+            )
     
     def _get_image_dict(self, observation_id):
         '''
@@ -1095,11 +1373,14 @@ class Batchrequest():
                 
                 name = os.path.split(max(cpt_dirs, key = os.path.getmtime))[1]
         
+        current_out_dir = self.out_dir
+        
         with open(self.path_out(name, "log"), "rb") as f:
             br_cpt = pk.load(f)
         
         if int(br_cpt.version[0]) == 2:
             self.__dict__.update(br_cpt.__dict__)
+            self.out_dir = current_out_dir
         
         else:
             mssg = "Incompatible Batchrequest version {0} of loaded file."
@@ -1108,56 +1389,135 @@ class Batchrequest():
 
 #-----------------------------------------------------------------------------|
 # Run request
-BR = Batchrequest()
-
-if FROMCPT:
-    BR.load_checkpoint()
-    BR.run_batch()
-
-elif FLORINC is not None:
-    BR.load_checkpoint(file = FLORINC)
-    BR._insert_manual()
-
-elif REPEAT is not None:
-    REPEATMULTI = [r for r in REPEAT if r in MULTIIMG]
-    BR.load_checkpoint(file = LOADFILE)
-    BR.repeat(models_single = REPEAT,
-              models_multi = REPEATMULTI
-              )
-
-else:
-    BR.add_releves(releve_name_list = RELEVENAMES)
-    BR.run_batch()
-
-BR.save()
-
-# Export data as Excel sheet
-df = BR.to_df()
-
-## Add species names (using the Info Flora taxonomic backbone)
-SD = base.SpeciesDecoder("comeco_local")
-
-df["true_taxon_name"] = [SD.decode(tid) for tid in df["true_taxon_id"]]
-
-## Drop duplicates from dataframe
-df = df.drop_duplicates(subset = ["releve_name", "observation_id",
-                                    "true_taxon_id", "plant_organ",
-                                    "image_files", "cv_model"],
-                          keep = "last")
-
-## Save to Excel file
-if os.path.isfile(BR.path_out("Responses.xlsx")):
-    with pd.ExcelWriter(BR.path_out("Responses.xlsx"), mode = "a",
-                        if_sheet_exists = "replace") as writer:
-        df.to_excel(writer, sheet_name = BR.name, index = False)
+if __name__ == "__main__":
+    BR = Batchrequest()
     
-else:
-    df.to_excel(BR.path_out("Responses.xlsx"), sheet_name = BR.name,
-                index = False)
-
-# Shutdown system if shutdown flag was set
-if args.shutdown:
-    cmd = "shutdown /s /t 1" if platform.system() == "Windows" \
-        else "systemctl poweroff"
+    if REPEAT != []:
+        print(f"Loading BR file {LOADFILE}.")
+        BR.load_checkpoint(file = LOADFILE)
+        BR._cleanup_duplicates()
+        
+        # For old BR file versions: Get releve names
+        if BR.total_releve_names == []:
+            BR.total_releve_names = list(BR.results.keys())
+        
+        print(f"Repeating requests for the following API(s): {REPEAT}.")
+        REPEATMULTI = [r for r in REPEAT if r in MULTIIMG]
+        
+        if UPDATEFIXED:
+            BR.update_image_dicts()
+            BR._update_fixed_taxon_ids()
+            BR._update_fixed_plant_organs()
+        
+        BR.repeat(models_single = REPEAT,
+                  models_multi = REPEATMULTI
+                  )
     
-    os.system(cmd)
+    elif FROMCPT:
+        BR.load_checkpoint()
+        ## Changes in image META are only recognised after updating! (Else, BR
+        ## uses ._image_meta_static to update .pending.) Since the script might
+        ## have stopped encountering an error in the image data set, it is
+        ## advisable to update here. (Of course, issues with the image data
+        ## need to be resolved first.)
+        BR.update_image_dicts()
+        
+        if UPDATEFIXED:
+            print("Updating fixed taxon IDs and plant parts.")
+            BR._update_fixed_taxon_ids()
+            BR._update_fixed_plant_organs()
+        
+        else:
+            BR.run_batch()
+    
+    elif FLORINC is not None:
+        BR.load_checkpoint(file = FLORINC)
+        
+        if UPDATEFIXED:
+            BR._update_fixed_taxon_ids()
+            BR._update_fixed_plant_organs()
+        
+        BR._insert_manual()
+    
+    elif MANUALUPDATE is not None:
+        [BRFILE, RNME, OID, IMG, CVM, UPWHAT] = MANUALUPDATE
+        BR.load_checkpoint(file = BRFILE)
+        
+        if UPDATEFIXED:
+            BR._update_fixed_taxon_ids()
+            BR._update_fixed_plant_organs()
+        
+        what, value = UPWHAT.split("=")
+        if what == "new_true_id":
+            print(f"New true ID: {value}")
+            BR._insert_manual(
+                source = "prompt",
+                releve_name = RNME,
+                obs_id = OID,
+                image = IMG,
+                cv_model = CVM,
+                new_true_id = value
+                )
+        elif what == "new_response":
+            print("New value:")
+            print(value.split(";"))
+            
+            BR._insert_manual(
+                source = "prompt",
+                releve_name = RNME,
+                obs_id = OID,
+                image = IMG,
+                cv_model = CVM,
+                new_response = value.split(";")
+                )
+        else:
+            raise Exception("Invalid input parameter.")
+    
+    elif UPDATEFIXED and (LOADFILE is not None):
+        print("Try fix only\nUpdating fixed taxon IDs and plant parts.")
+        BR.load_checkpoint(file = LOADFILE)
+        BR._update_fixed_taxon_ids()
+        BR._update_fixed_plant_organs()
+    
+    else:
+        BR.add_releves(releve_name_list = RELEVENAMES)
+        BR.run_batch()
+    
+    BR.save()
+    
+    # Export data as Excel sheet
+    df = BR.to_df()
+    
+    ## Add species names (using the Info Flora taxonomic backbone)
+    SD = base.SpeciesDecoder("comeco_local")
+    
+    df["true_taxon_name"] = [SD.decode(tid) for tid in df["true_taxon_id"]]
+    
+    ## Drop duplicates from dataframe
+    df = df.drop_duplicates(
+        subset = [
+            "releve_name", "observation_id", "true_taxon_id", "plant_organ",
+            "image_files", "cv_model"
+                ], keep = "last"
+        )
+    
+    ## Save to Excel file
+    if os.path.isfile(BR.path_out("Responses.xlsx")):
+        with pd.ExcelWriter(BR.path_out("Responses.xlsx"), mode = "a",
+                            if_sheet_exists = "replace") as writer:
+            df.to_excel(writer, sheet_name = BR.name, index = False)
+        print(
+            "Wrote sheet to Excel table " + BR.path_out("Responses.xlsx") + "."
+            )
+    
+    else:
+        df.to_excel(BR.path_out("Responses.xlsx"), sheet_name = BR.name,
+                    index = False)
+        print("Created Excel table at " + BR.path_out("Responses.xlsx") + ".")
+    
+    # Shutdown system if shutdown flag was set
+    if args.shutdown:
+        cmd = "shutdown /s /t 1" if platform.system() == "Windows" \
+            else "systemctl poweroff"
+        
+        os.system(cmd)

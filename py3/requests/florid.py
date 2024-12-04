@@ -29,7 +29,7 @@ import requests
 # General settings/variables
 IMG_MAXSIZE = 369800
 
-LOCAL = True
+LOCAL = False
 FLORIDSERVER = "H:/florid_v001"
 SHOULDBERUNNING = False
 THREADS = []
@@ -118,6 +118,9 @@ def post_image(image_files,
     lat = base.dms_to_dec(lat) if isinstance(lat, tuple) else lat
     lon = base.dms_to_dec(lon) if isinstance(lon, tuple) else lon
     
+    if not isinstance(lat, float):
+        print("Warning: No valid coordinates found.")
+    
     date_time = base.get_creation_time(file) if date is None else date
     
     img = {
@@ -132,7 +135,7 @@ def post_image(image_files,
     }
     
     POSTURL = "http://127.0.0.1:8000/identify/images" if LOCAL else \
-        "https://florid.infoflora.ch/api/v1/openapi/identify/images"
+        "http://10.30.4.120:1337/identify/images"
     
     if LOCAL:
         if not SHOULDBERUNNING:
@@ -142,12 +145,38 @@ def post_image(image_files,
         response = requests.post(POSTURL, json = img)
     
     else:
-        response = post_image(file, coords = coords)
+        response = requests.post(POSTURL, json = img)
+    
+    # If encode/decode error occurs due to image being application/octet-stream
+    # use Info Flora url instead of local images
+    if response.status_code == 400:
+        print(
+            f"Got error 400 for files {files}." +
+            " Trying to avoid potential application/octet-stream issue."
+            )
+        
+        metadata = base.load_meta("N:/prj/COMECO/img/META.pickle")
+        obs_meta = metadata[int(os.path.basename(os.path.dirname(file)))]
+        f_locs = [os.path.basename(o) for o in obs_meta["file_locations"]]
+        
+        image_urls = []
+        for file in files:
+            image_index = f_locs.index(os.path.basename(file))
+            image_info = obs_meta["documents"][image_index]
+            url = image_info["file_url"]
+            image_urls.append(url)
+            print(f"Found url: {url}\n")
+        
+        img["images"] = image_urls
+        response = requests.post(POSTURL, json = img)
     
     return response.json()
 
 def species_ranking(response_json, n = 5):
-    species = response_json["combined"]["name"]
+    species = response_json["top_n"]["by_combined"]["name"]
+    
+    if species[0] is None:
+        species = response_json["top_n"]["by_image"]["name"]
     
     return species[:n]
 

@@ -52,8 +52,9 @@ class Encrypter:
         self.enc_dict = dict()
         
         for k in self.input.keys():
-            self.enc_dict[k] = self.FN.encrypt(self.input[k] \
-                                               .encode("ascii"))
+            self.enc_dict[k] = self.FN.encrypt(
+                self.input[k].encode("ascii")
+                )
     
     def save_secret(self, path):
         with open(path, "wb") as f:

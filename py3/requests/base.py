@@ -166,7 +166,13 @@ def add_coords(path, coordinates, replace = False):
     except:
         o = io.BytesIO()
         thumb_im = Image.open(path)
-        thumb_im.thumbnail((25, 25), Image.ANTIALIAS)
+        
+        try:
+            thumb_im.thumbnail((25, 25), Image.LANCZOS)
+        
+        except:
+            thumb_im.thumbnail((25, 25), Image.ANTIALIAS)
+        
         thumb_im.save(o, "jpeg")
         thumbnail = o.getvalue()
         
@@ -210,7 +216,13 @@ def add_coords(path, coordinates, replace = False):
         except:
             o = io.BytesIO()
             thumb_im = Image.open(path)
-            thumb_im.thumbnail((25, 25), Image.ANTIALIAS)
+            
+            try:
+                thumb_im.thumbnail((25, 25), Image.LANCZOS)
+            
+            except:
+                thumb_im.thumbnail((25, 25), Image.ANTIALIAS)
+            
             thumb_im.save(o, "jpeg")
             thumbnail = o.getvalue()
             
@@ -296,7 +308,13 @@ def add_creation_time(path, date_time, replace = False):
     except:
         o = io.BytesIO()
         thumb_im = Image.open(path)
-        thumb_im.thumbnail((25, 25), Image.ANTIALIAS)
+        
+        try:
+            thumb_im.thumbnail((25, 25), Image.LANCZOS)
+        
+        except:
+            thumb_im.thumbnail((25, 25), Image.ANTIALIAS)
+        
         thumb_im.save(o, "jpeg")
         thumbnail = o.getvalue()
         
@@ -323,7 +341,13 @@ def add_creation_time(path, date_time, replace = False):
     except:
         o = io.BytesIO()
         thumb_im = Image.open(path)
-        thumb_im.thumbnail((20, 20), Image.ANTIALIAS)
+        
+        try:
+            thumb_im.thumbnail((25, 25), Image.LANCZOS)
+        
+        except:
+            thumb_im.thumbnail((25, 25), Image.ANTIALIAS)
+        
         thumb_im.save(o, "jpeg")
         thumbnail = o.getvalue()
         

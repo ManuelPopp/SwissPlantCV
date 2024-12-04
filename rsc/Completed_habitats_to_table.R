@@ -1,19 +1,76 @@
-require("readxl")
-require("xlsx")
-require("dplyr")
-require("sf")
-require("cols4all")
-require("xtable")
+#!/usr/bin/env Rscript
+#>------------------------------------<
+##
+## Script name: Completed habitats to table
+##
+## Author: Manuel R. Popp
+## Email: manuel.popp@wsl.ch
+##
+## Date Created: 2023-09-04
+##
+## ---------------------------
+##
+## Descripton: Create table and kml file containing sampling location info
+## Notes: -
+##
+#>----------------------------------------------------------------------------<|
+#> Install/load packages
+packages <- c(
+    "rstudioapi", "dplyr", "readxl", "xlsx", "dplyr", "sf", "cols4all",
+    "xtable"
+)
 
-dir_fig <- "D:/switchdrive/PlantApp/pub/fig"
-dir_tab <- "D:/switchdrive/PlantApp/pub/tab"
-p_habitats_table <- "D:/switchdrive/PlantApp/dat/Habitats.xlsx"
+for (i in 1:NROW(packages)) {
+    if (
+        !require(packages[i], character.only = TRUE)
+    ) {
+        install.packages(
+            packages[i],
+            dependencies = TRUE
+        )
+        require(
+            packages[i],
+            character.only = TRUE
+        )
+    }
+}
+
+#>----------------------------------------------------------------------------<|
+#> Functions
+get_file_location <-  function(){
+    this_file <- commandArgs() %>% 
+        tibble::enframe(name = NULL) %>%
+        tidyr::separate(col = value,
+                        into = c("key", "value"), sep = "=", fill = "right") %>%
+        dplyr::filter(key == "--file") %>%
+        dplyr::pull(value)
+    
+    if (length(this_file) == 0)
+    {
+        this_file <- rstudioapi::getSourceEditorContext()$path
+    }
+    return(dirname(this_file))
+}
+
+#>----------------------------------------------------------------------------<|
+#> Settings
+dir_this_file <- get_file_location()
+
+dir_main <- dirname(dir_this_file)
+dir_dat <- file.path(dir_main, "dat")
+dir_fig <- file.path(dir_main, "pub", "fig")
+dir_tab <- file.path(dir_main, "pub", "tab")
+p_habitats_table <- file.path(dir_dat, "Habitats.xlsx")
+
+dir_dbx <- "C:/Users/poppman/Dropbox/Apps/Overleaf/SwissPlantCV"
 
 names_eng <- c(
   "Jura Mountains", "Central Plateau", "Northern Alps", "Western Alps",
   "Eastern Alps", "Southern Alps"
 )
 
+#>----------------------------------------------------------------------------<|
+#> Main
 # Get table of all habitats
 habitats <- as.data.frame(readxl::read_excel(p_habitats_table, sheet = 1))
 
@@ -61,8 +118,11 @@ habitats[which(habitats$name == "0"), 2] <- c(
   )
 
 # Get list of finished habitats
-kml_file <- "D:/switchdrive/PlantApp/spl/Completed_habitats.kml"
-biogeo_file <- "D:/switchdrive/PlantApp/gis/shp/BiogeographischeRegionen/N2020_Revision_BiogeoRegion.shp"
+kml_file <- file.path(dir_main, "spl", "Completed_habitats.kml")
+biogeo_file <- file.path(
+    dir_main, "gis", "shp", "BiogeographischeRegionen",
+    "N2020_Revision_BiogeoRegion.shp"
+    )
 
 completed <- sf::st_read(kml_file)
 biogeo <- sf::st_read(biogeo_file)
@@ -76,7 +136,9 @@ joined <- sf::st_join(completed_LV95, regions)
 # Add completed releves to habitat list
 for(region in unique(joined$RegionNumm)){
   habitats[, ncol(habitats) + 1] <- rep(0, nrow(habitats))
-  colnames(habitats)[ncol(habitats)] <- paste0("Region_Nr_", as.character(region))
+  colnames(habitats)[ncol(habitats)] <- paste0(
+    "Region_Nr_", as.character(region)
+    )
   }
 
 for(i in 1:nrow(completed)){
@@ -84,7 +146,9 @@ for(i in 1:nrow(completed)){
   region_id <- joined$RegionNumm[i]
   
   i <- which(habitats$ID == habitat_type)
-  j <- which(colnames(habitats) == paste0("Region_Nr_", as.character(region_id)))
+  j <- which(colnames(habitats) == paste0(
+    "Region_Nr_", as.character(region_id))
+    )
   habitats[i, j] <- habitats[i, j] + 1
 }
 
@@ -92,7 +156,7 @@ habitats$Sum <- rowSums(habitats[, c(3:ncol(habitats))])
 
 xlsx::write.xlsx(
   as.data.frame(habitats),
-  file = "D:/switchdrive/PlantApp/spl/Completed_habitats.xlsx",
+  file = file.path(dir_main, "spl", "Completed_habitats.xlsx"),
   sheetName = "Sheet_1"
   )
 
@@ -111,9 +175,11 @@ print(xtable(habitat_export, type = "latex",
 )
 
 # Sampling per region
-bioregions <- data.frame(Number = unique(regions$RegionNumm),
-                         Area = NA,
-                         N = NA)
+bioregions <- data.frame(
+    Number = unique(regions$RegionNumm),
+    Area = NA,
+    N = NA
+    )
 
 for(i in 1:nrow(bioregions)){
   num <- bioregions$Number[i]
@@ -139,21 +205,83 @@ print(xtable(export, type = "latex", digits = c(0, 0, 0, 0),#, 2),
       caption.placement = "top"
 )
 
-# Export map
-cols <- c4a("brewer.pastel1", length(unique(regions$RegionNumm)))
-cols1 <- adjustcolor(cols, alpha.f = 0.3)
-cols2 <- c4a("brewer.dark2", length(unique(substr(joined$Description, 1, 1))))
+file.copy(
+    file.path(dir_tab, "Sampling_summary.tex"),
+    file.path(dir_dbx, "tab", "Sampling_summary.tex"),
+    overwrite = TRUE
+    )
 
-pdf(file = file.path(dir_fig, "Sampling_locations_LV95.pdf"),
-    width = 4, height = 3)
-par(mar = c(1.5, 1.5, 0.1, 0.1), cex.axis = 0.75, mgp = c(3, 0.5, 0))
-plot(st_geometry(regions), main = NA, col = cols1[regions$RegionNumm],
-     axes = TRUE)
-plot(st_geometry(joined), col = cols2[
-  as.numeric(substr(joined$Description, 2, 2))
-  ],
-  pch = as.numeric(substr(joined$Description, 1, 1)),
-  lwd = 2,
-  add = TRUE, cex = 1
-     )
+# Export map
+main_regions <- regions %>%
+  group_by(RegionNumm) %>%
+  summarise(geometry = sf::st_union(geometry))
+
+outline <- sf::st_union(sf::st_geometry(regions))
+
+cols <- cols4all::c4a("brewer.pastel1", length(unique(main_regions$RegionNumm)))
+
+# I changed the colour palette for the other graphics, so I need to adjust it
+# here, too:
+safe_colorblind_palette <- c(
+  "#88CCEE", "#CC6677", "#DDCC77", "#117733", "#332288", "#AA4499", "#44AA99",
+  "#999933", "#882255", "#661100", "#6699CC", "#888888"
+)
+cols <- safe_colorblind_palette[1:length(unique(main_regions$RegionNumm))]
+cols1 <- adjustcolor(cols, alpha.f = 0.15)
+cols2 <- c4a("brewer.dark2", length(unique(substr(joined$Description, 1, 1))))
+cols2 <- safe_colorblind_palette
+col_habitats <- cols2[c(1, 5, 12, 3, 6, 4, 2)]
+pch_habitats <- c(0, 4, 3, 5, 1, 2, 6, 7)
+
+plot(
+    rep(1, 7) ~ seq(1:7), col = col_habitats, pch = pch_habitats,
+     xaxt = "n", cex = 1.2, lwd = 3
+    )
+axis(
+    1, at = seq(1:7),
+    labels = c(
+      "Water", "Wetlands", "Rocks", "Meadows", "Scrubs", "Forest", "Ruderal"
+      )
+    )
+
+# Get longitude and latitude axis tick labels (more useful to readers)
+
+
+plot_axes = FALSE
+if (plot_axes) {
+  pdf(file = file.path(dir_fig, "Sampling_locations_LV95.pdf"),
+      width = 4, height = 3)
+  par(mar = c(1.5, 1.5, 0.1, 0.1), cex.axis = 0.75, mgp = c(3, 0.5, 0))
+  plot(
+    sf::st_geometry(main_regions), main = NA,
+    col = cols1[main_regions$RegionNumm], lty = 3, lwd = 0.5,
+    axes = TRUE
+  )
+} else {
+  pdf(file = file.path(dir_fig, "Sampling_locations_LV95.pdf"),
+      width = 4, height = 2.8)
+  par(mar = c(0, 0, 0, 0), mgp = c(3, 0.5, 0))
+  plot(
+    sf::st_geometry(main_regions), main = NA,
+    col = cols1[main_regions$RegionNumm], lty = 3, lwd = 0.5,
+    axes = FALSE
+  )
+  box()
+}
+
+plot(sf::st_geometry(outline), add = TRUE, lty = 1, lwd = 1.5)
+plot(
+  st_geometry(joined), col = col_habitats[
+    as.numeric(substr(joined$Description, 1, 1))
+    ],
+  pch = pch_habitats[as.numeric(substr(joined$Description, 1, 1))],
+  lwd = 1.5,
+  add = TRUE, cex = 1.2
+  )
 dev.off()
+
+file.copy(
+    file.path(dir_fig, "Sampling_locations_LV95.pdf"),
+    file.path(dir_dbx, "fig", "Sampling_locations_LV95.pdf"),
+    overwrite = TRUE
+)

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 """
 Created on Wed Aug 16 10:30:37 2023
@@ -12,17 +12,35 @@ __license__ = "Unlicense"
 __version__ = "1.0.1"
 __maintainer__ = "Manuel R. Popp"
 __email__ = "requests@cdpopp.de"
-__status__ = "Development"
+__status__ = "Production"
 
 #-----------------------------------------------------------------------------|
 # Imports
-import os, time, easygui, subprocess
+import os, time, easygui, subprocess, argparse
 import pandas as pd
 import pickle as pk
 import pykew.powo as powo
 from datetime import datetime
 from pykew.powo_terms import Name as NamePOWO
 from alive_progress import alive_bar as pb
+
+#-----------------------------------------------------------------------------|
+# Arguments and settings
+def parseArguments():
+    parser = argparse.ArgumentParser()
+    
+    # Use as: py taxonomy.py -addsyn "Taxon name" "Synonym name"
+    parser.add_argument("-addsyn", "--add_synonym",
+                        help = "Add a synonym to the data base.",
+                        type = str, nargs = 2, default = False)
+    
+    args = parser.parse_args()
+    
+    return args
+
+args = parseArguments()
+
+ADDSYNONYM = args.add_synonym
 
 #-----------------------------------------------------------------------------|
 # Settings
@@ -32,6 +50,9 @@ dir_main = os.path.dirname(dir_py)
 
 INFOFLORATAXBB = "Checklist_2017_simple_version_20230503.xlsx"
 TAXBB = os.path.join(dir_main, "dat", INFOFLORATAXBB)
+SYNDBFILE = os.path.join(dir_main, "dat", "Synonyms.db")
+RESPONSES = os.path.join(dir_main, "out", "Responses.xlsx")
+OUTPUT = os.path.join(dir_main, "out", "Final.xlsx")
 
 taxonomy_bb = pd.read_excel(TAXBB, sheet_name = "Checklist 2017",
                             skiprows = 5, header = 0)
@@ -153,9 +174,9 @@ class TaxonomyTree():
     def parent(self, taxon):
         parent = self.backbone[self.backbone["taxon_name"] == taxon][
             "within_taxon_name"
-            ]
+            ].to_list()
         
-        return parent.to_list()[0]
+        return parent[0] if len(parent) > 0 else None
     
     def children(self, taxon):
         rows = self.backbone[self.backbone["within_taxon_name"] == taxon]
@@ -171,6 +192,18 @@ class SynonymDatabase():
         self.database = {}
     
     def add_taxon(self, name):
+        '''
+        Add a taxon to the data base and search for synonyms.
+        
+        Parameters
+        ----------
+        name : str
+            Taxon name.
+        
+        Returns
+        -------
+        None.
+        '''
         original_query_name = name
         query = self._create_query(name)
         
@@ -185,10 +218,11 @@ class SynonymDatabase():
                 print("Sending API request for {0}".format(name))
                 powo_results = powo.search(query)
                 
-                accepted_taxa = [(r["name"], r["fqId"]) if
-                                 r["accepted"] else (r["synonymOf"]["name"],
-                                       r["synonymOf"]["fqId"]
-                                       ) for r in powo_results]
+                accepted_taxa = []
+                
+                for r in powo_results:
+                    if r["accepted"]:
+                        accepted_taxa.append((r["name"], r["fqId"]))
                 
                 break
             
@@ -241,13 +275,22 @@ class SynonymDatabase():
                     query = self._create_query(name, level = 1)
                 
                 else:
-                    time.sleep(5)
+                    time.sleep(1)
         
-        accepted_taxon = accepted_taxa[0]
+        try:
+            accepted_taxon = accepted_taxa[0]
+            
+            find_synonyms = True
+        
+        except:
+            ## If it didn't work, just skip this one. Missing entries will
+            ## be manually added if required later on in the analyses.
+            find_synonyms = False
+            synonyms = []
         
         failed_attempts = 0
         
-        while True:
+        while find_synonyms:
             try:
                 mssg = "Sending request for accepted taxon {0}."
                 print(mssg.format(" ".join(accepted_taxon)))
@@ -257,16 +300,40 @@ class SynonymDatabase():
                 if "synonyms" in response.keys():
                     synonyms = response["synonyms"]
                     synonyms = [s["name"] + " " + s["author"] for s in
-                         synonyms]
+                         synonyms if \
+                             s["taxonomicStatus"] == "Homotypic_Synonym"]
                     
+                    '''
+                    # Dropping the endings creates too many false matches.
+                    # Only iNaturalist is not using author names and
+                    # iNaturalist uses the POWO database, so the accepted
+                    # taxon name without author should be the name iNaturalist
+                    # associates with the taxon.
                     without_author = [
                         " ".join(s.split(" ")[:2]) for s in synonyms
                         ]
                     
                     synonyms.extend(without_author)
+                    '''
                 
                 else:
-                    synonyms = [accepted_taxon[0], " ".join(accepted_taxon)]
+                    synonyms = []
+                
+                try:
+                    accepted_names = [
+                        " ".join([response["name"], response["authors"]]),
+                        " ".join(# Just to make sure subspecies are also covd.
+                            response["name"].split(" ")[:-1] +
+                            [response["authors"] + " subsp."] +
+                            response["name"].split(" ")[-1:]
+                            ),
+                        accepted_taxon[0]
+                        ]
+                
+                except:
+                    accepted_names = [accepted_taxon[0]]
+                
+                synonyms.extend(accepted_names)
                 
                 break
             
@@ -285,7 +352,7 @@ class SynonymDatabase():
                 
                 print("Request failed.")
                 failed_attempts += 1
-                time.sleep(2)
+                time.sleep(0.5)
         
         ## Make sure current query name and original query name are allwed as
         ## synonyms
@@ -297,17 +364,70 @@ class SynonymDatabase():
             original_query_name.split(" ")[:2]
             )])
         
-        self.database[original_query_name] = {"synonyms" : synonyms
+        self.database[original_query_name] = {"synonyms" : list(set(synonyms))
             }
     
     def remove_taxon(self, name):
+        '''
+        Removes a taxon from the data base.
+        
+        Parameters
+        ----------
+        name : str
+            Taxon name.
+        
+        Returns
+        -------
+        None.
+        '''
         try:
             del self.database[name]
         
         except:
             print("Taxon not found in database.")
     
+    def add_synonyms(self, taxon, synonyms):
+        '''
+        Adds a synonym or a list of synonyms to an existing data base entry.
+        If no matching entry exists, it will be created.
+        
+        Parameters
+        ----------
+        taxon : str
+            Taxon name.
+        synonyms : str or list of str
+            Synonyms to the taxon name.
+        
+        Returns
+        -------
+        None.
+        '''
+        if taxon in self.database.keys():
+            if isinstance(synonyms, list):
+                self.database[taxon]["synonyms"].extend(synonyms)
+            
+            else:
+                self.database[taxon]["synonyms"].append(synonyms)
+        else:
+            if isinstance(synonyms, list):
+                self.database[taxon] = {"synonyms" : synonyms}
+            
+            else:
+                self.database[taxon] = {"synonyms" : [synonyms]}
+    
     def add_list(self, taxon_list):
+        '''
+        Wrapper to add a list of taxa.
+        
+        Parameters
+        ----------
+        taxon_list : list
+            List of taxon names.
+        
+        Returns
+        -------
+        None.
+        '''
         taxon_list = list(set(taxon_list))
         taxon_list.sort()
         
@@ -317,16 +437,49 @@ class SynonymDatabase():
                     self.add_taxon(taxon)
                 
                 bar()
-                time.sleep(1)
+                time.sleep(0.5)
         
     def get_sublevel_taxa(self, name, backbone = taxonomy_bb):
+        '''
+        Search taxonomy backbone for all lower taxa.
+        
+        Parameters
+        ----------
+        name : str
+            Taxon name.
+        backbone : pandas.DataFrame, optional
+            Taxonomy backbone. The default is taxonomy_bb.
+        
+        Returns
+        -------
+        SubtaxonIterator
+            Subtaxon iterator object.
+        '''
         iterator = SubtaxonIterator(name, backbone)
         
         return iterator.get()
     
     def is_synonym(self, taxon, true_taxon):
+        '''
+        Check whether a taxon is a synonym of true_taxon.
         
-        return taxon in self.database[true_taxon]["synonyms"]
+        Parameters
+        ----------
+        taxon : str
+            Taxon name.
+        true_taxon : str
+            Taxon to match with.
+        
+        Returns
+        -------
+        bool
+            Match or no match.
+        '''
+        if taxon is None or true_taxon is None:
+            return False
+        
+        else:
+            return taxon in self.database[true_taxon]["synonyms"]
     
     def is_lower(self, taxon, true_taxon):
         sublevel_synonyms = self.get_sublevel_taxa(true_taxon)
@@ -334,7 +487,7 @@ class SynonymDatabase():
         return taxon in sublevel_synonyms
     
     def _create_query(self, name, level = 0):
-        name = name.replace("nothosubsp", "subsp")# Some issue with Pulsatilla alpina
+        name = name.replace("nothosubsp", "subsp")# Some issue with Pulsatilla alpina. Not in the data set. Simply replaced to avoid issues.
         
         if "agg." in name:
             print("Cannot query for aggregates.")
@@ -421,14 +574,14 @@ class Matcher():
         
         if synonym_db == "create_new":
             self.Synonyms = SynonymDatabase()
+            self.Synonyms.add_list(backbone["taxon_name"].to_list())
         
         else:
             with open(synonym_db, "rb") as f:
                 self.Synonyms = pk.load(f)
-        
-        self.Synonyms.add_list(backbone["taxon_name"].to_list())
     
     def match(self, taxon, true_taxon):
+        #print(f"Matching {taxon} and true taxon {true_taxon}.")
         ## Replace potentially "wrong" abbreviations
         taxon = taxon.replace("agg.", "aggr.")
         
@@ -456,15 +609,65 @@ class Matcher():
                 matching_lvl = 1
             
             else:
-                matching_lvl = None
+                matching_lvl = 10 if \
+                    taxon.split(" ")[0] == true_taxon.split(" ")[0] else None
         
         return matching_lvl
 
 #-----------------------------------------------------------------------------|
 # Match taxa
-taxonomy_bb = taxonomy_bb.head(40)#################### For testing
+if ADDSYNONYM:
+    print("Adding synonym {0} for taxon {1}.".format(
+        ADDSYNONYM[1], ADDSYNONYM[0])
+        )
+    
+    with open(SYNDBFILE, "rb") as f:
+        Synonyms = pk.load(f)
 
-M = Matcher(taxonomy_bb)
-M.Synonyms.save(os.path.join(dir_main, "dat", "Synonyms.db"))
+    Synonyms.add_synonyms(ADDSYNONYM[0], ADDSYNONYM[1])
+    Synonyms.save(SYNDBFILE)
 
-M.match("Achillea millefolium aggr.", "Achillea millefolium L.")
+else:
+    print("Updating synonyms and adding to API responses...")
+    
+    if not os.path.isfile(SYNDBFILE):
+        ## Initial run (create new synonym database)
+        M = Matcher(taxonomy_bb)
+        M.Synonyms.save(SYNDBFILE)
+    
+    else:
+        ## Any subsequent run (load pre-existing synonym database)
+        M = Matcher(taxonomy_bb, synonym_db = SYNDBFILE)
+    
+    ### Some names have been abbreviated. Here, I simply add the same synonyms
+    ### for the abbreviated name, since those names are on subspecies level
+    ### already and hardly confused when truncated after 47 letters.
+    key_list = list(M.Synonyms.database.keys())
+    
+    for key in key_list:
+        if len(key) > 47:
+            M.Synonyms.database[key[:47] + "..."] = M.Synonyms.database[key]
+    
+    sheets_dict = pd.read_excel(RESPONSES, sheet_name = None, index_col = None)
+    print("Found Excel file sheets: {}".format(sheets_dict.keys()))
+    
+    df = pd.concat(sheets_dict.values())
+    
+    for rank in ["first", "second", "third", "forth", "fifth"]:
+        try:
+            df["match_" + rank] = [M.match(
+                taxon, true_taxon
+                ) for taxon, true_taxon in zip(
+                    map(str, df[rank].values),
+                    map(str, df["true_taxon_name"].values)
+                    )]
+        
+        except KeyError as e:
+            lines = df[df["true_taxon_name"] == e.args[0]]
+            mssg = f"Error in {lines}. Cannot match taxon."
+            raise KeyError(mssg)
+    
+    df.to_excel(OUTPUT, index = False, header = True, na_rep = 100)
+
+print("Finished.")
+#time.sleep(1)

@@ -18,6 +18,9 @@ __status__ = "Development"
 # Imports
 import os, re, shutil, json
 o = "D:/switchdrive/PlantApp/out/FloraIncognita"
+dir_py = os.path.dirname(os.path.dirname(__file__))
+dir_main = os.path.dirname(dir_py)
+o = os.path.join(dir_main, "out", "FloraIncognita")
 
 #-----------------------------------------------------------------------------|
 # Settings
@@ -46,7 +49,7 @@ def post_image(files, batch, out_path = STDOUT):
     '''
     img_files = files if isinstance(files, list) else [files]
     
-    out_dir = STDOUT if batch is None else os.path.join(STDOUT, batch)
+    out_dir = STDOUT if batch is None else os.path.join(out_path, batch)
     
     if not os.path.exists(out_dir):
         os.makedirs(out_dir, exist_ok = True)
@@ -171,9 +174,30 @@ def insert(batchrequest_obj):
         matching_keys = [k for k in keys if image in k]
         
         if len(matching_keys) != 1:
-            mssg = "List of matching images has length {0} for image {1}."
+            mssg = "List of matching images has length {0} for image {1}" + \
+                " of observation {2}."
             
-            raise Exception(mssg.format(len(matching_keys), image))
+            if len(matching_keys) == 2:
+                l0 = len(
+                    batchrequest_obj.results[releve_name][
+                        int(obs_id)][matching_keys[0]].keys()
+                    )
+                l1 = len(
+                    batchrequest_obj.results[releve_name][
+                        int(obs_id)][matching_keys[1]].keys()
+                    )
+                
+                Warning("Trying to resolve duplicate keys...")
+                if l0 > l1:
+                    matching_key = matching_keys[0]
+                    del batchrequest_obj.results[releve_name][
+                        int(obs_id)][matching_keys[1]]
+                else:
+                    matching_key = matching_keys[1]
+                    del batchrequest_obj.results[releve_name][
+                        int(obs_id)][matching_keys[0]]
+            else:    
+                raise Exception(mssg.format(len(matching_keys), image, obs_id))
         
         else:
             matching_key = matching_keys[0]

@@ -423,7 +423,7 @@ class Observations():
             offset += max_return
             time.sleep(0.5)
     
-    def get_releves(self):
+    def get_releves(self, releve_types = [922, 923]):
         '''
         Output releve data.
 
@@ -449,8 +449,12 @@ class Observations():
         
         releve_data = []
         
+        if not isinstance(releve_types, list):
+            releve_types = [releve_types]
+        
         for observation in self.observations.values():
-            if observation["releve_type"] == 923:
+            if (observation["releve_type"] in releve_types) \
+                or (releve_types == ["all"]):
                 if pd.isna(observation["releve_id"]):
                     
                     mssg = "Releve ID missing from observation {0}."
@@ -462,7 +466,7 @@ class Observations():
                      "date" : observation["date"],
                      "location" : (observation["y"], observation["x"]),
                      "habitat_id" : int(observation["habitat_id"]) if \
-                         observation["habitat_id"] is not None else None
+                         not pd.isna(observation["habitat_id"]) else None
                      }
                     )
         
@@ -582,7 +586,7 @@ class Observations():
                     
                     img_types = ["Unknown"] * len(url_list)
                 
-                if len(url_list) > 0:
+                if len(url_list) > 0 and not os.path.exists(current_dir):
                     os.makedirs(current_dir, exist_ok = True)
                 
                 else:

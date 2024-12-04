@@ -97,13 +97,17 @@ print("Updating completed releve list...")
 my_obs = Observations()
 my_obs.get_observations([93662], [None])
 
-releves = my_obs.get_releves()
+releves = my_obs.get_releves(releve_types = [922, 923])
 
 OUTTBL = os.path.join(dir_main, "spl", "Completed_habitats.csv")
 OUTKML = os.path.join(dir_main, "spl", "Completed_habitats.kml")
+OUTALL = os.path.join(dir_main, "spl", "Releve_info.csv")
 
 # Write output to table
-releves.to_csv(OUTTBL, index = False)
+releves[releves["releve_type"] == 923].to_csv(OUTTBL, index = False)
 
 # Write output to KML
-releves.to_kml(OUTKML)
+releves[releves["releve_type"] == 923].to_kml(OUTKML)
+
+# Write complete releve information
+releves.to_csv(OUTALL, index = False)

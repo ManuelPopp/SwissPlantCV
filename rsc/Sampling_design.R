@@ -48,14 +48,18 @@ cols <- c(
 )
 
 ## Colour scheme for "Formationen"/Habitat areas (highest level)
-class_cols <- c("blue", "khaki1", "cyan", "chartreuse",
-                "chartreuse4", "darkgreen", "darkgrey", "brown")
+class_cols <- c(
+  "blue", "khaki1", "cyan", "chartreuse", "chartreuse4", "darkgreen",
+  "darkgrey", "brown"
+  )
 
 ## Swiss Grid (CH1903 / LV03 -- Swiss CH1903 / LV03) PROJ.4
-EPSG21781 <- paste("+proj=somerc +lat_0=46.9524055555556",
-                   "+lon_0=7.43958333333333 +k_0=1 +x_0=600000 +y_0=200000",
-                   "+ellps=bessel +towgs84=674.374,15.056,405.346,0,0,0,0",
-                   "+units=m +no_defs +type=crs")
+EPSG21781 <- paste(
+  "+proj=somerc +lat_0=46.9524055555556",
+  "+lon_0=7.43958333333333 +k_0=1 +x_0=600000 +y_0=200000",
+  "+ellps=bessel +towgs84=674.374,15.056,405.346,0,0,0,0",
+  "+units=m +no_defs +type=crs"
+  )
 
 #>----------------------------------------------------------------------------<?
 #> Import functions
@@ -70,24 +74,29 @@ habitats <- readxl::read_excel(dir_habitats, sheet = 1, col_names = TRUE)
 habitats$Habitat_Sci[habitats$Habitat_Sci == "0"] <- NA
 
 ## Load biogeographic regions shapefile
-dir_bio_reg = file.path(dir_dat, "BioGeoRegionen", "BiogeographischeRegionen",
-                        "N2020_Revision_BiogeoRegion.shp")
+dir_bio_reg = file.path(
+  dir_dat, "BioGeoRegionen", "BiogeographischeRegionen",
+  "N2020_Revision_BiogeoRegion.shp"
+  )
 
 bio_reg <- sf::st_read(dir_bio_reg)
 
 bio_reg_agg <- bio_reg %>%
   group_by(RegionNumm) %>%
-  summarise(geometry = st_union(geometry),
-            Shape_Area = sum(Shape_Area),
-            Region = min(RegionNumm),
-            DeName = unique(DERegionNa))
+  summarise(
+    geometry = st_union(geometry),
+    Shape_Area = sum(Shape_Area),
+    Region = min(RegionNumm),
+    DeName = unique(DERegionNa)
+    )
 
 ## Load habitat observations table
 dir_habitat_obs <- file.path(dir_dat, "Observed_habitats_Apr2023.csv")
 
 habitat_obs_table <- read.csv(dir_habitat_obs, encoding = "UTF-8")
-habitat_obs <- sf::st_as_sf(habitat_obs_table, coords = c("x", "y"),
-                            crs = EPSG21781)
+habitat_obs <- sf::st_as_sf(
+  habitat_obs_table, coords = c("x", "y"), crs = EPSG21781
+  )
 
 ## Transform sf objects to a common coordinate reference system
 habitat_obs <- sf::st_transform(habitat_obs, crs = st_crs(bio_reg_agg))
