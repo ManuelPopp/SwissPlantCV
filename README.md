@@ -11,7 +11,7 @@ This repository comprises various subdirectories
 ```
 📂 SwissPlantCV/
 ├── 📂 bat/
-│   └── ... (Various files used to run scripts with pre-defined input parameters.)
+│   └── *.* (Various files used to run scripts with pre-defined input parameters.)
 ├── 📂 dat/
 │   ├── 📂 BioGeoRegionen/
 │   │   ├── 📂 BiogeographischeRegionen/
