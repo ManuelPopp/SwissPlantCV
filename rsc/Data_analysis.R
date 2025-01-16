@@ -18,20 +18,20 @@
 rm(list = ls())
 import <- function(...) {
   #' Import R packages. Install them if necessary.
-  #' 
+  #'
   #' @param ... any argument that can be passed to install.packages.
   #' @details The function installs only packages that are missing. Packages
   #' are loaded.
   #' @examples
   #' # Load packages
   #' import("dplyr", "MASS", "terra", dependencies = TRUE)
-  #' 
+  #'
   #' @seealso \code{\link[base]{install.packages}}
   #' @export
   args <- list(...)
-  packages = args[names(args) == ""]
-  kwargs = args[names(args) != ""]
-  
+  packages <- args[names(args) == ""]
+  kwargs <- args[names(args) != ""]
+
   for (package in packages) {
     if (!require(package, character.only = TRUE)) {
       do.call(install.packages, c(list(package), kwargs))
@@ -45,7 +45,7 @@ import(
   "ggbreak", "stringr", "gridExtra", "terra", "multcomp", "emmeans", "MASS",
   "reshape2", "lme4", "sjPlot", "grDevices", "pbkrtest", "afex", "grid",
   dependencies = TRUE
-  )#, "xlsx")
+) # , "xlsx")
 
 if (Sys.info()[1] == "Linux") {
   dir_dbx <- "/home/manuel/Dropbox"
@@ -55,16 +55,17 @@ if (Sys.info()[1] == "Linux") {
 
 #>----------------------------------------------------------------------------<|
 #> Functions
-get_file_location <-  function(){
-  this_file <- commandArgs() %>% 
+get_file_location <- function() {
+  this_file <- commandArgs() %>%
     tibble::enframe(name = NULL) %>%
-    tidyr::separate(col = value,
-                    into = c("key", "value"), sep = "=", fill = "right") %>%
+    tidyr::separate(
+      col = value,
+      into = c("key", "value"), sep = "=", fill = "right"
+    ) %>%
     dplyr::filter(key == "--file") %>%
     dplyr::pull(value)
-  
-  if (length(this_file) == 0)
-  {
+
+  if (length(this_file) == 0) {
     this_file <- rstudioapi::getSourceEditorContext()$path
   }
   return(dirname(this_file))
@@ -79,8 +80,7 @@ set_var <- function(
       dir_dbx,
       "Apps/Overleaf/SwissPlantCV/var",
       "variables.tex"
-      )
-    ) {
+    )) {
   if (dir.exists(dirname(dirname(file)))) {
     dir.create(dirname(file), showWarnings = FALSE)
   } else {
@@ -89,31 +89,31 @@ set_var <- function(
         "Directory",
         dirname(dirname(file)),
         "not found. Cannot write variables."
-        )
       )
+    )
     return()
   }
-  
+
   if (get("variable_text_renew")) {
     append <- FALSE
     variable_text_renew <<- FALSE
   } else {
     append <- TRUE
   }
-  
+
   # Remove existing definitions of the variable if there are any
   if (file.exists(file)) {
     lines <- readLines(file)
     filtered_lines <- lines[
       !grepl(paste0("{\\", name, "}"), lines, fixed = TRUE)
-      ]
+    ]
     writeLines(filtered_lines, file)
   }
-  
+
   cat(
     sprintf(paste0("\\newcommand{\\", name, "}{%.", digits, "f}\n"), value),
     file = file, append = append
-    )
+  )
 }
 
 # Simplify p-values from a vector or matrix
@@ -125,7 +125,7 @@ reduce_p <- function(x) {
   char_vals[which(x < 1e-10)] <- "\\llap{$<$}\\num{1e-10}"
   names(char_vals) <- colnames(x)
   dim(char_vals) <- dim(x)
-  
+
   return(char_vals)
 }
 
@@ -133,7 +133,7 @@ signif_digits <- function(x, n = 3) {
   f <- function(value, nd = n) {
     char_val <- as.character(signif(value, nd))
     nc <- length(gregexpr("[[:digit:]]", char_val)[[1]])
-    
+
     if (nc < n) {
       if (grepl(".", char_val, fixed = TRUE)) {
         cpse <- ""
@@ -141,16 +141,17 @@ signif_digits <- function(x, n = 3) {
         cpse <- "."
       }
       char_val <- paste(
-        char_val, paste0(rep("0", n - nc), collapse = ""), sep = cpse
-        )
+        char_val, paste0(rep("0", n - nc), collapse = ""),
+        sep = cpse
+      )
     }
-    
+
     return(char_val)
   }
-  
+
   out <- unlist(sapply(X = x, FUN = f))
   dim(out) <- dim(x)
-  
+
   return(out)
 }
 
@@ -190,30 +191,34 @@ dir.create(dir_etc, recursive = TRUE, showWarnings = FALSE)
 safe_colorblind_palette <- c(
   "#88CCEE", "#CC6677", "#DDCC77", "#117733", "#332288", "#AA4499", "#44AA99",
   "#999933", "#882255", "#661100", "#6699CC", "#888888"
-  )
+)
 
-options(ggplot2.discrete.colour = safe_colorblind_palette,
-        ggplot2.discrete.fill = safe_colorblind_palette
-        )
+options(
+  ggplot2.discrete.colour = safe_colorblind_palette,
+  ggplot2.discrete.fill = safe_colorblind_palette
+)
 
-#theme_set(theme_bw())
+# theme_set(theme_bw())
 
 # Set whether analyses should be conducted on species level (subspecies
 # determined in the field will be evaluated as if determined to species level
 # only)
-SPECIESLVL = TRUE
+SPECIESLVL <- TRUE
 
 #>----------------------------------------------------------------------------<|
 #> Load data
 # Load API response data
-tryCatch({
-  # Try to read the data using the xlsx package (only works if installed, caused
-  # issues with some OS and R versions...)
-  rsp <<- xlsx::read.xlsx(file.path(dir_out, "Final.xlsx"), sheetIndex = 1)
-}, error = function(e) {
-  # Read the data using the readxl package if the xlsx package failed
-  rsp <<- readxl::read_excel(file.path(dir_out, "Final.xlsx"))
-})
+tryCatch(
+  {
+    # Try to read the data using the xlsx package (only works if installed, caused
+    # issues with some OS and R versions...)
+    rsp <<- xlsx::read.xlsx(file.path(dir_out, "Final.xlsx"), sheetIndex = 1)
+  },
+  error = function(e) {
+    # Read the data using the readxl package if the xlsx package failed
+    rsp <<- readxl::read_excel(file.path(dir_out, "Final.xlsx"))
+  }
+)
 
 head(rsp)
 
@@ -235,14 +240,14 @@ sampling_locations <- terra::vect(
   sampling_coordinates,
   geom = c("lon", "lat"),
   crs = "+proj=longlat +datum=WGS84"
-  )
+)
 
 fbiogeo <- file.path(
   dir_dat,
   "BioGeoRegionen",
   "BiogeographischeRegionen",
   "N2020_Revision_BiogeoRegion.shp"
-  )
+)
 
 biogeo <- terra::vect(fbiogeo)
 
@@ -254,78 +259,79 @@ rsp$biogeo_region <- int$DERegionNa
 
 #>----------------------------------------------------------------------------<|
 #> Manual taxon corrections and taxonomy reconciliation
-name_short <- function(x){
-    if (typeof(x) == "list") {
-        x <- x[[1]]
-    }
-    
-    name <- paste(unlist(strsplit(x, split = " "))[c(1, 2)], collapse = " ")
-    return(name)
+name_short <- function(x) {
+  if (typeof(x) == "list") {
+    x <- x[[1]]
+  }
+
+  name <- paste(unlist(strsplit(x, split = " "))[c(1, 2)], collapse = " ")
+  return(name)
 }
 
 ## Remove uncertain IDs
 remove_taxa <- c("Epipactis rhodanensis Gévaudan & Robatsch")
-rsp <- rsp[which(!rsp$true_taxon_id %in% remove_taxa),]
+rsp <- rsp[which(!rsp$true_taxon_id %in% remove_taxa), ]
 
 # Replace backslashes in image file paths
 rsp$image_files <- gsub(
-  "[^0-9A-Za-z:;._]", "/", rsp$image_files, ignore.case = TRUE
-    )
+  "[^0-9A-Za-z:;._]", "/", rsp$image_files,
+  ignore.case = TRUE
+)
 
 ## Accept different taxonomic systems by resolving synonyms/aggregates not
 ## covered by the automatic synonym detection (taxonomy,py)
 source(file.path(dir_main, "rsc", "taxonomy_match_manual.R"))
 
 if (length(taxonomy_mismatches) != length(alternative_names) |
-    length(taxonomy_mismatches) != length(alternative_aggs)) {
+  length(taxonomy_mismatches) != length(alternative_aggs)) {
   stop("Taxonomy reconciliation vectors are of different lengths. Check!")
 }
 
 columns_names <- which(
   names(rsp) %in% c("first", "second", "third", "forth", "fifth")
-  )
+)
 
 columns_match <- which(
   names(rsp) %in% c(
     "match_first", "match_second", "match_third", "match_forth", "match_fifth"
-    )
+  )
 )
 
 if (TRUE) {
   for (line in 1:nrow(rsp)) {
     fullname <- rsp$true_taxon_name[line]
     name <- name_short(rsp$true_taxon_name[line])
-    
+
     # Check whether there are known mismatches between taxonomic systems
     if (
-        name %in% taxonomy_mismatches |
+      name %in% taxonomy_mismatches |
         fullname %in% taxonomy_mismatches |
         name %in% apply(FUN = name_short, MARGIN = 2, rsp[line, columns_names])
-        ) {
+    ) {
       indices <- which(taxonomy_mismatches == fullname)
-      
+
       if (length(indices) == 0) {
         indices <- which(taxonomy_mismatches == name)
       }
-      
+
       for (c in 1:length(columns_names)) {
         result <- rsp[line, columns_names[c]][[1]]
-        
+
         # Check whether the suggested name is a "synonym" according to an alter-
         # native taxonomic system
         if (result %in% alternative_names[indices]) {
           rsp[line, columns_match[c]] <- 0
-          
+
           # Check whether the suggested name is grouped in an aggregate
           # following some system
-          } else if (result %in% alternative_aggs[indices]) {
-            rsp[line, columns_match[c]] <- 1
-            } else if (
-              name_short(result) == name & grepl(glob2rx("* agg*."), result)
-              ) {
-              rsp[line, columns_match[c]] <- 1
-            }
+        } else if (result %in% alternative_aggs[indices]) {
+          rsp[line, columns_match[c]] <- 1
+        } else if (
+          name_short(result) == name & grepl(glob2rx("* agg*."), result)
+        ) {
+          rsp[line, columns_match[c]] <- 1
         }
+      }
     }
   }
 }
@@ -335,14 +341,14 @@ row_indices <- which(grepl(glob2rx("* sub*."), rsp$true_taxon_name))
 
 for (line in row_indices) {
   sname <- name_short(rsp$true_taxon_name[line])
-  
+
   for (c in 1:length(columns_names)) {
     result <- rsp[line, columns_names[c]][[1]]
     if (startsWith(result, sname)) {
       if (grepl(glob2rx("* agg*."), result)) {
         if (SPECIESLVL) {
           rsp[line, columns_match[c]] <- 1
-        }else{
+        } else {
           rsp[line, columns_match[c]] <- 2
         }
       } else if (grepl(glob2rx("* sub*."), result)) {
@@ -352,8 +358,8 @@ for (line in row_indices) {
               "Check subspecies: True =",
               rsp$true_taxon_name[line],
               "Predicted =", result
-              )
             )
+          )
         }
       } else {
         if (SPECIESLVL) {
@@ -374,8 +380,8 @@ if (SPECIESLVL) {
       which(
         rsp[, columns_match[c]] == -1 &
           grepl(glob2rx("* sub*."), rsp[[columns_names[c]]])
-        ), columns_match[c]
-      ] <- 0
+      ), columns_match[c]
+    ] <- 0
   }
 }
 
@@ -400,11 +406,11 @@ if (SPECIESLVL) {
 # Load taxonomic backbone
 tbb <- read.csv(
   file.path(dir_dat, "Taxonomic_backbone_wHier_2022.csv"),
-  sep = ",", header = TRUE
-  ) %>%
+  sep = ",", header = TRUE, skip = 1
+) %>%
   dplyr::select(
     ID, Species_level_ID, Name, Genus, Family, Order, Class, Phylum, COMECO_ID
-    )
+  )
 
 head(tbb)
 
@@ -413,17 +419,17 @@ df <- dplyr::left_join(
   x = rsp,
   y = tbb,
   by = dplyr::join_by(true_taxon_id == ID)
-  )
+)
 
 cv_model_names <- c(
   "Flora Incognita", "FlorID", "FlorID vision", "iNaturalist", "Pl@ntNet"
-  )
+)
 
 df$cv_model_name <- cv_model_names[
   match(df$cv_model, c(
     "floraincognita", "florid", "florvision", "inaturalist", "plantnet"
-    ))
-  ]
+  ))
+]
 
 #-------------------------------------------------------------------------------
 
@@ -437,7 +443,7 @@ habitat_list <- c(
   "Forests",
   "Ruderal sites",
   "Plantations, fields and crops"
-  )
+)
 
 df$habitat_main <- habitat_list[as.numeric(substr(df$habitat, 1, 1))]
 
@@ -462,9 +468,9 @@ df$growth_form[
       "Thurniaceae",
       "Typhaceae",
       "Xyridaceae"
-      )
     )
-  ] <- "Graminoid"
+  )
+] <- "Graminoid"
 
 df$growth_form[
   which(
@@ -532,23 +538,14 @@ df$growth_form[
 ] <- "Woody"
 
 sp_info <- read.csv(
-  file.path(dir_dat, "FH_Mastertabelle_Auszug_20201001.csv"),
-  header = TRUE, sep = ";"
+  file.path(dir_dat, "growth_form_info.csv"),
+  header = TRUE, skip = 1
 )
-
-woody <- c(
-  "Ch-P.li", "Cp", "Cp-Ph", "Cp.he", "G-Cp", "P", "P.li", "Ph", "Ph-Cp", "Ph-P",
-  "Ph.li", "Pr", "Pr.li"
-  )
-
-aquatic <- c(
-  "Ah", "Ah-Ap.ca", "Ah-G", "Ah-H", "Ah-H.ha", "Ah-T", "Ah.ca", "Ap", "Ap.ca"
-  )
 
 df$growth_form[
   which(
     df$Name %in%
-      sp_info$NOM_COMPLET[which(sp_info$KEY_GROWTH_FORM_DE %in% woody)] |
+      sp_info$sp_name[which(sp_info$growth_form == "woody")] |
       df$Genus %in% c("Euonymus")
   )
 ] <- "Woody"
@@ -556,14 +553,14 @@ df$growth_form[
 df$growth_form[
   which(
     df$Name %in%
-    sp_info$NOM_COMPLET[which(sp_info$KEY_GROWTH_FORM_DE %in% aquatic)]
+      sp_info$sp_name[which(sp_info$growth_form == "aquatic")]
   )
 ] <- "Aquatic"
 
 cat(
   "Forbs (please check):\n",
   paste(sort(unique(df$Genus[which(is.na(df$growth_form))])), collapse = ", ")
-  )
+)
 
 df$growth_form[which(is.na(df$growth_form))] <- "Forb"
 
@@ -587,14 +584,14 @@ col_nam <- match(c("first", "second", "third", "forth", "fifth"), names(df))
 col_val <- match(
   c(
     "match_first", "match_second", "match_third", "match_forth", "match_fifth"
-    ), names(df)
-  )
+  ), names(df)
+)
 
 for (j in 1:length(col_val)) {
   for (i in 1:nrow(df)) {
     if (
       df[[col_val[j]]][i] == 1 & !grepl(glob2rx("* agg*."), df[[col_nam[j]]][i])
-      ) {
+    ) {
       df[i, col_val[j]] <- 5
     }
   }
@@ -603,8 +600,8 @@ for (j in 1:length(col_val)) {
 head(df)
 
 species_list <- df %>%
-    group_by(Species_level_ID) %>%
-    summarize(Species = first(Name))
+  group_by(Species_level_ID) %>%
+  summarize(Species = first(Name))
 
 n_sites <- length(unique(df$releve_id))
 set_var("totalreleves", n_sites, digits = 0)
@@ -618,7 +615,7 @@ counts <- df %>%
   group_by(releve_id) %>%
   summarise(
     n_obs = n_distinct(observation_id)
-    )
+  )
 
 md <- median(counts$n_obs, na.rm = TRUE)
 hist(counts$n_obs, nclass = 14)
@@ -651,11 +648,11 @@ set_var("nhabitats", n_habitats_total, 0)
 taxa <- df %>%
   group_by(Species_level_ID) %>%
   summarise(
-    #Count = n(),
+    # Count = n(),
     Species = dplyr::first(Species_level_ID),
     Genus = dplyr::first(Genus),
     Family = dplyr::first(Family)
-    ) %>%
+  ) %>%
   group_by(Genus) %>%
   summarise(
     Count = n(),
@@ -682,7 +679,7 @@ taxa_pie_family <- cbind(
   magrittr::set_colnames(c("Taxon", "Level", "Fill", "Count")) %>%
   ungroup() %>%
   mutate(prop = Count / sum(Count) * 100) %>%
-  mutate(ypos = cumsum(prop) - 0.5 * prop) %>% 
+  mutate(ypos = cumsum(prop) - 0.5 * prop) %>%
   mutate(yang = 90 + (ypos / 100 * 360))
 taxa_pie_family$Alpha <- rep("high", nrow(taxa_pie_family))
 
@@ -694,7 +691,7 @@ taxa_pie_genus <- cbind(
   magrittr::set_colnames(c("Taxon", "Level", "Fill", "Count")) %>%
   ungroup() %>%
   mutate(prop = Count / sum(Count) * 100) %>%
-  mutate(ypos = cumsum(prop) - 0.5 * prop) %>% 
+  mutate(ypos = cumsum(prop) - 0.5 * prop) %>%
   mutate(yang = 90 + (ypos / 100 * 360))
 
 taxa_pie_genus$Alpha <- rep(
@@ -704,7 +701,7 @@ taxa_pie_genus$Alpha <- rep(
 taxonomy_piechart <- ggplot(
   rbind(taxa_pie_genus, taxa_pie_family),
   aes(x = Level, y = Count, fill = Fill, group = Taxon, alpha = Alpha)
-  ) +
+) +
   geom_bar(stat = "identity") +
   geom_col(aes(x = 0, y = 0)) +
   coord_polar(theta = "y") +
@@ -713,7 +710,7 @@ taxonomy_piechart <- ggplot(
   geom_text(
     aes(x = Level, y = Count, angle = yang, label = Taxon),
     size = 1.5, color = "white", position = position_stack(vjust = 0.5)
-    ) +
+  ) +
   scale_alpha_manual(values = c(1, 0.5))
 
 # Export figures of covered taxa
@@ -736,10 +733,10 @@ if (save_plots) {
     type = "index",
     force.print.labels = TRUE,
     lowerbound.cex.labels = 0.2,
-    #algorithm = "pivotSize",
+    # algorithm = "pivotSize",
     align.labels = list(c("center", "top"), c("center", "center")),
     fontsize.title = 0,
-    title = ""# "Representation of taxa in the data set"
+    title = "" # "Representation of taxa in the data set"
   )
   dev.off()
   file.copy(f_out, dir_fig_online, overwrite = TRUE)
@@ -787,32 +784,32 @@ n_right <- df_single %>%
     right = sum(Top1_hl, na.rm = TRUE),
     field_taxon = first(true_taxon_name),
     suggestions = paste(first, collapse = ", ")
-    )
+  )
 
-suspicious_images <- n_right[which(n_right$right < 1),]
+suspicious_images <- n_right[which(n_right$right < 1), ]
 nrow(suspicious_images)
 
 suspicious_obs <- suspicious_images %>%
   group_by(observation_id) %>%
   summarise(N = n())
 
-suspicious_obs <- suspicious_obs[order(suspicious_obs$N, decreasing = TRUE),]
+suspicious_obs <- suspicious_obs[order(suspicious_obs$N, decreasing = TRUE), ]
 nrow(suspicious_obs)
 paste(suspicious_obs$observation_id, collapse = ",")
 
 if (save_tables) {
   write.csv(
-    df_single[which(!df_single$Top1_hl),],
+    df_single[which(!df_single$Top1_hl), ],
     file = file.path(dir_out, "SingleImages.csv")
   )
 }
 
 if (save_tables) {
-  only_florid_correct <- df_single[which(n_right$right == 1),] %>%
+  only_florid_correct <- df_single[which(n_right$right == 1), ] %>%
     filter(cv_model == "florid" & Top1)
-  
+
   only_florid_correct_names <- only_florid_correct$true_taxon_name
-  
+
   not_in_tbb <- df_single[
     which(
       !df_single$first %in% c(
@@ -827,20 +824,20 @@ if (save_tables) {
     mutate(flor_id_correct = true_taxon_name %in% only_florid_correct_names) %>%
     dplyr::select(first, cv_model, flor_id_correct) %>%
     dplyr::distinct()
-  
+
   if (!file.exists(file.path(dir_out, "NotFoundInTBB.xlsx"))) {
     write.table(
       not_in_tbb,
       file = file.path(dir_out, "NotFoundInTBB.csv"),
       quote = FALSE, row.names = FALSE, sep = ";"
-      )
+    )
   } else {
     nin_tbb <- read_xlsx(file.path(dir_out, "NotFoundInTBB.xlsx"))
-    
+
     df_tmp <- df_single %>%
       mutate(swiss_species = 1, plant = 1, flor_id_correct = TRUE) %>%
       filter(!cv_model %in% c("florvision"))
-    
+
     for (i in 1:nrow(df_tmp)) {
       if (df_tmp$first[i] %in% nin_tbb$first) {
         idx <- match(df_tmp$first[i], nin_tbb$first)
@@ -849,7 +846,7 @@ if (save_tables) {
         df_tmp$plant[i] <- nin_tbb$plant[idx]
       }
     }
-    
+
     summarised <- df_tmp %>%
       group_by(cv_model_name) %>%
       summarise(
@@ -867,14 +864,14 @@ if (save_tables) {
       tibble::column_to_rownames(var = "cv_model_name") %>%
       as.matrix() %>%
       t()
-    
+
     row.names(summarised) <- c(
       "Total", "Species-level Top 1", "Aggregate-level Top 1", "No Swiss plant",
       "Not a plant",
       "Non-Swiss Top 1 but correct Top 3",
       "Non-Swiss Top 1 where FlorID Top 1"
     )
-    
+
     write.table(
       summarised[-1, ],
       file = file.path(dir_tab_online, "Non_Swiss_Plants.tex"),
@@ -899,7 +896,7 @@ summary_single <- df_single %>%
     Top3_acc = mean(as.numeric(Top3)),
     Top1_acc_hl = mean(as.numeric(Top1_hl)),
     Top3_acc_hl = mean(as.numeric(Top3_hl))
-    )
+  )
 
 summary_multi <- df_multi %>%
   group_by(cv_model_name) %>%
@@ -920,7 +917,7 @@ single_vs_multi <- merge(
   summary_multi[, c("cv_model_name", "Top1_acc")],
   by = "cv_model_name",
   all.x = TRUE
-  )
+)
 
 single_vs_multi_hl <- merge(
   summary_single[, c("cv_model_name", "Top1_acc_hl")],
@@ -935,7 +932,7 @@ if (save_tables) {
     file = file.path(dir_tab, "Summary_single.csv"),
     row.names = FALSE
   )
-  
+
   write.csv(
     summary_multi,
     file = file.path(dir_tab, "Summary_multi.csv"),
@@ -960,21 +957,21 @@ if (save_tables) {
     sep = " & ", eol = "\\\\\n", col.names = FALSE, row.names = FALSE,
     quote = FALSE
   )
-  
+
   write.table(
     summary_multi[, c(1, 2, 4, 3, 5)],
     file = file.path(dir_tab_online, "Summary_multi.tex"),
     sep = " & ", eol = "\\\\\n", col.names = FALSE, row.names = FALSE,
     quote = FALSE
   )
-  
+
   write.table(
     single_vs_multi,
     file = file.path(dir_tab_online, "Single_vs_multi.tex"),
     sep = " & ", eol = "\\\\\n", col.names = FALSE, row.names = FALSE,
     quote = FALSE, na = "{-}"
   )
-  
+
   write.table(
     single_vs_multi_hl,
     file = file.path(dir_tab_online, "Single_vs_multi_hl.tex"),
@@ -984,9 +981,9 @@ if (save_tables) {
 }
 
 # Remove FlorID vision for further analyses
-df <- df[which(df$cv_model != "florvision"),]
-df_single <- df_single[which(df_single$cv_model != "florvision"),]
-df_multi <- df_multi[which(df_multi$cv_model != "florvision"),]
+df <- df[which(df$cv_model != "florvision"), ]
+df_single <- df_single[which(df_single$cv_model != "florvision"), ]
+df_multi <- df_multi[which(df_multi$cv_model != "florvision"), ]
 
 #>----------------------------------------------------------------------------<|
 #> Add information on whether a taxon is included in a CV model
@@ -1026,7 +1023,7 @@ if (save_plots) {
       xlab("(a) By observation"),
     gg_hablvl_single +
       theme(
-        #axis.title.x = element_blank(),
+        # axis.title.x = element_blank(),
         axis.title.y = element_blank(),
         axis.text.y = element_blank(),
         axis.ticks.y = element_blank()
@@ -1053,26 +1050,29 @@ regional_long <- reshape2::melt(
   regional[
     regional$cv_model_name != "FlorID vision",
     which(!(names(regional) %in% c("Top3_acc", "Top3_acc_hl")))
-    ],
+  ],
   id.vars = c("cv_model_name", "habitat_main", "biogeo_region"),
   variable.name = "Measure"
-  )
+)
 
 regional_long$Level <- dplyr::recode_factor(
-  regional_long$Measure, Top1_acc = "Species", Top1_acc_hl = "Aggregate"
-  )
+  regional_long$Measure,
+  Top1_acc = "Species", Top1_acc_hl = "Aggregate"
+)
 
 gg_reg <- ggplot(
   data = regional_long,
   aes(x = biogeo_region, y = value, fill = Level)
-  ) +
+) +
   geom_boxplot() +
   xlab("Biogeographical region") +
   ylab("Top 1 accurracy") +
   facet_wrap(facets = "cv_model_name") +
   scale_x_discrete(
-    labels = function(x){sub("Alpen", "Alpen-\n", sub("\\s", "\n", x))}
-    ) +
+    labels = function(x) {
+      sub("Alpen", "Alpen-\n", sub("\\s", "\n", x))
+    }
+  ) +
   theme_bw()
 
 # Do not use: Misleading due to grouping by biogeo instead observation id.
@@ -1085,14 +1085,16 @@ gg_hab <- ggplot(
   ylab("Top 1 accurracy") +
   facet_wrap(facets = "cv_model_name") +
   scale_x_discrete(
-    labels = function(x){gsub("^([^ ]+ [^ ]+) (.*)$", "\\1\n\\2", x)}
+    labels = function(x) {
+      gsub("^([^ ]+ [^ ]+) (.*)$", "\\1\n\\2", x)
+    }
   ) +
   theme_bw() +
   theme(
     legend.position = "bottom",
     legend.direction = "horizontal",
     axis.text.x = element_text(angle = 45, hjust = 1)
-    )
+  )
 
 # if (save_plots) {
 #   f_out <- file.path(dir_fig_online, "Acc_by_habitat_main.pdf")
@@ -1155,14 +1157,14 @@ head(pp_single_veg)
 ggplot(
   data = pp_single_veg,
   aes(x = cv_model_name, y = Top3_acc, fill = cv_model_name)
-  ) +
+) +
   geom_violin() +
   facet_grid(. ~ Class)
 
 ggplot(
   data = pp_single_veg,
   aes(x = cv_model_name, y = Top3_acc, fill = cv_model_name)
-  ) +
+) +
   geom_boxplot() +
   facet_grid(. ~ Class)
 
@@ -1171,20 +1173,20 @@ pp_single_f <- pp_single %>% filter(plant_organ %in% c("i", "f"))
 head(pp_single_f)
 ggplot(
   data = pp_single_f, aes(x = cv_model_name, y = Top3_acc, fill = cv_model_name)
-  ) +
+) +
   geom_violin() +
   facet_grid(. ~ Class)
 
 ggplot(
   data = pp_single_f, aes(x = cv_model_name, y = Top3_acc, fill = cv_model_name)
-  ) +
+) +
   geom_boxplot() +
   facet_grid(. ~ Class)
 
 pp_single_f %>%
   group_by(cv_model_name, Species_level_ID) %>%
   summarise(Overall_top1 = mean(Top1_acc)) %>%
-  group_by(cv_model_name,) %>%
+  group_by(cv_model_name, ) %>%
   summarise(Top1 = mean(Overall_top1))
 
 # Several parts
@@ -1193,19 +1195,19 @@ head(pp_single_sev)
 ggplot(
   data = pp_single_sev,
   aes(x = cv_model_name, y = Top1_acc, fill = cv_model_name)
-  ) +
+) +
   geom_violin() +
   facet_grid(. ~ Class)
 
 ggplot(
   data = pp_single_sev,
   aes(x = cv_model_name, y = Top1_acc, fill = cv_model_name)
-  ) +
+) +
   geom_boxplot() +
   theme(
     axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
     legend.position = "none"
-    ) +
+  ) +
   facet_grid(. ~ Class) +
   xlab("Identification provider") +
   ylab("Top 1 accuracy")
@@ -1213,7 +1215,7 @@ ggplot(
 pp_single_sev %>%
   group_by(cv_model_name, Species_level_ID) %>%
   summarise(Overall_top1 = mean(Top1_acc)) %>%
-  group_by(cv_model_name,) %>%
+  group_by(cv_model_name, ) %>%
   summarise(Top1 = mean(Overall_top1))
 
 #>----------------------------------------------------------------------------<|
@@ -1239,19 +1241,21 @@ df_gf_w <- df_single %>%
 sink(file.path(dir_stt, "Growth_form_pairwise_wilcox.txt"))
 cat("Species-level comparisons:")
 pairwise.wilcox.test(
-  df_gf_w$Top1_acc, df_gf_w$growth_form, p.adjust.method = "holm"
+  df_gf_w$Top1_acc, df_gf_w$growth_form,
+  p.adjust.method = "holm"
 )
 
 cat("\n\nAggregate-level comparisons:")
 pairwise.wilcox.test(
-  df_gf_w$Top1_acc_hl, df_gf_w$growth_form, p.adjust.method = "holm"
+  df_gf_w$Top1_acc_hl, df_gf_w$growth_form,
+  p.adjust.method = "holm"
 )
 sink()
 
 file.copy(
   from = file.path(dir_stt, "Growth_form_pairwise_wilcox.txt"),
   to = file.path(dir_stat_online, "Growth_form_pairwise_wilcox.txt")
-  )
+)
 
 # tmp1 <- df_gf
 # tmp1$Accuracy <- tmp1$Top1_acc
@@ -1259,7 +1263,7 @@ file.copy(
 # tmp2 <- df_gf
 # tmp2$Accuracy <- tmp2$Top1_acc_hl
 # tmp2$Level <- "Genus"
-# 
+#
 # df_gf <- rbind(tmp1, tmp2)
 # df_gf$combined <- paste(df_gf$Level, df_gf$cv_model_name)
 
@@ -1267,7 +1271,7 @@ file.copy(
 gg_gf_t1 <- ggplot(
   data = df_gf,
   aes(x = growth_form, y = Top1_acc, fill = growth_form)
-  ) +
+) +
   geom_boxplot(alpha = 0.7) +
   facet_wrap(~cv_model_name, ncol = length(unique(df_gf$cv_model_name))) +
   theme_bw() +
@@ -1285,7 +1289,7 @@ gg_gf_hl <- ggplot(
   aes(x = growth_form, y = Top1_acc_hl, fill = growth_form)
 ) +
   geom_boxplot(alpha = 0.7) +
-  facet_wrap(.~cv_model_name, ncol = length(unique(df_gf$cv_model_name))) +
+  facet_wrap(. ~ cv_model_name, ncol = length(unique(df_gf$cv_model_name))) +
   theme_bw() +
   scale_fill_manual("Growth form", values = safe_colorblind_palette) +
   xlab("") +
@@ -1296,7 +1300,7 @@ gg_gf_hl <- ggplot(
     strip.text.x = element_blank()
   )
 
-df_gf_counts <- df_gf[which(df_gf$cv_model_name == "FlorID"),] %>%
+df_gf_counts <- df_gf[which(df_gf$cv_model_name == "FlorID"), ] %>%
   group_by(growth_form) %>%
   summarise(n_observations = n())
 
@@ -1304,7 +1308,7 @@ for (i in 1:nrow(df_gf_counts)) {
   set_var(
     paste0("nobs", df_gf_counts$growth_form[i]),
     df_gf_counts$n_observations[i], 0
-    )
+  )
 }
 
 if (save_plots) {
@@ -1313,7 +1317,7 @@ if (save_plots) {
   combined_plot <- grid.arrange(
     gg_gf_t1, gg_gf_hl,
     ncol = 1, heights = c(0.9, 1.1)
-    )
+  )
   grid.text("Growth form", x = 0.5, y = 0.02, gp = gpar(fontsize = 12))
   dev.off()
   file.copy(f_out, dir_fig_online, overwrite = TRUE)

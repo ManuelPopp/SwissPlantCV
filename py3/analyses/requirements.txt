@@ -1,0 +1,8 @@
+numpy==1.26.3
+pykew==0.1.3
+tkinter
+alive_progres
+easygui==0.98.3
+datetime
+pandas==2.1.4
+Pillow==10.2.0

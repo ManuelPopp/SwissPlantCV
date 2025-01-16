@@ -3,8 +3,8 @@
 #> Install/load packages
 packages <- c("WorldFlora")
 
-for(i in 1:NROW(packages)){
-  if(!require(packages[i], character.only = TRUE)){
+for (i in 1:NROW(packages)) {
+  if (!require(packages[i], character.only = TRUE)) {
     install.packages(packages[i])
     library(packages[i], character.only = TRUE)
   }
@@ -17,7 +17,7 @@ searchstring <- paste(
   collapse = " "
 )
 
-wfo_file <- "D:/switchdrive/PlantApp/dat/wfo/classification.csv"
+wfo_file <- "../dat/wfo/classification.csv"
 
 synonyms <- WFO.synonyms(searchstring, WFO.file = wfo_file)
 synonym <- paste(synonyms[1, 2], synonyms[1, 3])
