@@ -8,7 +8,7 @@ R scripts were used for analysis of the final data and plotting. The main R scri
 
 ## Repository organisation
 This repository comprises various subdirectories
-```python
+```r
 📂 SwissPlantCV/
 ├── 📂 bat/
 │   └── *.* 'Various files used to run scripts with pre-defined input parameters.'
@@ -20,9 +20,9 @@ This repository comprises various subdirectories
 │   ├── GBIF_obs_per_year.csv 'Number of GBIF records per year, obtained via GBIF API.'
 │   ├── growth_form_info.csv 'Information on growth form for aquatic and woody taxa. Manually checked.'
 │   ├── Habitats.xlsx 'TypoCH habitat types, manually compiled following Delarze et al., 2015; see manuscript.'
-│   ├── Synonyms.db '''Database to translate between taxonomic backbones.
-│   │                Pickled instance of class SynonymDatabase (py3/analyses/taxonomy.py),
-│   │                compiled via WFO API and manual resolving.'''
+│   ├── Synonyms.db 'Database to translate between taxonomic backbones.
+│   │                'Pickled instance of class SynonymDatabase (py3/analyses/taxonomy.py),'
+│   │                'compiled via WFO API and manual resolving.'
 │   └── Taxonomic_backbone_wHier_2022.csv 'Taxonomix backbone for Swiss flora.'
 ├── 📂 out/
 │   └── Final.xlsx 'Excel sheet summarising all API responses.'
