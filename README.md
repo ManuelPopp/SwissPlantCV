@@ -8,58 +8,58 @@ R scripts were used for analysis of the final data and plotting. The main R scri
 
 ## Repository organisation
 This repository comprises various subdirectories
-```
+```bash
 📂 SwissPlantCV/
 ├── 📂 bat/
-│   └── *.* (Various files used to run scripts with pre-defined input parameters.)
+│   └── *.* (Various files used to run scripts with pre-defined input parameters.)
 ├── 📂 dat/
 │   ├── 📂 BioGeoRegionen/
 │   │   ├── 📂 BiogeographischeRegionen/
-│   │   │   └── N2020_Revision_BiogeoRegion.* (Shapefile of biogeographical regions of Switzerland.)
-│   │   └── README.txt (Information on the shapefile within the subdirectory.)
-│   ├── GBIF_obs_per_year.csv (Number of GBIF records per year, obtained via GBIF API.)
-│   ├── growth_form_info.csv (Information on growth form for aquatic and woody taxa. Manually checked.)
-│   ├── Habitats.xlsx (TypoCH habitat types, manually compiled following Delarze et al., 2015; see manuscript.)
-│   ├── Synonyms.db (Database to translate between taxonomic backbones.
-│   │                Pickled instance of class SynonymDatabase (py3/analyses/taxonomy.py),
-│   │                compiled via WFO API and manual resolving.)
-│   └── Taxonomic_backbone_wHier_2022.csv (Taxonomix backbone for Swiss flora.)
+│   │   │   └── N2020_Revision_BiogeoRegion.* (Shapefile of biogeographical regions of Switzerland.)
+│   │   └── README.txt (Information on the shapefile within the subdirectory.)
+│   ├── GBIF_obs_per_year.csv (Number of GBIF records per year, obtained via GBIF API.)
+│   ├── growth_form_info.csv (Information on growth form for aquatic and woody taxa. Manually checked.)
+│   ├── Habitats.xlsx (TypoCH habitat types, manually compiled following Delarze et al., 2015; see manuscript.)
+│   ├── Synonyms.db (Database to translate between taxonomic backbones.
+│   │                Pickled instance of class SynonymDatabase (py3/analyses/taxonomy.py),
+│   │                compiled via WFO API and manual resolving.)
+│   └── Taxonomic_backbone_wHier_2022.csv (Taxonomix backbone for Swiss flora.)
 ├── 📂 out/
-│   └── Final.xlsx (Excel sheet summarising all API responses.)
+│   └── Final.xlsx (Excel sheet summarising all API responses.)
 ├── 📂 py3/
 │   ├── 📂 analyses/
-│   │   ├── Check_misclassifications.py (Tkinter graphical interface to check wrong IDs manually.)
-│   │   ├── locationprecision.py (Was used to obtain stats on location precision for sampling points.)
-│   │   ├── taxonomy.py (Provides SynonymDatabase class to build taxonomy database.
-│   │   └── requirements.txt (Python modules used during this step.)
+│   │   ├── Check_misclassifications.py (Tkinter graphical interface to check wrong IDs manually.)
+│   │   ├── locationprecision.py (Was used to obtain stats on location precision for sampling points.)
+│   │   ├── taxonomy.py (Provides SynonymDatabase class to build taxonomy database.)
+│   │   └── requirements.txt (Python modules used during this step.)
 │   ├── 📂 misc/
 │   ├── 📂 requests/
-│   │   ├── authentication.py (Load encrypted user credentials for some APIs.)
-│   │   ├── base.py (Basic functions for coordinate conversion, EXIF handling, file encyption, etc.)
-│   │   ├── batchrequest_v201.py (Provides BatchRequest class to send API requests and store responses.)
-│   │   ├── <identification provider>.py (Functions to handle the request formats for the different APIs.)
-│   │   └── requirements.txt (Python modules used during this step.)
+│   │   ├── authentication.py (Load encrypted user credentials for some APIs.)
+│   │   ├── base.py (Basic functions for coordinate conversion, EXIF handling, file encyption, etc.)
+│   │   ├── batchrequest_v201.py (Provides BatchRequest class to send API requests and store responses.)
+│   │   ├── <identification provider>.py (Functions to handle the request formats for the different APIs.)
+│   │   └── requirements.txt (Python modules used during this step.)
 │   ├── 📂 sampling/
-│   │   ├── <scriptname>.py (Scripts to facilitate fieldwork, e.g., to visualise sampled habitat types.)
-│   │   └── requirements.txt (Python modules used during this step.)
+│   │   ├── <scriptname>.py (Scripts to facilitate fieldwork, e.g., to visualise sampled habitat types.)
+│   │   └── requirements.txt (Python modules used during this step.)
 │   ├── 📂 tk_Search_Releves/
-│   │   ├── Releve_species_lists.py (Tkinter graphical interface to check InfoFlora Fieldbook export for potential sampling locations.)
-│   │   └── requirements.txt (Python modules used during this step.)
-│   └── requirements.txt (All additional Python modules used.)
+│   │   ├── Releve_species_lists.py (Tkinter graphical interface to check InfoFlora Fieldbook export for potential sampling locations.)
+│   │   └── requirements.txt (Python modules used during this step.)
+│   └── requirements.txt (All additional Python modules used.)
 ├── 📂 rsc/
-│   ├── Barplot_best_match.R (Create stacked barplot Figure 3.)
-│   ├── Citizen_science_stats.R (Create barplots of citizen science observations.)
-│   ├── Completed_habitats_to_table.R (Create LaTeX table of sampled habitats.)
-│   ├── Data_analysis.R (Main script for data analysis.)
-│   ├── Habitat_level_accuracy.R (Comparison of identification success summarised by habitat type.)
-│   ├── Included_taxa.R (To check on which wrongly IDd taxa the resp. model was not trained.)
-│   ├── Observation_level_accuracy.R (Comparison of identification success summarised by observation.)
-│   ├── Sampling_design.R (Create map from initial submission, etc.)
-│   ├── Tables_acc_per_plant_part.R (Create LaTeX table of ID success per plant part)
-│   ├── Taxon_in_<ID provider>.R (Check if specific taxon known to model. Where no API -> manual check.)
-│   ├── taxonomy_match_manual.R (List of synonyms that were manually resolved.)
-│   └── wfo.R (Check synonyms using WFO.)
-└── README.md (This file.)
+│   ├── Barplot_best_match.R (Create stacked barplot Figure 3.)
+│   ├── Citizen_science_stats.R (Create barplots of citizen science observations Figure 1.)
+│   ├── Completed_habitats_to_table.R (Create LaTeX table of sampled habitats.)
+│   ├── Data_analysis.R (Main script for data analysis.)
+│   ├── Habitat_level_accuracy.R (Comparison of identification success summarised by habitat type.)
+│   ├── Included_taxa.R (To check on which wrongly IDd taxa the resp. model was not trained.)
+│   ├── Observation_level_accuracy.R (Comparison of identification success summarised by observation.)
+│   ├── Sampling_design.R (Create map from initial submission, etc.)
+│   ├── Tables_acc_per_plant_part.R (Create LaTeX table of ID success per plant part)
+│   ├── Taxon_in_<ID provider>.R (Check if specific taxon known to model. Where no API -> manual check.)
+│   ├── taxonomy_match_manual.R (List of synonyms that were manually resolved.)
+│   └── wfo.R (Check synonyms using WFO.)
+└── README.md (This file.)
 
 ```
 
