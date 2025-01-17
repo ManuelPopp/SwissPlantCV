@@ -47,6 +47,8 @@ import(
   dependencies = TRUE
 ) # , "xlsx")
 
+# If no variable values are to be exported to Dropbox for synchronisation with
+# Overleaf, ignore the following.
 if (Sys.info()[1] == "Linux") {
   dir_dbx <- "/home/manuel/Dropbox"
 } else {
@@ -72,48 +74,57 @@ get_file_location <- function() {
 }
 
 # Set dynamic document values
+# To produce the initial manuscript and dynamically update variables to encorpo-
+# rate updates in the underlying data, the set_var() function was used.
+# I "disabled" this function to avoid issues while running the script in another
+# context.
 variable_text_renew <- FALSE
+export_variables_to_overleaf <- FALSE
 
-set_var <- function(
+if (export_variables_to_overleaf) {
+  set_var <- function(
     name, value, digits = 2,
     file = file.path(
       dir_dbx,
       "Apps/Overleaf/SwissPlantCV/var",
       "variables.tex"
     )) {
-  if (dir.exists(dirname(dirname(file)))) {
-    dir.create(dirname(file), showWarnings = FALSE)
-  } else {
-    warning(
-      paste(
-        "Directory",
-        dirname(dirname(file)),
-        "not found. Cannot write variables."
+    if (dir.exists(dirname(dirname(file)))) {
+      dir.create(dirname(file), showWarnings = FALSE)
+    } else {
+      warning(
+        paste(
+          "Directory",
+          dirname(dirname(file)),
+          "not found. Cannot write variables."
+        )
       )
+      return()
+    }
+    
+    if (get("variable_text_renew")) {
+      append <- FALSE
+      variable_text_renew <<- FALSE
+    } else {
+      append <- TRUE
+    }
+    
+    # Remove existing definitions of the variable if there are any
+    if (file.exists(file)) {
+      lines <- readLines(file)
+      filtered_lines <- lines[
+        !grepl(paste0("{\\", name, "}"), lines, fixed = TRUE)
+      ]
+      writeLines(filtered_lines, file)
+    }
+    
+    cat(
+      sprintf(paste0("\\newcommand{\\", name, "}{%.", digits, "f}\n"), value),
+      file = file, append = append
     )
-    return()
   }
-
-  if (get("variable_text_renew")) {
-    append <- FALSE
-    variable_text_renew <<- FALSE
-  } else {
-    append <- TRUE
-  }
-
-  # Remove existing definitions of the variable if there are any
-  if (file.exists(file)) {
-    lines <- readLines(file)
-    filtered_lines <- lines[
-      !grepl(paste0("{\\", name, "}"), lines, fixed = TRUE)
-    ]
-    writeLines(filtered_lines, file)
-  }
-
-  cat(
-    sprintf(paste0("\\newcommand{\\", name, "}{%.", digits, "f}\n"), value),
-    file = file, append = append
-  )
+} else {
+  set_var <- function(...) {return()}
 }
 
 # Simplify p-values from a vector or matrix
@@ -157,12 +168,16 @@ signif_digits <- function(x, n = 3) {
 
 #>----------------------------------------------------------------------------<|
 #> Settings
-save_plots <- TRUE
-save_tables <- TRUE
+# I disabled export of plots and tables to simplify the script and avoid
+# potential issues with non-existing directories on another user's machine.
+# If your folder structure is set up correctly and directory names are adjusted,
+# you can set these to TRUE in order to export tables and figures.
+save_plots <- FALSE
+save_tables <- FALSE
 
 # Directories
 dir_this_file <- get_file_location()
-if (dir.exists(dir_this_file)) {
+if (!dir.exists(dir_this_file)) {
   if (Sys.info()[1] == "Linux") {
     dir_this_file <- "/home/manuel/ownCloud/PlantApp/rsc"
   } else {
@@ -210,8 +225,8 @@ SPECIESLVL <- TRUE
 # Load API response data
 tryCatch(
   {
-    # Try to read the data using the xlsx package (only works if installed, caused
-    # issues with some OS and R versions...)
+    # Try to read the data using the xlsx package (only works if installed,
+    # caused issues with some OS and R versions...)
     rsp <<- xlsx::read.xlsx(file.path(dir_out, "Final.xlsx"), sheetIndex = 1)
   },
   error = function(e) {
@@ -222,7 +237,7 @@ tryCatch(
 
 head(rsp)
 
-sites <- read.csv(file.path(dir_main, "spl", "Releve_info.csv"))
+sites <- read.csv(file.path(dir_dat, "Releve_info.csv"))
 rsp$habitat <- sites$habitat_id[match(rsp$releve_id, sites$releve_id)]
 rsp$date <- sites$date[match(rsp$releve_id, sites$releve_id)]
 rsp$location <- sites$location[match(rsp$releve_id, sites$releve_id)]
@@ -448,121 +463,12 @@ habitat_list <- c(
 df$habitat_main <- habitat_list[as.numeric(substr(df$habitat, 1, 1))]
 
 # Add plant life form information
-df$growth_form <- NA
-df$growth_form[
-  which(
-    df$Family %in% c(
-      "Anarthriaceae",
-      "Bromeliaceae",
-      "Cyperaceae",
-      "Ecdeiocoleaceae",
-      "Eriocaulaceae",
-      "Flagellariaceae",
-      "Joinvilleaceae",
-      "Juncaceae",
-      "Mayacaceae",
-      "Poaceae",
-      "Rapateaceae",
-      "Restionaceae",
-      "Centrolepidaceae",
-      "Thurniaceae",
-      "Typhaceae",
-      "Xyridaceae"
-    )
-  )
-] <- "Graminoid"
-
-df$growth_form[
-  which(
-    df$Family %in% c(
-      "Ophioglossaceae",
-      "Botrychiaceae",
-      "Helminthostachyaceae",
-      "Psilotaceae",
-      "Tmesipteridaceae",
-      "Equisetaceae",
-      "Angiopteridaceae",
-      "Christenseniaceae",
-      "Danaeaceae",
-      "Kaulfussiaceae",
-      "Marattiaceae",
-      "Osmundaceae",
-      "Hymenophyllaceae",
-      "Lygodiaceae",
-      "Anemiaceae",
-      "Thyrsopteridaceae",
-      "Loxsomataceae",
-      "Culcitaceae",
-      "Plagiogyriaceae",
-      "Cibotiaceae",
-      "Cyatheaceae",
-      "Dicksoniaceae",
-      "Dennstaedtiaceae",
-      "Pteridaceae",
-      "Aspleniaceae",
-      "Thelypteridaceae",
-      "Woodsiaceae",
-      "Blechnaceae",
-      "Onocleaceae",
-      "Dryopteridaceae",
-      "Lomariopsidaceae",
-      "Tectariaceae",
-      "Oleandraceae",
-      "Davalliaceae",
-      "Polypodiaceae",
-      "Lycopodiaceae",
-      "Selaginellaceae",
-      "Isoetaceae"
-    )
-  )
-] <- "Fern"
-
-df$growth_form[
-  which(
-    df$Family %in% c(
-      "Araucariaceae",
-      "Cupressaceae",
-      "Ginkgoaceae",
-      "Gnetaceae",
-      "Pinaceae",
-      "Podocarpaceae",
-      "Sciadopityaceae",
-      "Taxaceae",
-      "Welwitschiaceae",
-      "Zamiaceae",
-      "Moraceae",
-      "Fagaceae",
-      "Ulmaceae"
-    )
-  )
-] <- "Woody"
-
 sp_info <- read.csv(
   file.path(dir_dat, "growth_form_info.csv"),
   header = TRUE, skip = 1
 )
 
-df$growth_form[
-  which(
-    df$Name %in%
-      sp_info$sp_name[which(sp_info$growth_form == "woody")] |
-      df$Genus %in% c("Euonymus")
-  )
-] <- "Woody"
-
-df$growth_form[
-  which(
-    df$Name %in%
-      sp_info$sp_name[which(sp_info$growth_form == "aquatic")]
-  )
-] <- "Aquatic"
-
-cat(
-  "Forbs (please check):\n",
-  paste(sort(unique(df$Genus[which(is.na(df$growth_form))])), collapse = ", ")
-)
-
-df$growth_form[which(is.na(df$growth_form))] <- "Forb"
+df$growth_form <- sp_info$growth_form[match(df$Name, sp_info$sp_name)]
 
 # Correct inconsistent labeling for ferns
 df$plant_organ[which(df$growth_form == "Fern")] <- gsub(
@@ -570,10 +476,10 @@ df$plant_organ[which(df$growth_form == "Fern")] <- gsub(
 )
 
 # Add full plant organ names
-plant_prgan_names <- c(
+plant_organ_names <- c(
   "Inflorescense", "Infructescense", "Vegetative", "Trunk", "Several"
 )
-df$plant_organ_name <- plant_prgan_names[
+df$plant_organ_name <- plant_organ_names[
   match(df$plant_organ, c("i", "f", "v", "t", "s"))
 ]
 

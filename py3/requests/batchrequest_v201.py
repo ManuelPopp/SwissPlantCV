@@ -1245,6 +1245,14 @@ class Batchrequest():
             as depicted plant part (key "organ") for each image.
         '''
         image_files = self._image_meta[observation_id]["file_locations"]
+        image_files = [# Added this to ensure that the image files are found in the correct directory after moving around files.
+            os.path.join(
+                self.image_dir,
+                os.path.basename(os.path.dirname(os.path.dirname(imf))),
+                os.path.basename(os.path.dirname(imf)),
+                os.path.basename(imf)
+                ) for imf in image_files
+            ]
         image_names = [os.path.splitext(
             os.path.split(p.replace("\\", "/"))[-1]
             )[0] for p in image_files]

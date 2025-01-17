@@ -18,8 +18,9 @@ This repository comprises various subdirectories
 │   │   │   └── N2020_Revision_BiogeoRegion.* 'Shapefile of biogeographical regions of Switzerland.'
 │   │   └── README.txt 'Information on the shapefile within the subdirectory.'
 │   ├── GBIF_obs_per_year.csv 'Number of GBIF records per year, obtained via GBIF API.'
-│   ├── growth_form_info.csv 'Information on growth form for aquatic and woody taxa. Manually checked.'
+│   ├── growth_form_info.csv 'Growth form by species for plants within the data set.'
 │   ├── Habitats.xlsx 'TypoCH habitat types, manually compiled following Delarze et al., 2015; see manuscript.'
+│   ├── Releve_info.csv 'Information on sampling plots (releves) containing releve ID and location.'
 │   ├── Synonyms.db 'Database to translate between taxonomic backbones.'
 │   │                'Pickled instance of class SynonymDatabase (py3/analyses/taxonomy.py),'
 │   │                'compiled via WFO API and manual resolving.'
@@ -93,3 +94,45 @@ graph TD
 classDef empty width:0px,height:0px;
 ```
 **Figure 1:** Overview of the data collection and processing workflow. Additional steps involved manual insertion of Flora Incognita and FlorID "vision only" results into the BatchRequest objects, resp. the Responses.xlsx via additional scripts. This is due to the circumstance that Flora Incognita did not provide direct access to their API but ran the model locally and sent us the results as json. For the vision only version of FlorID, the information was separately extracted from the responses (already present in the Batchrequest objects, but not stored separately from the combined model output).
+
+## Prerequisites
+### General
+Script files within this repository cannot be executed as standalone scripts. They require the surrounding file structure, including other scripts, data, and tables for functioning.
+
+### Data
+Derived data are stored along with code in this repository. This includes tables used in data analyses, as well as some intermetiate files exported from within Python scripts (pickled versions of attributes for some instances of custom classes which hold methods to load such files and, in doing so, restore a previous state).
+
+Image data, however, are stored in an accompanying data repository and must be downloaded separately.
+
+**Metadata:** The data repository contains metadata files. These files hold information on all images, as well as on the location where they were stored.
+
+### Python scripts
+Python scripts require installation of additional modules. Directories where Python scripts are located contain a `requirements.txt` file. Such a file can be used to install modules using Python's default package manager [pip](https://pypi.org/project/pip/). Requirements can be installed by simply running
+
+```console
+pip install -r requirements.txt
+
+```
+
+Note that `requirements.txt` files within this repository specify a module version to make code exactly reproducible. Due to the open source nature of the software used, modules might be discontinued, functions or function parameters might be deprecated, and code might become incompatible with some future version of a module or a future version of Python. However, code published within this repository is compatible across a range of Python versions. Thus, it is likely possible to run code without installing a specific Python version, or a specific version of a module. Feel free to remove the version pinning in your local copy of this repository.
+
+Code has been tested with several Python versions 3.9.x, 3.11.x and 3.12.5. Important note: Geospatial analyses require proper setup of Python with GDAL bindings. Python was therefore installed using the [OSGeo4W](https://www.osgeo.org/projects/osgeo4w) installer. Note that all relevant parts (e.g. pip) of Python must be installed and set up correctly.
+
+### R scripts
+The main R script is [Data_analysis.R](https://github.com/ManuelPopp/SwissPlantCV/blob/main/rsc/Data_analysis.R). It should automatically try to install all required packages. The script requires supplementing R scripts at the exact relative position as within this repo, since some sub-workflows were separated to enhance readability and limit the size of the main script. Moreover, the script reads in tables. If the R script is not called from within the common [RStudio](https://www.rstudio.org) IDE, make sure to search for where the `dir_main` variable is defined (`dir_main <-`) and set the value of this variable manually to the main directory of your local copy of this repo.
+
+Code has been tested with R versions 4.4.0 and 4.4.1., as well as some older versions > 4.3.x.
+
+### Obtaining image data
+API requests to the Info Flora Online Fieldbook are not necessary, since the full data set has already been compiled and made available in the data repository. Moreover, the fieldbook is only available to project members and curators.
+
+## Disclaimer
+This repository contains code to send API requests to third-party plant species identification providers. These APIs **are not part of this project**. Owners and potential contributors of this repository cannot be assumed to be affiliated with any of these third-party providers.
+
+Users should be aware that:
+
+- API requests to plant identification services **typically require authentication**. Users are responsible for obtaining any necessary login credentials from the respective providers.  
+- **The terms, conditions, and policies** governing the use of these APIs are set solely by their respective owners. I **do not control, endorse, or guarantee** the availability, reliability, or accuracy of these services.  
+- **Owners and potential contributers of this repository accept no liability** for any actions users take when interacting with these APIs, including but not limited to violations of third-party terms of service, rate limits, or misuse of the data retrieved.  
+
+Users are advised to carefully review and comply with the respective API providers' policies before use.

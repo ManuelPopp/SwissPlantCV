@@ -1,576 +1,588 @@
-# This file contains species names and growth form for woody and aquatic species. Other growth forms were assigned in the R script Data_analysis.R. Growth forms were manually checked.
+# Growth form by plant species, assigned by family where possible, or manually.
 "sp_name","growth_form"
-"Huperzia selago (L.) Schrank & Mart.",NA
-"Lycopodium clavatum L.",NA
-"Lycopodium annotinum L.",NA
-"Diphasiastrum alpinum (L.) Holub",NA
-"Selaginella selaginoides (L.) Schrank & Mart.",NA
-"Botrychium lunaria (L.) Sw.",NA
-"Equisetum arvense L.",NA
-"Equisetum telmateia Ehrh.",NA
-"Equisetum sylvaticum L.",NA
-"Equisetum ramosissimum Desf.",NA
-"Equisetum variegatum Schleich.",NA
-"Equisetum palustre L.",NA
-"Equisetum fluviatile L.",NA
-"Pteridium aquilinum (L.) Kuhn",NA
-"Oreopteris limbosperma (All.) Holub",NA
-"Thelypteris palustris Schott",NA
-"Asplenium trichomanes L.",NA
-"Asplenium ruta-muraria L.",NA
-"Asplenium ceterach L.",NA
-"Athyrium filix-femina (L.) Roth",NA
-"Cystopteris alpina (Lam.) Desv.",NA
-"Gymnocarpium dryopteris (L.) Newman",NA
-"Polystichum lonchitis (L.) Roth",NA
-"Dryopteris filix-mas (L.) Schott",NA
-"Dryopteris affinis (Lowe) Fraser-Jenk.",NA
-"Dryopteris dilatata (Hoffm.) A. Gray",NA
-"Dryopteris expansa (C. Presl) Fraser-Jenk. & Jermy",NA
-"Dryopteris carthusiana (Vill.) H. P. Fuchs",NA
-"Abies alba Mill.","woody"
-"Picea abies (L.) H. Karst.","woody"
-"Larix decidua Mill.","woody"
-"Pinus cembra L.","woody"
-"Pinus sylvestris L.","woody"
-"Pinus mugo subsp. uncinata (DC.) Domin","woody"
-"Juniperus communis L.",NA
-"Juniperus communis L. subsp. communis","woody"
-"Juniperus sabina L.","woody"
-"Nymphaea alba L.","aquatic"
-"Nuphar lutea (L.) Sm.","aquatic"
-"Trollius europaeus L.",NA
-"Caltha palustris L.",NA
-"Aconitum lycoctonum L.",NA
-"Anemone narcissiflora L.",NA
-"Anemone nemorosa L.",NA
-"Hepatica nobilis Schreb.",NA
-"Pulsatilla alpina (L.) Delarbre",NA
-"Ranunculus tuberosus Lapeyr.",NA
-"Ranunculus repens L.",NA
-"Ranunculus lanuginosus L.",NA
-"Ranunculus acris L.",NA
-"Ranunculus acris subsp. friesianus (Jord.) Syme",NA
-"Ranunculus bulbosus L.",NA
-"Ranunculus glacialis L.",NA
-"Ranunculus aconitifolius L.",NA
-"Ranunculus platanifolius L.",NA
-"Ranunculus trichophyllus Chaix","aquatic"
-"Ranunculus trichophyllus Chaix subsp. trichophyllus","aquatic"
-"Thalictrum aquilegiifolium L.",NA
-"Berberis vulgaris L.","woody"
-"Chelidonium majus L.",NA
-"Sempervivum arachnoideum L.",NA
-"Sempervivum tectorum L.",NA
-"Sedum telephium L.",NA
-"Sedum montanum Songeon & E. P. Perrier",NA
-"Sedum album L.",NA
-"Sedum dasyphyllum L.",NA
-"Saxifraga aizoides L.",NA
-"Saxifraga stellaris L.",NA
-"Saxifraga rotundifolia L.",NA
-"Saxifraga caesia L.",NA
-"Saxifraga paniculata Mill.",NA
-"Saxifraga granulata L.",NA
-"Fagus sylvatica L.","woody"
-"Quercus pubescens Willd.","woody"
-"Quercus robur L.","woody"
-"Betula pubescens Ehrh.","woody"
-"Betula nana L.","woody"
-"Alnus viridis (Chaix) DC.","woody"
-"Alnus glutinosa (L.) Gaertn.","woody"
-"Alnus incana (L.) Moench","woody"
-"Ostrya carpinifolia Scop.","woody"
-"Ulmus glabra Huds.","woody"
-"Urtica dioica L.",NA
-"Parietaria judaica L.",NA
-"Aruncus dioicus (Walter) Fernald",NA
-"Filipendula vulgaris Moench",NA
-"Filipendula ulmaria (L.) Maxim.",NA
-"Rubus idaeus L.","woody"
-"Rubus caesius L.","woody"
-"Rubus armeniacus Focke",NA
-"Rosa canina L.","woody"
-"Sanguisorba minor Scop.",NA
-"Geum rivale L.",NA
-"Geum urbanum L.",NA
-"Geum reptans L.",NA
-"Dryas octopetala L.","woody"
-"Potentilla palustris (L.) Scop.",NA
-"Potentilla caulescens L.",NA
-"Potentilla erecta (L.) Raeusch.",NA
-"Potentilla argentea L.",NA
-"Fragaria vesca L.",NA
-"Duchesnea indica (Andrews) Focke",NA
-"Alchemilla pentaphyllea L.",NA
-"Sorbus aucuparia L.","woody"
-"Sorbus aria (L.) Crantz","woody"
-"Crataegus monogyna Jacq.","woody"
-"Prunus spinosa L.","woody"
-"Frangula alnus Mill.","woody"
-"Genista tinctoria L.","woody"
-"Robinia pseudoacacia L.","woody"
-"Vicia sylvatica L.",NA
-"Vicia sepium L.",NA
-"Lathyrus vernus (L.) Bernh.",NA
-"Lathyrus pratensis L.",NA
-"Ononis pusilla L.",NA
-"Melilotus albus Medik.",NA
-"Medicago sativa L.",NA
-"Medicago lupulina L.",NA
-"Trifolium alpinum L.",NA
-"Trifolium montanum L.",NA
-"Trifolium repens L.",NA
-"Trifolium pallescens Schreb.",NA
-"Trifolium thalii Vill.",NA
-"Trifolium badium Schreb.",NA
-"Trifolium dubium Sibth.",NA
-"Trifolium arvense L.",NA
-"Trifolium pratense L.",NA
-"Trifolium pratense L. subsp. pratense",NA
-"Trifolium rubens L.",NA
-"Lotus maritimus L.",NA
-"Lotus pedunculatus Cav.",NA
-"Lotus corniculatus L.",NA
-"Lotus alpinus (DC.) Ramond",NA
-"Anthyllis vulneraria L.",NA
-"Anthyllis vulneraria L. subsp. vulneraria",NA
-"Hippocrepis comosa L.",NA
-"Hedysarum hedysaroides (L.) Schinz & Thell.",NA
-"Polygala vulgaris L.",NA
-"Euonymus europaeus L.",NA
-"Parnassia palustris L.",NA
-"Hypericum montanum L.",NA
-"Hypericum hirsutum L.",NA
-"Hypericum perforatum L. subsp. perforatum",NA
-"Viola odorata L.",NA
-"Viola reichenbachiana Boreau",NA
-"Viola palustris L.",NA
-"Viola biflora L.",NA
-"Salix herbacea L.","woody"
-"Salix retusa L.","woody"
-"Salix triandra L.","woody"
-"Salix appendiculata Vill.","woody"
-"Salix repens L.","woody"
-"Salix foetida DC.","woody"
-"Salix viminalis L.","woody"
-"Salix elaeagnos Scop.","woody"
-"Salix daphnoides Vill.","woody"
-"Mercurialis perennis L.",NA
-"Euphorbia dulcis L.",NA
-"Euphorbia amygdaloides L.",NA
-"Euphorbia cyparissias L.",NA
-"Oxalis acetosella L.",NA
-"Tilia cordata Mill.","woody"
-"Helianthemum nummularium (L.) Mill.","woody"
-"Helianthemum nummularium (L.) Mill. subsp. nummularium","woody"
-"Helianthemum apenninum (L.) Mill.","woody"
-"Fumana procumbens (Dunal) Gren. & Godr.","woody"
-"Alliaria petiolata (M. Bieb.) Cavara & Grande",NA
-"Cardamine amara L.",NA
-"Arabis caerulea All.",NA
-"Arabis subcoriacea Gren.",NA
-"Lunaria rediviva L.",NA
-"Draba hoppeana Rchb.",NA
-"Draba dubia Suter",NA
-"Pritzelago alpina (L.) Kuntze subsp. alpina",NA
-"Thlaspi rotundifolium (L.) Gaudin subsp. rotundifolium",NA
-"Biscutella laevigata L.",NA
-"Diplotaxis tenuifolia (L.) DC.",NA
-"Erucastrum nasturtiifolium (Poir.) O. E. Schulz",NA
-"Reseda lutea L.",NA
-"Acer pseudoplatanus L.","woody"
-"Acer campestre L.","woody"
-"Lythrum salicaria L.",NA
-"Circaea lutetiana L.",NA
-"Epilobium fleischeri Hochst.",NA
-"Epilobium parviflorum Schreb.",NA
-"Epilobium collinum C. C. Gmel.",NA
-"Epilobium alpestre (Jacq.) Krock.",NA
-"Epilobium palustre L.",NA
-"Epilobium anagallidifolium Lam.",NA
-"Epilobium alsinifolium Vill.",NA
-"Geranium sanguineum L.",NA
-"Geranium sylvaticum L.",NA
-"Geranium palustre L.",NA
-"Geranium pyrenaicum Burm. f.",NA
-"Geranium robertianum L.",NA
-"Geranium robertianum L. subsp. robertianum",NA
-"Thesium alpinum L.",NA
-"Chenopodium bonus-henricus L.",NA
-"Arenaria serpyllifolia L.",NA
-"Minuartia recurva (All.) Schinz & Thell.",NA
-"Stellaria nemorum L.",NA
-"Stellaria nemorum L. subsp. nemorum",NA
-"Cerastium cerastoides (L.) Britton",NA
-"Cerastium alpinum L.",NA
-"Cerastium latifolium L.",NA
-"Cerastium pedunculatum Gaudin",NA
-"Cerastium fontanum subsp. vulgare (Hartm.) Greuter & Burdet",NA
-"Silene flos-cuculi (L.) Clairv.",NA
-"Silene nutans L.",NA
-"Silene nutans L. subsp. nutans",NA
-"Silene vulgaris (Moench) Garcke subsp. vulgaris",NA
-"Silene vulgaris subsp. glareosa (Jord.) Marsden-Jones & Turrill",NA
-"Silene vulgaris subsp. prostrata (Gaudin) Schinz & Thell.",NA
-"Silene acaulis (L.) Jacq.",NA
-"Silene exscapa All.",NA
-"Silene dioica (L.) Clairv.",NA
-"Gypsophila repens L.",NA
-"Petrorhagia saxifraga (L.) Link",NA
-"Saponaria officinalis L.",NA
-"Dianthus seguieri Vill.",NA
-"Dianthus carthusianorum L.",NA
-"Dianthus carthusianorum subsp. vaginatus (Chaix) Schinz & R. Keller",NA
-"Dianthus sylvestris Wulfen",NA
-"Polygonum bistorta L.",NA
-"Polygonum viviparum L.",NA
-"Rumex scutatus L.",NA
-"Rumex nivalis Hegetschw.",NA
-"Rumex alpinus L.",NA
-"Rumex obtusifolius L.",NA
-"Rumex crispus L.",NA
-"Oxyria digyna (L.) Hill",NA
-"Drosera rotundifolia L.",NA
-"Myricaria germanica (L.) Desv.","woody"
-"Loiseleuria procumbens (L.) Desv.","woody"
-"Empetrum nigrum L.","woody"
-"Erica carnea L.","woody"
-"Calluna vulgaris (L.) Hull","woody"
-"Arctostaphylos uva-ursi (L.) Spreng.","woody"
-"Rhododendron ferrugineum L.","woody"
-"Vaccinium oxycoccos L.","woody"
-"Vaccinium vitis-idaea L.","woody"
-"Vaccinium myrtillus L.","woody"
-"Vaccinium uliginosum L.","woody"
-"Pyrola minor L.",NA
-"Primula auricula L.",NA
-"Primula hirsuta All.",NA
-"Primula farinosa L.",NA
-"Androsace alpina (L.) Lam.",NA
-"Cyclamen purpurascens Mill.",NA
-"Lysimachia vulgaris L.",NA
-"Impatiens parviflora DC.",NA
-"Impatiens glandulifera Royle",NA
-"Blackstonia perfoliata (L.) Huds.",NA
-"Centaurium erythraea Rafn",NA
-"Gentiana clusii E. P. Perrier & Songeon",NA
-"Gentiana brachyphylla Vill.",NA
-"Gentiana nivalis L.",NA
-"Vincetoxicum hirundinaria Medik.",NA
-"Vinca minor L.","woody"
-"Asperula cynanchica L.",NA
-"Galium odoratum (L.) Scop.",NA
-"Galium palustre L.",NA
-"Galium verum L. subsp. verum",NA
-"Galium mollugo L.",NA
-"Galium lucidum All.",NA
-"Galium pumilum Murray",NA
-"Galium aparine L.",NA
-"Eritrichium nanum (L.) Gaudin",NA
-"Myosotis decumbens Host",NA
-"Myosotis alpestris F. W. Schmidt",NA
-"Myosotis nemorosa Besser",NA
-"Atropa bella-donna L.",NA
-"Solanum dulcamara L.",NA
-"Cuscuta epithymum (L.) L.",NA
-"Calystegia sepium (L.) R. Br.",NA
-"Convolvulus arvensis L.",NA
-"Verbena officinalis L.",NA
-"Ajuga reptans L.",NA
-"Ajuga genevensis L.",NA
-"Teucrium scorodonia L.",NA
-"Teucrium montanum L.","woody"
-"Teucrium chamaedrys L.","woody"
-"Scutellaria galericulata L.",NA
-"Melittis melissophyllum L.",NA
-"Lamium maculatum (L.) L.",NA
-"Lamium galeobdolon subsp. montanum (Pers.) Hayek",NA
-"Stachys officinalis (L.) Trevis.",NA
-"Stachys sylvatica L.",NA
-"Stachys recta L.",NA
-"Glechoma hederacea L.",NA
-"Prunella grandiflora (L.) Scholler",NA
-"Prunella vulgaris L.",NA
-"Thymus pulegioides L. subsp. pulegioides",NA
-"Salvia pratensis L.",NA
-"Plantago major L. subsp. major",NA
-"Plantago lanceolata L.",NA
-"Plantago alpina L.",NA
-"Plantago atrata Hoppe",NA
-"Cymbalaria muralis G. Gaertn. & al.",NA
-"Linaria alpina (L.) Mill.",NA
-"Veronica alpina L.",NA
-"Veronica chamaedrys L.",NA
-"Veronica serpyllifolia L.",NA
-"Veronica serpyllifolia subsp. humifusa (Dicks.) Syme",NA
-"Veronica arvensis L.",NA
-"Veronica persica Poir.",NA
-"Veronica filiformis Sm.",NA
-"Pseudolysimachion spicatum (L.) Opiz",NA
-"Globularia cordifolia L.","woody"
-"Fraxinus excelsior L.","woody"
-"Fraxinus ornus L.","woody"
-"Ligustrum vulgare L.","woody"
-"Buddleja davidii Franch.","woody"
-"Scrophularia nodosa L.",NA
-"Melampyrum sylvaticum L.",NA
-"Melampyrum pratense L.",NA
-"Euphrasia minima Schleich.",NA
-"Euphrasia rostkoviana subsp. montana (Jord.) Wettst.",NA
-"Odontites viscosus (L.) Clairv.",NA
-"Odontites luteus (L.) Clairv.",NA
-"Pedicularis verticillata L.",NA
-"Rhinanthus alectorolophus (Scop.) Pollich",NA
-"Rhinanthus minor L.",NA
-"Rhinanthus angustifolius C. C. Gmel.",NA
-"Rhinanthus glacialis Personnat",NA
-"Ilex aquifolium L.","woody"
-"Astrantia major L.",NA
-"Chaerophyllum hirsutum L.",NA
-"Chaerophyllum villarsii W. D. J. Koch",NA
-"Aegopodium podagraria L.",NA
-"Bupleurum ranunculoides L. subsp. ranunculoides",NA
-"Carum carvi L.",NA
-"Ligusticum mutellinoides Vill.",NA
-"Angelica sylvestris L.",NA
-"Peucedanum ostruthium (L.) W. D. J. Koch",NA
-"Viburnum lantana L.","woody"
-"Viburnum opulus L.","woody"
-"Lonicera xylosteum L.","woody"
-"Valeriana dioica L.",NA
-"Valeriana officinalis L.",NA
-"Valeriana montana L.",NA
-"Valeriana tripteris L.",NA
-"Succisa pratensis Moench",NA
-"Scabiosa triandra L.",NA
-"Scabiosa lucida Vill.",NA
-"Lomelosia graminifolia (L.) Greuter & Burdet",NA
-"Menyanthes trifoliata L.",NA
-"Campanula barbata L.",NA
-"Campanula rotundifolia L.",NA
-"Campanula scheuchzeri Vill.",NA
-"Campanula cochleariifolia Lam.",NA
-"Phyteuma hemisphaericum L.",NA
-"Phyteuma globulariifolium Sternb. & Hoppe subsp. globulariifolium",NA
-"Phyteuma betonicifolium Vill.",NA
-"Phyteuma spicatum L.",NA
-"Adenostyles alliariae (Gouan) A. Kern.",NA
-"Adenostyles alpina (L.) Bluff & Fingerh.",NA
-"Solidago virgaurea subsp. minuta (L.) Arcang.",NA
-"Bellis perennis L.",NA
-"Aster bellidiastrum (L.) Scop.",NA
-"Aster alpinus L.",NA
-"Aster linosyris (L.) Bernh.",NA
-"Conyza sumatrensis (Retz.) E. Walker",NA
-"Erigeron alpinus L.",NA
-"Erigeron uniflorus L.",NA
-"Antennaria carpatica (Wahlenb.) Bluff & Fingerh.",NA
-"Inula salicina L.",NA
-"Inula hirta L.",NA
-"Achillea atrata L.",NA
-"Achillea nana L.",NA
-"Achillea macrophylla L.",NA
-"Matricaria discoidea DC.",NA
-"Leucanthemopsis alpina (L.) Heywood",NA
-"Leucanthemum adustum (W. D. J. Koch) Gremli",NA
-"Artemisia absinthium L.",NA
-"Homogyne alpina (L.) Cass.",NA
-"Arnica montana L.",NA
-"Doronicum grandiflorum Lam.",NA
-"Doronicum clusii (All.) Tausch",NA
-"Senecio alpinus (L.) Scop.",NA
-"Senecio ovatus (G. Gaertn. & al.) Willd.",NA
-"Senecio incanus L. subsp. incanus",NA
-"Carduus personata (L.) Jacq.",NA
-"Carduus defloratus subsp. tridentinus (Evers) Murr",NA
-"Cirsium arvense (L.) Scop.",NA
-"Cirsium palustre (L.) Scop.",NA
-"Cirsium tuberosum (L.) All.",NA
-"Cirsium spinosissimum (L.) Scop.",NA
-"Cirsium oleraceum (L.) Scop.",NA
-"Centaurea scabiosa L. subsp. scabiosa",NA
-"Centaurea valesiaca (DC.) Jord.",NA
-"Centaurea stoebe L. subsp. stoebe",NA
-"Centaurea nigrescens Willd.",NA
-"Serratula tinctoria L.",NA
-"Leontodon hispidus L.",NA
-"Leontodon hispidus L. subsp. hispidus",NA
-"Scorzonera austriaca Willd.",NA
-"Sonchus asper Hill",NA
-"Cicerbita alpina (L.) Wallr.",NA
-"Prenanthes purpurea L.",NA
-"Taraxacum officinale aggr.",NA
-"Taraxacum alpinum aggr.",NA
-"Crepis aurea (L.) Cass.",NA
-"Crepis kerneri Rech. f.",NA
-"Crepis pyrenaica (L.) Greuter",NA
-"Crepis capillaris Wallr.",NA
-"Crepis paludosa (L.) Moench",NA
-"Crepis biennis L.",NA
-"Hieracium staticifolium All.",NA
-"Hieracium murorum aggr.",NA
-"Hieracium prenanthoides aggr.",NA
-"Alisma plantago-aquatica L.",NA
-"Potamogeton natans L.","aquatic"
-"Tofieldia calyculata (L.) Wahlenb.",NA
-"Paris quadrifolia L.",NA
-"Anthericum ramosum L.",NA
-"Maianthemum bifolium (L.) F. W. Schmidt",NA
-"Polygonatum verticillatum (L.) All.",NA
-"Polygonatum multiflorum (L.) All.",NA
-"Ruscus aculeatus L.","woody"
-"Allium lusitanicum Lam.",NA
-"Allium carinatum L. subsp. carinatum",NA
-"Allium carinatum subsp. pulchellum Bonnier & Layens",NA
-"Allium ursinum L.",NA
-"Cephalanthera rubra (L.) Rich.",NA
-"Cephalanthera damasonium (Mill.) Druce",NA
-"Cephalanthera longifolia (L.) Fritsch",NA
-"Epipactis atrorubens Besser",NA
-"Epipactis palustris (L.) Crantz",NA
-"Neottia nidus-avis (L.) Rich.",NA
-"Listera cordata (L.) R. Br.",NA
-"Goodyera repens (L.) R. Br.",NA
-"Gymnadenia odoratissima (L.) Rich.",NA
-"Dactylorhiza maculata subsp. fuchsii (Druce) Hyl.",NA
-"Dactylorhiza majalis (Rchb.) P. F. Hunt & Summerh.",NA
-"Orchis morio L.",NA
-"Orchis mascula (L.) L. subsp. mascula",NA
-"Orchis palustris Jacq.",NA
-"Trachycarpus fortunei (Hook.) H. Wendl.","woody"
-"Sparganium erectum L.",NA
-"Typha latifolia L.",NA
-"Juncus filiformis L.",NA
-"Juncus triglumis L.",NA
-"Juncus effusus L.",NA
-"Juncus inflexus L.",NA
-"Juncus jacquinii L.",NA
-"Juncus articulatus L.",NA
-"Juncus acutiflorus Hoffm.",NA
-"Luzula lutea (All.) DC.",NA
-"Luzula luzuloides (Lam.) Dandy & Wilmott",NA
-"Luzula nivea (L.) DC.",NA
-"Luzula sylvatica aggr.",NA
-"Luzula sylvatica (Huds.) Gaudin",NA
-"Luzula campestris (L.) DC.",NA
-"Luzula spicata (L.) DC.",NA
-"Eriophorum vaginatum L.",NA
-"Eriophorum scheuchzeri Hoppe",NA
-"Eriophorum latifolium Hoppe",NA
-"Eriophorum angustifolium Honck.",NA
-"Trichophorum cespitosum (L.) Hartm.",NA
-"Scirpus sylvaticus L.",NA
-"Blysmus compressus (L.) Link",NA
-"Eleocharis quinqueflora (Hartmann) O. Schwarz",NA
-"Schoenus nigricans L.",NA
-"Elyna myosuroides (Vill.) Fritsch",NA
-"Carex davalliana Sm.",NA
-"Carex curvula All.",NA
-"Carex disticha Huds.",NA
-"Carex foetida All.",NA
-"Carex spicata Huds.",NA
-"Carex remota L.",NA
-"Carex leporina L.",NA
-"Carex echinata Murray",NA
-"Carex lachenalii Schkuhr",NA
-"Carex nigra (L.) Reichard",NA
-"Carex elata All.",NA
-"Carex bicolor All.",NA
-"Carex atrata L. subsp. atrata",NA
-"Carex parviflora Host",NA
-"Carex pilulifera L.",NA
-"Carex caryophyllea Latourr.",NA
-"Carex pendula Huds.",NA
-"Carex flacca Schreb.",NA
-"Carex panicea L.",NA
-"Carex alba Scop.",NA
-"Carex digitata L.",NA
-"Carex mucronata All.",NA
-"Carex sylvatica Huds.",NA
-"Carex firma Host",NA
-"Carex ferruginea Scop.",NA
-"Carex sempervirens Vill.",NA
-"Carex hirta L.",NA
-"Carex flava L.",NA
-"Carex demissa Hornem.",NA
-"Carex pseudocyperus L.","aquatic"
-"Carex rostrata Stokes",NA
-"Carex acutiformis Ehrh.",NA
-"Cladium mariscus (L.) Pohl",NA
-"Bromus ramosus Huds.",NA
-"Bromus benekenii (Lange) Trimen",NA
-"Bromus erectus Huds.",NA
-"Bromus erectus Huds. subsp. erectus",NA
-"Festuca quadriflora Honck.",NA
-"Festuca ovina aggr.",NA
-"Festuca gigantea (L.) Vill.",NA
-"Festuca altissima All.",NA
-"Briza media L.",NA
-"Brachypodium sylvaticum (Huds.) P. Beauv.",NA
-"Brachypodium pinnatum aggr.",NA
-"Brachypodium rupestre (Host) Roem. & Schult.",NA
-"Poa annua L.",NA
-"Poa supina Schrad.",NA
-"Poa alpina L.",NA
-"Poa trivialis L.",NA
-"Dactylis glomerata L.",NA
-"Cynosurus cristatus L.",NA
-"Melica ciliata L.",NA
-"Melica nutans L.",NA
-"Sesleria caerulea (L.) Ard.",NA
-"Hordelymus europaeus (L.) Harz",NA
-"Elymus repens (L.) Gould",NA
-"Elymus hispidus (Opiz) Melderis",NA
-"Elymus caninus (L.) L.",NA
-"Lolium perenne L.",NA
-"Molinia caerulea (L.) Moench",NA
-"Molinia arundinacea Schrank",NA
-"Phragmites australis (Cav.) Steud.",NA
-"Nardus stricta L.",NA
-"Holcus lanatus L.",NA
-"Avenella flexuosa (L.) Drejer",NA
-"Deschampsia cespitosa (L.) P. Beauv.",NA
-"Trisetum flavescens (L.) P. Beauv.",NA
-"Trisetum spicatum (L.) K. Richt.",NA
-"Arrhenatherum elatius (L.) J. Presl & C. Presl",NA
-"Helictotrichon versicolor (Vill.) Pilg.",NA
-"Koeleria pyramidata (Lam.) P. Beauv.",NA
-"Agrostis gigantea Roth",NA
-"Agrostis alpina Scop.",NA
-"Milium effusum L.",NA
-"Calamagrostis varia (Schrad.) Host",NA
-"Calamagrostis epigejos (L.) Roth",NA
-"Calamagrostis pseudophragmites (Haller f.) Koeler",NA
-"Calamagrostis villosa (Chaix) J. F. Gmel.",NA
-"Phleum pratense L.",NA
-"Phleum alpinum L.",NA
-"Phleum rhaeticum (Humphries) Rauschert",NA
-"Phleum hirsutum Honck.",NA
-"Phleum phleoides (L.) H. Karst.",NA
-"Stipa pennata L.",NA
-"Stipa capillata L.",NA
-"Achnatherum calamagrostis (L.) P. Beauv.",NA
-"Anthoxanthum odoratum L.",NA
-"Setaria viridis (L.) P. Beauv.",NA
-"Setaria verticillata (L.) P. Beauv.",NA
-"Chrysopogon gryllus (L.) Trin.",NA
-"Rubus fruticosus aggr.",NA
-"Aconitum lycoctonum subsp. neapolitanum (Ten.) Nyman",NA
-"Alchemilla plicatula aggr.",NA
-"Alchemilla vulgaris aggr.",NA
-"Gentiana bavarica subsp. subacaulis (Schleich.) G. Mull.",NA
-"Lapsana communis L. subsp. communis",NA
-"Sempervivum arachnoideum L. subsp. arachnoideum",NA
-"Euphorbia seguieriana Neck.",NA
-"Tilia platyphyllos Scop. subsp. platyphyllos","woody"
-"Myosotis sylvatica aggr.",NA
-"Bupleurum falcatum L.",NA
-"Knautia dipsacifolia Kreutzer subsp. dipsacifolia",NA
-"Phyteuma spicatum L. subsp. spicatum",NA
-"Erigeron acris subsp. politus (Fr.) H. Lindb.",NA
-"Nigritella rhellicani Teppner & E. Klein",NA
-"Festuca pratensis Huds. subsp. pratensis",NA
-"Festuca acuminata Gaudin",NA
-"Festuca rubra L.",NA
-"Helictotrichon pubescens (Huds.) Pilg. subsp. pubescens",NA
+"Abies alba Mill.","Woody"
+"Acer campestre L.","Woody"
+"Acer pseudoplatanus L.","Woody"
+"Achillea atrata L.","Forb"
+"Achillea macrophylla L.","Forb"
+"Achillea nana L.","Forb"
+"Achnatherum calamagrostis (L.) P. Beauv.","Graminoid"
+"Aconitum lycoctonum L.","Forb"
+"Aconitum lycoctonum subsp. neapolitanum (Ten.) Nyman","Forb"
+"Adenostyles alliariae (Gouan) A. Kern.","Forb"
+"Adenostyles alpina (L.) Bluff & Fingerh.","Forb"
+"Aegopodium podagraria L.","Forb"
+"Agrostis alpina Scop.","Graminoid"
+"Agrostis gigantea Roth","Graminoid"
+"Ajuga genevensis L.","Forb"
+"Ajuga reptans L.","Forb"
+"Alchemilla decumbens Buser","Forb"
+"Alchemilla glabra Neygenf.","Forb"
+"Alchemilla nitida Buser","Forb"
+"Alchemilla pentaphyllea L.","Forb"
+"Alchemilla plicatula aggr.","Forb"
+"Alchemilla vulgaris aggr.","Forb"
+"Alisma plantago-aquatica L.","Forb"
+"Alliaria petiolata (M. Bieb.) Cavara & Grande","Forb"
+"Allium carinatum L. subsp. carinatum","Forb"
+"Allium carinatum subsp. pulchellum Bonnier & Layens","Forb"
+"Allium lusitanicum Lam.","Forb"
+"Allium ursinum L.","Forb"
+"Alnus glutinosa (L.) Gaertn.","Woody"
+"Alnus incana (L.) Moench","Woody"
+"Alnus viridis (Chaix) DC.","Woody"
+"Androsace alpina (L.) Lam.","Forb"
+"Anemone narcissiflora L.","Forb"
+"Anemone nemorosa L.","Forb"
+"Angelica sylvestris L.","Forb"
+"Antennaria carpatica (Wahlenb.) Bluff & Fingerh.","Forb"
+"Anthericum ramosum L.","Forb"
+"Anthoxanthum alpinum Á. Löve & D. Löve","Graminoid"
+"Anthoxanthum odoratum L.","Graminoid"
+"Anthyllis vulneraria L.","Forb"
+"Anthyllis vulneraria L. subsp. vulneraria","Forb"
+"Arabis caerulea All.","Forb"
+"Arabis subcoriacea Gren.","Forb"
+"Arctostaphylos uva-ursi (L.) Spreng.","Woody"
+"Arenaria serpyllifolia L.","Forb"
+"Arnica montana L.","Forb"
+"Arrhenatherum elatius (L.) J. Presl & C. Presl","Graminoid"
+"Arrhenatherum elatius (L.) J. Presl & C. Presl subsp. elatius","Graminoid"
+"Artemisia absinthium L.","Forb"
+"Aruncus dioicus (Walter) Fernald","Forb"
+"Asperula cynanchica L.","Forb"
+"Asplenium ceterach L.","Fern"
+"Asplenium ruta-muraria L.","Fern"
+"Asplenium trichomanes L.","Fern"
+"Aster alpinus L.","Forb"
+"Aster bellidiastrum (L.) Scop.","Forb"
+"Aster linosyris (L.) Bernh.","Forb"
+"Astrantia major L.","Forb"
+"Athyrium filix-femina (L.) Roth","Forb"
+"Atropa bella-donna L.","Forb"
+"Avenella flexuosa (L.) Drejer","Graminoid"
+"Bellis perennis L.","Forb"
+"Berberis vulgaris L.","Woody"
+"Betula nana L.","Woody"
+"Betula pubescens Ehrh.","Woody"
+"Biscutella laevigata L.","Forb"
+"Blackstonia perfoliata (L.) Huds.","Forb"
+"Blysmus compressus (L.) Link","Graminoid"
+"Botrychium lunaria (L.) Sw.","Fern"
+"Brachypodium pinnatum aggr.","Graminoid"
+"Brachypodium rupestre (Host) Roem. & Schult.","Graminoid"
+"Brachypodium sylvaticum (Huds.) P. Beauv.","Graminoid"
+"Briza media L.","Graminoid"
+"Bromus benekenii (Lange) Trimen","Graminoid"
+"Bromus erectus Huds.","Graminoid"
+"Bromus erectus Huds. subsp. erectus","Graminoid"
+"Bromus ramosus Huds.","Graminoid"
+"Buddleja davidii Franch.","Woody"
+"Bupleurum falcatum L.","Forb"
+"Bupleurum ranunculoides L. subsp. ranunculoides","Forb"
+"Calamagrostis epigejos (L.) Roth","Graminoid"
+"Calamagrostis pseudophragmites (Haller f.) Koeler","Graminoid"
+"Calamagrostis varia (Schrad.) Host","Graminoid"
+"Calamagrostis villosa (Chaix) J. F. Gmel.","Graminoid"
+"Calluna vulgaris (L.) Hull","Woody"
+"Caltha palustris L.","Forb"
+"Calystegia sepium (L.) R. Br.","Forb"
+"Campanula barbata L.","Forb"
+"Campanula cochleariifolia Lam.","Forb"
+"Campanula rotundifolia L.","Forb"
+"Campanula scheuchzeri Vill.","Forb"
+"Cardamine amara L.","Forb"
+"Carduus defloratus subsp. tridentinus (Evers) Murr","Forb"
+"Carduus personata (L.) Jacq.","Forb"
+"Carex acutiformis Ehrh.","Graminoid"
+"Carex alba Scop.","Graminoid"
+"Carex atrata L. subsp. atrata","Graminoid"
+"Carex bicolor All.","Graminoid"
+"Carex caryophyllea Latourr.","Graminoid"
+"Carex curvula All.","Graminoid"
+"Carex davalliana Sm.","Graminoid"
+"Carex demissa Hornem.","Graminoid"
+"Carex digitata L.","Graminoid"
+"Carex disticha Huds.","Graminoid"
+"Carex echinata Murray","Graminoid"
+"Carex elata All.","Graminoid"
+"Carex ferruginea Scop.","Graminoid"
+"Carex firma Host","Graminoid"
+"Carex flacca Schreb.","Graminoid"
+"Carex flava L.","Graminoid"
+"Carex foetida All.","Graminoid"
+"Carex hirta L.","Graminoid"
+"Carex lachenalii Schkuhr","Graminoid"
+"Carex leporina L.","Graminoid"
+"Carex mucronata All.","Graminoid"
+"Carex nigra (L.) Reichard","Graminoid"
+"Carex panicea L.","Graminoid"
+"Carex parviflora Host","Graminoid"
+"Carex pendula Huds.","Graminoid"
+"Carex pilulifera L.","Graminoid"
+"Carex pseudocyperus L.","Aquatic"
+"Carex remota L.","Graminoid"
+"Carex rostrata Stokes","Graminoid"
+"Carex sempervirens Vill.","Graminoid"
+"Carex spicata Huds.","Graminoid"
+"Carex sylvatica Huds.","Graminoid"
+"Carum carvi L.","Forb"
+"Centaurea nigrescens Willd.","Forb"
+"Centaurea scabiosa L. subsp. scabiosa","Forb"
+"Centaurea stoebe L. subsp. stoebe","Forb"
+"Centaurea valesiaca (DC.) Jord.","Forb"
+"Centaurium erythraea Rafn","Forb"
+"Cephalanthera damasonium (Mill.) Druce","Forb"
+"Cephalanthera longifolia (L.) Fritsch","Forb"
+"Cephalanthera rubra (L.) Rich.","Forb"
+"Cerastium alpinum L.","Forb"
+"Cerastium cerastoides (L.) Britton","Forb"
+"Cerastium fontanum subsp. vulgare (Hartm.) Greuter & Burdet","Forb"
+"Cerastium latifolium L.","Forb"
+"Cerastium pedunculatum Gaudin","Forb"
+"Chaerophyllum hirsutum L.","Forb"
+"Chaerophyllum villarsii W. D. J. Koch","Forb"
+"Chelidonium majus L.","Forb"
+"Chenopodium bonus-henricus L.","Forb"
+"Chrysopogon gryllus (L.) Trin.","Graminoid"
+"Cicerbita alpina (L.) Wallr.","Forb"
+"Circaea lutetiana L.","Forb"
+"Cirsium arvense (L.) Scop.","Forb"
+"Cirsium oleraceum (L.) Scop.","Forb"
+"Cirsium palustre (L.) Scop.","Forb"
+"Cirsium spinosissimum (L.) Scop.","Forb"
+"Cirsium tuberosum (L.) All.","Forb"
+"Cladium mariscus (L.) Pohl","Graminoid"
+"Convolvulus arvensis L.","Forb"
+"Conyza sumatrensis (Retz.) E. Walker","Forb"
+"Crataegus monogyna Jacq.","Woody"
+"Crepis aurea (L.) Cass.","Forb"
+"Crepis biennis L.","Forb"
+"Crepis capillaris Wallr.","Forb"
+"Crepis kerneri Rech. f.","Forb"
+"Crepis paludosa (L.) Moench","Forb"
+"Crepis pyrenaica (L.) Greuter","Forb"
+"Cuscuta epithymum (L.) L.","Forb"
+"Cyclamen purpurascens Mill.","Forb"
+"Cymbalaria muralis G. Gaertn. & al.","Forb"
+"Cynosurus cristatus L.","Graminoid"
+"Cystopteris alpina (Lam.) Desv.","Forb"
+"Dactylis glomerata L.","Graminoid"
+"Dactylorhiza lapponica (Hartm.) Soó","Forb"
+"Dactylorhiza maculata subsp. fuchsii (Druce) Hyl.","Forb"
+"Dactylorhiza majalis (Rchb.) P. F. Hunt & Summerh.","Forb"
+"Deschampsia cespitosa (L.) P. Beauv.","Graminoid"
+"Dianthus carthusianorum L.","Forb"
+"Dianthus carthusianorum subsp. vaginatus (Chaix) Schinz & R. Keller","Forb"
+"Dianthus seguieri Vill.","Forb"
+"Dianthus sylvestris Wulfen","Forb"
+"Diphasiastrum alpinum (L.) Holub","Fern"
+"Diplotaxis tenuifolia (L.) DC.","Forb"
+"Doronicum clusii (All.) Tausch","Forb"
+"Doronicum grandiflorum Lam.","Forb"
+"Draba dubia Suter","Forb"
+"Draba hoppeana Rchb.","Forb"
+"Drosera rotundifolia L.","Forb"
+"Dryas octopetala L.","Woody"
+"Dryopteris affinis (Lowe) Fraser-Jenk.","Fern"
+"Dryopteris carthusiana (Vill.) H. P. Fuchs","Fern"
+"Dryopteris dilatata (Hoffm.) A. Gray","Fern"
+"Dryopteris expansa (C. Presl) Fraser-Jenk. & Jermy","Fern"
+"Dryopteris filix-mas (L.) Schott","Fern"
+"Duchesnea indica (Andrews) Focke","Forb"
+"Eleocharis quinqueflora (Hartmann) O. Schwarz","Graminoid"
+"Elymus caninus (L.) L.","Graminoid"
+"Elymus hispidus (Opiz) Melderis","Graminoid"
+"Elymus repens (L.) Gould","Graminoid"
+"Elyna myosuroides (Vill.) Fritsch","Graminoid"
+"Empetrum nigrum L.","Woody"
+"Empetrum nigrum subsp. hermaphroditum (Hagerup) Böcher","Forb"
+"Epilobium alpestre (Jacq.) Krock.","Forb"
+"Epilobium alsinifolium Vill.","Forb"
+"Epilobium anagallidifolium Lam.","Forb"
+"Epilobium collinum C. C. Gmel.","Forb"
+"Epilobium fleischeri Hochst.","Forb"
+"Epilobium palustre L.","Forb"
+"Epilobium parviflorum Schreb.","Forb"
+"Epipactis atrorubens Besser","Forb"
+"Epipactis palustris (L.) Crantz","Forb"
+"Epipactis rhodanensis Gévaudan & Robatsch","Forb"
+"Equisetum arvense L.","Fern"
+"Equisetum fluviatile L.","Fern"
+"Equisetum palustre L.","Fern"
+"Equisetum ramosissimum Desf.","Fern"
+"Equisetum sylvaticum L.","Fern"
+"Equisetum telmateia Ehrh.","Fern"
+"Equisetum variegatum Schleich.","Fern"
+"Erica carnea L.","Woody"
+"Erigeron acris subsp. politus (Fr.) H. Lindb.","Forb"
+"Erigeron alpinus L.","Forb"
+"Erigeron uniflorus L.","Forb"
+"Eriophorum angustifolium Honck.","Graminoid"
+"Eriophorum latifolium Hoppe","Graminoid"
+"Eriophorum scheuchzeri Hoppe","Graminoid"
+"Eriophorum vaginatum L.","Graminoid"
+"Eritrichium nanum (L.) Gaudin","Forb"
+"Erucastrum nasturtiifolium (Poir.) O. E. Schulz","Forb"
+"Euonymus europaeus L.","Woody"
+"Euphorbia amygdaloides L.","Forb"
+"Euphorbia cyparissias L.","Forb"
+"Euphorbia dulcis L.","Forb"
+"Euphorbia seguieriana Neck.","Forb"
+"Euphrasia minima Schleich.","Forb"
+"Euphrasia rostkoviana subsp. montana (Jord.) Wettst.","Forb"
+"Fagus sylvatica L.","Woody"
+"Festuca acuminata Gaudin","Graminoid"
+"Festuca altissima All.","Graminoid"
+"Festuca gigantea (L.) Vill.","Graminoid"
+"Festuca ovina aggr.","Graminoid"
+"Festuca pratensis Huds. subsp. pratensis","Graminoid"
+"Festuca quadriflora Honck.","Graminoid"
+"Festuca rubra L.","Graminoid"
+"Filipendula ulmaria (L.) Maxim.","Forb"
+"Filipendula vulgaris Moench","Forb"
+"Fragaria vesca L.","Forb"
+"Frangula alnus Mill.","Woody"
+"Fraxinus excelsior L.","Woody"
+"Fraxinus ornus L.","Woody"
+"Fumana procumbens (Dunal) Gren. & Godr.","Woody"
+"Galium aparine L.","Forb"
+"Galium lucidum All.","Forb"
+"Galium mollugo L.","Forb"
+"Galium odoratum (L.) Scop.","Forb"
+"Galium palustre L.","Forb"
+"Galium pumilum Murray","Forb"
+"Galium verum L. subsp. verum","Forb"
+"Genista tinctoria L.","Woody"
+"Gentiana bavarica subsp. subacaulis (Schleich.) G. Mull.","Forb"
+"Gentiana brachyphylla Vill.","Forb"
+"Gentiana clusii E. P. Perrier & Songeon","Forb"
+"Gentiana nivalis L.","Forb"
+"Geranium palustre L.","Forb"
+"Geranium pyrenaicum Burm. f.","Forb"
+"Geranium robertianum L.","Forb"
+"Geranium robertianum L. subsp. robertianum","Forb"
+"Geranium sanguineum L.","Forb"
+"Geranium sylvaticum L.","Forb"
+"Geum reptans L.","Forb"
+"Geum rivale L.","Forb"
+"Geum urbanum L.","Forb"
+"Glechoma hederacea L.","Forb"
+"Globularia cordifolia L.","Woody"
+"Goodyera repens (L.) R. Br.","Forb"
+"Gymnadenia odoratissima (L.) Rich.","Forb"
+"Gymnocarpium dryopteris (L.) Newman","Forb"
+"Gypsophila repens L.","Forb"
+"Hedysarum hedysaroides (L.) Schinz & Thell.","Forb"
+"Helianthemum apenninum (L.) Mill.","Woody"
+"Helianthemum nummularium (L.) Mill.","Woody"
+"Helianthemum nummularium (L.) Mill. subsp. nummularium","Woody"
+"Helictotrichon pubescens (Huds.) Pilg. subsp. pubescens","Graminoid"
+"Helictotrichon versicolor (Vill.) Pilg.","Graminoid"
+"Hepatica nobilis Schreb.","Forb"
+"Hieracium murorum aggr.","Forb"
+"Hieracium prenanthoides aggr.","Forb"
+"Hieracium staticifolium All.","Forb"
+"Hippocrepis comosa L.","Forb"
+"Holcus lanatus L.","Graminoid"
+"Homogyne alpina (L.) Cass.","Forb"
+"Hordelymus europaeus (L.) Harz","Graminoid"
+"Huperzia selago (L.) Schrank & Mart.","Fern"
+"Hypericum hirsutum L.","Forb"
+"Hypericum montanum L.","Forb"
+"Hypericum perforatum L. subsp. perforatum","Forb"
+"Ilex aquifolium L.","Woody"
+"Impatiens glandulifera Royle","Forb"
+"Impatiens parviflora DC.","Forb"
+"Inula hirta L.","Forb"
+"Inula salicina L.","Forb"
+"Juncus acutiflorus Hoffm.","Graminoid"
+"Juncus articulatus L.","Graminoid"
+"Juncus effusus L.","Graminoid"
+"Juncus filiformis L.","Graminoid"
+"Juncus inflexus L.","Graminoid"
+"Juncus jacquinii L.","Graminoid"
+"Juncus triglumis L.","Graminoid"
+"Juniperus communis L.","Woody"
+"Juniperus communis L. subsp. communis","Woody"
+"Juniperus communis subsp. alpina Čelak.","Woody"
+"Juniperus sabina L.","Woody"
+"Knautia dipsacifolia Kreutzer subsp. dipsacifolia","Forb"
+"Koeleria pyramidata (Lam.) P. Beauv.","Graminoid"
+"Lamium galeobdolon subsp. montanum (Pers.) Hayek","Forb"
+"Lamium maculatum (L.) L.","Forb"
+"Lapsana communis L. subsp. communis","Forb"
+"Larix decidua Mill.","Woody"
+"Lathyrus pratensis L.","Forb"
+"Lathyrus vernus (L.) Bernh.","Forb"
+"Leontodon helveticus Mérat","Forb"
+"Leontodon hispidus L.","Forb"
+"Leontodon hispidus L. subsp. hispidus","Forb"
+"Leucanthemopsis alpina (L.) Heywood","Forb"
+"Leucanthemum adustum (W. D. J. Koch) Gremli","Forb"
+"Ligusticum mutellinoides Vill.","Forb"
+"Ligustrum vulgare L.","Woody"
+"Linaria alpina (L.) Mill.","Forb"
+"Listera cordata (L.) R. Br.","Forb"
+"Loiseleuria procumbens (L.) Desv.","Woody"
+"Lolium perenne L.","Graminoid"
+"Lomelosia graminifolia (L.) Greuter & Burdet","Forb"
+"Lonicera xylosteum L.","Woody"
+"Lotus alpinus (DC.) Ramond","Forb"
+"Lotus corniculatus L.","Forb"
+"Lotus maritimus L.","Forb"
+"Lotus pedunculatus Cav.","Forb"
+"Lunaria rediviva L.","Forb"
+"Luzula campestris (L.) DC.","Graminoid"
+"Luzula lutea (All.) DC.","Graminoid"
+"Luzula luzuloides (Lam.) Dandy & Wilmott","Graminoid"
+"Luzula nivea (L.) DC.","Graminoid"
+"Luzula spicata (L.) DC.","Graminoid"
+"Luzula sylvatica (Huds.) Gaudin","Graminoid"
+"Luzula sylvatica aggr.","Graminoid"
+"Lycopodium annotinum L.","Fern"
+"Lycopodium clavatum L.","Fern"
+"Lysimachia vulgaris L.","Forb"
+"Lythrum salicaria L.","Forb"
+"Maianthemum bifolium (L.) F. W. Schmidt","Forb"
+"Matricaria discoidea DC.","Forb"
+"Medicago lupulina L.","Forb"
+"Medicago sativa L.","Forb"
+"Melampyrum pratense L.","Forb"
+"Melampyrum sylvaticum L.","Forb"
+"Melica ciliata L.","Graminoid"
+"Melica nutans L.","Graminoid"
+"Melilotus albus Medik.","Forb"
+"Melittis melissophyllum L.","Forb"
+"Menyanthes trifoliata L.","Forb"
+"Mercurialis perennis L.","Forb"
+"Milium effusum L.","Graminoid"
+"Minuartia recurva (All.) Schinz & Thell.","Forb"
+"Molinia arundinacea Schrank","Graminoid"
+"Molinia caerulea (L.) Moench","Graminoid"
+"Myosotis alpestris F. W. Schmidt","Forb"
+"Myosotis decumbens Host","Forb"
+"Myosotis nemorosa Besser","Forb"
+"Myosotis sylvatica aggr.","Forb"
+"Myricaria germanica (L.) Desv.","Woody"
+"Nardus stricta L.","Graminoid"
+"Neottia nidus-avis (L.) Rich.","Forb"
+"Nigritella rhellicani Teppner & E. Klein","Forb"
+"Nuphar lutea (L.) Sm.","Aquatic"
+"Nymphaea alba L.","Aquatic"
+"Odontites luteus (L.) Clairv.","Forb"
+"Odontites viscosus (L.) Clairv.","Forb"
+"Ononis pusilla L.","Forb"
+"Orchis mascula (L.) L. subsp. mascula","Forb"
+"Orchis morio L.","Forb"
+"Orchis palustris Jacq.","Forb"
+"Oreopteris limbosperma (All.) Holub","Fern"
+"Ostrya carpinifolia Scop.","Woody"
+"Oxalis acetosella L.","Forb"
+"Oxyria digyna (L.) Hill","Forb"
+"Parietaria judaica L.","Forb"
+"Paris quadrifolia L.","Forb"
+"Parnassia palustris L.","Forb"
+"Pedicularis verticillata L.","Forb"
+"Petrorhagia saxifraga (L.) Link","Forb"
+"Peucedanum ostruthium (L.) W. D. J. Koch","Forb"
+"Phleum alpinum L.","Graminoid"
+"Phleum hirsutum Honck.","Graminoid"
+"Phleum phleoides (L.) H. Karst.","Graminoid"
+"Phleum pratense L.","Graminoid"
+"Phleum rhaeticum (Humphries) Rauschert","Graminoid"
+"Phragmites australis (Cav.) Steud.","Graminoid"
+"Phyteuma betonicifolium Vill.","Forb"
+"Phyteuma globulariifolium Sternb. & Hoppe subsp. globulariifolium","Forb"
+"Phyteuma hemisphaericum L.","Forb"
+"Phyteuma spicatum L.","Forb"
+"Phyteuma spicatum L. subsp. spicatum","Forb"
+"Picea abies (L.) H. Karst.","Woody"
+"Pinus cembra L.","Woody"
+"Pinus mugo subsp. uncinata (DC.) Domin","Woody"
+"Pinus sylvestris L.","Woody"
+"Plantago alpina L.","Forb"
+"Plantago atrata Hoppe","Forb"
+"Plantago lanceolata L.","Forb"
+"Plantago major L. subsp. major","Forb"
+"Poa alpina L.","Graminoid"
+"Poa annua L.","Graminoid"
+"Poa supina Schrad.","Graminoid"
+"Poa trivialis L.","Graminoid"
+"Polygala vulgaris L.","Forb"
+"Polygonatum multiflorum (L.) All.","Forb"
+"Polygonatum verticillatum (L.) All.","Forb"
+"Polygonum bistorta L.","Forb"
+"Polygonum viviparum L.","Forb"
+"Polystichum lonchitis (L.) Roth","Fern"
+"Potamogeton natans L.","Aquatic"
+"Potentilla argentea L.","Forb"
+"Potentilla caulescens L.","Forb"
+"Potentilla erecta (L.) Raeusch.","Forb"
+"Potentilla palustris (L.) Scop.","Forb"
+"Prenanthes purpurea L.","Forb"
+"Primula auricula L.","Forb"
+"Primula farinosa L.","Forb"
+"Primula hirsuta All.","Forb"
+"Pritzelago alpina (L.) Kuntze subsp. alpina","Forb"
+"Prunella grandiflora (L.) Scholler","Forb"
+"Prunella vulgaris L.","Forb"
+"Prunus spinosa L.","Woody"
+"Pseudolysimachion spicatum (L.) Opiz","Forb"
+"Pseudorchis albida (L.) Á. Löve & D. Löve","Forb"
+"Pteridium aquilinum (L.) Kuhn","Fern"
+"Pulsatilla alpina (L.) Delarbre","Forb"
+"Pyrola minor L.","Forb"
+"Quercus pubescens Willd.","Woody"
+"Quercus robur L.","Woody"
+"Ranunculus aconitifolius L.","Forb"
+"Ranunculus acris L.","Forb"
+"Ranunculus acris subsp. friesianus (Jord.) Syme","Forb"
+"Ranunculus bulbosus L.","Forb"
+"Ranunculus glacialis L.","Forb"
+"Ranunculus lanuginosus L.","Forb"
+"Ranunculus platanifolius L.","Forb"
+"Ranunculus repens L.","Forb"
+"Ranunculus trichophyllus Chaix","Aquatic"
+"Ranunculus trichophyllus Chaix subsp. trichophyllus","Aquatic"
+"Ranunculus tuberosus Lapeyr.","Forb"
+"Reseda lutea L.","Forb"
+"Rhinanthus alectorolophus (Scop.) Pollich","Forb"
+"Rhinanthus angustifolius C. C. Gmel.","Forb"
+"Rhinanthus glacialis Personnat","Forb"
+"Rhinanthus minor L.","Forb"
+"Rhododendron ferrugineum L.","Woody"
+"Robinia pseudoacacia L.","Woody"
+"Rosa canina L.","Woody"
+"Rubus armeniacus Focke","Forb"
+"Rubus caesius L.","Woody"
+"Rubus fruticosus aggr.","Forb"
+"Rubus idaeus L.","Woody"
+"Rumex alpinus L.","Forb"
+"Rumex crispus L.","Forb"
+"Rumex nivalis Hegetschw.","Forb"
+"Rumex obtusifolius L.","Forb"
+"Rumex scutatus L.","Forb"
+"Ruscus aculeatus L.","Woody"
+"Salix appendiculata Vill.","Woody"
+"Salix daphnoides Vill.","Woody"
+"Salix elaeagnos Scop.","Woody"
+"Salix foetida DC.","Woody"
+"Salix herbacea L.","Woody"
+"Salix repens L.","Woody"
+"Salix retusa L.","Woody"
+"Salix triandra L.","Woody"
+"Salix viminalis L.","Woody"
+"Salvia pratensis L.","Forb"
+"Sanguisorba minor Scop.","Forb"
+"Saponaria officinalis L.","Forb"
+"Saxifraga aizoides L.","Forb"
+"Saxifraga caesia L.","Forb"
+"Saxifraga granulata L.","Forb"
+"Saxifraga paniculata Mill.","Forb"
+"Saxifraga rotundifolia L.","Forb"
+"Saxifraga stellaris L.","Forb"
+"Scabiosa lucida Vill.","Forb"
+"Scabiosa triandra L.","Forb"
+"Schoenus nigricans L.","Graminoid"
+"Scirpus sylvaticus L.","Graminoid"
+"Scorzonera austriaca Willd.","Forb"
+"Scrophularia nodosa L.","Forb"
+"Scutellaria galericulata L.","Forb"
+"Sedum album L.","Forb"
+"Sedum dasyphyllum L.","Forb"
+"Sedum montanum Songeon & E. P. Perrier","Forb"
+"Sedum telephium L.","Forb"
+"Selaginella selaginoides (L.) Schrank & Mart.","Fern"
+"Sempervivum arachnoideum L.","Forb"
+"Sempervivum arachnoideum L. subsp. arachnoideum","Forb"
+"Sempervivum tectorum L.","Forb"
+"Senecio alpinus (L.) Scop.","Forb"
+"Senecio incanus L. subsp. incanus","Forb"
+"Senecio ovatus (G. Gaertn. & al.) Willd.","Forb"
+"Serratula tinctoria L.","Forb"
+"Sesleria caerulea (L.) Ard.","Graminoid"
+"Setaria verticillata (L.) P. Beauv.","Graminoid"
+"Setaria viridis (L.) P. Beauv.","Graminoid"
+"Silene acaulis (L.) Jacq.","Forb"
+"Silene dioica (L.) Clairv.","Forb"
+"Silene exscapa All.","Forb"
+"Silene flos-cuculi (L.) Clairv.","Forb"
+"Silene nutans L.","Forb"
+"Silene nutans L. subsp. nutans","Forb"
+"Silene vulgaris (Moench) Garcke subsp. vulgaris","Forb"
+"Silene vulgaris subsp. glareosa (Jord.) Marsden-Jones & Turrill","Forb"
+"Silene vulgaris subsp. prostrata (Gaudin) Schinz & Thell.","Forb"
+"Solanum dulcamara L.","Forb"
+"Solidago virgaurea subsp. minuta (L.) Arcang.","Forb"
+"Sonchus asper Hill","Forb"
+"Sorbus aria (L.) Crantz","Woody"
+"Sorbus aucuparia L.","Woody"
+"Sparganium erectum L.","Graminoid"
+"Stachys officinalis (L.) Trevis.","Forb"
+"Stachys recta L.","Forb"
+"Stachys sylvatica L.","Forb"
+"Stellaria nemorum L.","Forb"
+"Stellaria nemorum L. subsp. nemorum","Forb"
+"Stipa capillata L.","Graminoid"
+"Stipa pennata L.","Graminoid"
+"Succisa pratensis Moench","Forb"
+"Taraxacum alpinum aggr.","Forb"
+"Taraxacum officinale aggr.","Forb"
+"Teucrium chamaedrys L.","Woody"
+"Teucrium montanum L.","Woody"
+"Teucrium scorodonia L.","Forb"
+"Thalictrum aquilegiifolium L.","Forb"
+"Thelypteris palustris Schott","Fern"
+"Thesium alpinum L.","Forb"
+"Thlaspi rotundifolium (L.) Gaudin subsp. rotundifolium","Forb"
+"Thymus praecox subsp. polytrichus (Borbás) Jalas","Forb"
+"Thymus pulegioides L. subsp. pulegioides","Forb"
+"Tilia cordata Mill.","Woody"
+"Tilia platyphyllos Scop. subsp. platyphyllos","Woody"
+"Tofieldia calyculata (L.) Wahlenb.","Forb"
+"Trachycarpus fortunei (Hook.) H. Wendl.","Woody"
+"Trichophorum cespitosum (L.) Hartm.","Graminoid"
+"Trifolium alpinum L.","Forb"
+"Trifolium arvense L.","Forb"
+"Trifolium badium Schreb.","Forb"
+"Trifolium dubium Sibth.","Forb"
+"Trifolium montanum L.","Forb"
+"Trifolium pallescens Schreb.","Forb"
+"Trifolium pratense L.","Forb"
+"Trifolium pratense L. subsp. pratense","Forb"
+"Trifolium repens L.","Forb"
+"Trifolium rubens L.","Forb"
+"Trifolium thalii Vill.","Forb"
+"Trisetum flavescens (L.) P. Beauv.","Graminoid"
+"Trisetum spicatum (L.) K. Richt.","Graminoid"
+"Trollius europaeus L.","Forb"
+"Typha latifolia L.","Graminoid"
+"Ulmus glabra Huds.","Woody"
+"Urtica dioica L.","Forb"
+"Vaccinium myrtillus L.","Woody"
+"Vaccinium oxycoccos L.","Woody"
+"Vaccinium uliginosum L.","Woody"
+"Vaccinium vitis-idaea L.","Woody"
+"Valeriana dioica L.","Forb"
+"Valeriana montana L.","Forb"
+"Valeriana officinalis L.","Forb"
+"Valeriana tripteris L.","Forb"
+"Verbena officinalis L.","Forb"
+"Veronica alpina L.","Forb"
+"Veronica arvensis L.","Forb"
+"Veronica chamaedrys L.","Forb"
+"Veronica filiformis Sm.","Forb"
+"Veronica persica Poir.","Forb"
+"Veronica serpyllifolia L.","Forb"
+"Veronica serpyllifolia subsp. humifusa (Dicks.) Syme","Forb"
+"Viburnum lantana L.","Woody"
+"Viburnum opulus L.","Woody"
+"Vicia sepium L.","Forb"
+"Vicia sylvatica L.","Forb"
+"Vinca minor L.","Woody"
+"Vincetoxicum hirundinaria Medik.","Forb"
+"Viola biflora L.","Forb"
+"Viola odorata L.","Forb"
+"Viola palustris L.","Forb"
+"Viola reichenbachiana Boreau","Forb"

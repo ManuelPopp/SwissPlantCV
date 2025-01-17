@@ -659,7 +659,7 @@ if __name__ == "__main__":
         dir_py = os.path.dirname(this_file)
         dir_main = os.path.dirname(dir_py)
         
-        RELEVETABLE = os.path.join(dir_main, "spl", "Releve_table.xlsx")
+        RELEVETABLE = os.path.join(dir_main, "dat", "Releve_table.xlsx")
         
         if not os.path.isfile(RELEVETABLE):
             logger.warn("Unable to locate standard releve table.")
