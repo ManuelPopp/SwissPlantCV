@@ -43,7 +43,8 @@ import <- function(...) {
 import(
   "rstudioapi", "dplyr", "ggplot2", "treemap", "readxl", "rjson", "tidyr",
   "ggbreak", "stringr", "gridExtra", "terra", "multcomp", "emmeans", "MASS",
-  "reshape2", "lme4", "sjPlot", "grDevices", "pbkrtest", "afex", "grid",
+  "reshape2", "lme4", "grDevices", "pbkrtest", "afex", "grid", #"sjPlot",
+  "parallel",
   dependencies = TRUE
 ) # , "xlsx")
 
@@ -604,7 +605,7 @@ taxa_pie_genus$Alpha <- rep(
   c("high", "low"), ceiling(nrow(taxa_pie_genus) / 2)
 )[1:nrow(taxa_pie_genus)]
 
-taxonomy_piechart <- ggplot(
+taxonomy_piechart <- ggplot2::ggplot(
   rbind(taxa_pie_genus, taxa_pie_family),
   aes(x = Level, y = Count, fill = Fill, group = Taxon, alpha = Alpha)
 ) +

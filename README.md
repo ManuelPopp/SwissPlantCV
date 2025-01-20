@@ -107,6 +107,7 @@ Image data, however, are stored in an accompanying data repository and must be d
 **Metadata:** The data repository contains metadata files. These files hold information on all images, as well as on the location where they were stored.
 
 ### Python scripts
+#### General
 Python scripts require installation of additional modules. Directories where Python scripts are located contain a `requirements.txt` file. Such a file can be used to install modules using Python's default package manager [pip](https://pypi.org/project/pip/). Requirements can be installed by simply running
 
 ```console
@@ -118,10 +119,62 @@ Note that `requirements.txt` files within this repository specify a module versi
 
 Code has been tested with several Python versions 3.9.x, 3.11.x and 3.12.5. Important note: Geospatial analyses require proper setup of Python with GDAL bindings. Python was therefore installed using the [OSGeo4W](https://www.osgeo.org/projects/osgeo4w) installer. Note that all relevant parts (e.g. pip) of Python must be installed and set up correctly.
 
+#### Python packages
+Here is a list of the required Python modules. For further information, see the section above and the `requirements.txt` files within each Python script (sub)directory.
+
+- geopandas
+- fiona
+- simplekml
+- numpy
+- pykew
+- exif
+- opencv-python
+- pandas
+- pyproj
+- requests_oauthlib
+- easygui
+- shapely
+- qgis
+- requests
+- Pillow
+- piexif
+- cryptography
+- oauthlib
+- pyinaturalist
+- tkinter
+- wget
+- alive_progress
+
 ### R scripts
+#### General
 The main R script is [Data_analysis.R](https://github.com/ManuelPopp/SwissPlantCV/blob/main/rsc/Data_analysis.R). It should automatically try to install all required packages. The script requires supplementing R scripts at the exact relative position as within this repo, since some sub-workflows were separated to enhance readability and limit the size of the main script. Moreover, the script reads in tables. If the R script is not called from within the common [RStudio](https://www.rstudio.org) IDE, make sure to search for where the ```dir_main```r variable is defined (```dir_main <-```r) and set the value of this variable manually to the main directory of your local copy of this repo.
 
 Code has been tested with R versions 4.4.0 and 4.4.1., as well as some older versions > 4.3.x.
+
+#### R packages
+Scripts used during our analyses normally install all required packages automatically. The following list is an overview of the required packages.
+
+- afex
+- dplyr
+- emmeans
+- ggbreak
+- ggplot2
+- grDevices
+- grid
+- gridExtra
+- lme4
+- MASS
+- multcomp
+- parallel
+- pbkrtest
+- readxl
+- reshape2
+- rjson
+- rstudioapi
+- stringr
+- terra
+- tidyr
+- treemap
 
 ### Obtaining image data
 API requests to the Info Flora Online Fieldbook are not necessary, since the full data set has already been compiled and made available in the data repository. Moreover, the fieldbook is only available to project members and curators. All code related to obtaining curated image data from the web is only for documentation purpose.
@@ -137,3 +190,6 @@ Users should be aware that:
 - **We accept no liability** for any actions users take when interacting with these APIs, including but not limited to violations of third-party terms of service, rate limits, or misuse of the data retrieved.
 
 Users are advised to carefully review and comply with the respective API providers' policies before use.
+
+## Further information
+For more information, see also the [Wiki](https://github.com/ManuelPopp/SwissPlantCV/wiki) of this repository.
