@@ -87,9 +87,3 @@ class Session():
 
 x = Session()
 r = x.authenticate()
-test_img_folder = "C:/Users/poppman/Desktop/Salamandra"
-coords = base.get_coords('N:/prj/COMECO/img\\2966350\\14490793\\img_2_v.jpg')
-coords = get_coords(os.path.join(test_img_folder, "img1.jpg"))
-
-obs = get_observations(id = 157494731)
-obs

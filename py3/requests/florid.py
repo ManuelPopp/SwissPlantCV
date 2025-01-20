@@ -18,7 +18,7 @@ __status__ = "Development"
 
 #-----------------------------------------------------------------------------|
 # Imports
-import os, time, threading
+import os, time, threading, warnings
 from datetime import datetime
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
@@ -31,7 +31,7 @@ IMG_MAXSIZE = 369800
 
 LOCAL = False
 FLORIDSERVER = "H:/florid_v001"
-SHOULDBERUNNING = False
+SHOULDBERUNNING = True # Use external API, not local server.
 THREADS = []
 
 #-----------------------------------------------------------------------------|
@@ -83,7 +83,7 @@ def post_image(image_files,
                n_suggestions = 5,
                true_id = 1046220):
     '''
-    Post image to COMECO for identification.
+    Post image to FlorID for identification.
     
     Parameters
     ----------
@@ -105,6 +105,9 @@ def post_image(image_files,
     global LOCAL, SHOULDBERUNNING
     
     files = image_files if isinstance(image_files, list) else [image_files]
+    if len(files) > 5:
+        warnings.warn("Only the first 5 images will be used by FlorID.")
+        files = files[:5]
     
     file = files[0]
     
@@ -124,8 +127,9 @@ def post_image(image_files,
     date_time = base.get_creation_time(file) if date is None else date
     
     img = {
-      "images": [base.image_to_b64(f, max_size = IMG_MAXSIZE) for f in
-                 files] if not LOCAL else files,
+      "images": files if LOCAL else [
+          base.image_crop_to_b64(f, max_size = IMG_MAXSIZE) for f in files
+          ],
       "lat" : lat,
       "lon" : lon,
       "date" : str(date_time.date()) if isinstance(date_time, datetime) \
@@ -134,41 +138,17 @@ def post_image(image_files,
       "req_taxon_ids" : [true_id]
     }
     
-    POSTURL = "http://127.0.0.1:8000/identify/images" if LOCAL else \
-        "http://10.30.4.120:1337/identify/images"
+    #POSTURL = "http://127.0.0.1:8000/identify/images" if LOCAL else \
+    #    "http://10.30.4.120:1337/identify/images"
+    # Use new, publicly available API:
+    POSTURL = "https://speciesid.wsl.ch/florid"
     
     if LOCAL:
         if not SHOULDBERUNNING:
             start_local_server()
             time.sleep(30)
-        
-        response = requests.post(POSTURL, json = img)
     
-    else:
-        response = requests.post(POSTURL, json = img)
-    
-    # If encode/decode error occurs due to image being application/octet-stream
-    # use Info Flora url instead of local images
-    if response.status_code == 400:
-        print(
-            f"Got error 400 for files {files}." +
-            " Trying to avoid potential application/octet-stream issue."
-            )
-        
-        metadata = base.load_meta("N:/prj/COMECO/img/META.pickle")
-        obs_meta = metadata[int(os.path.basename(os.path.dirname(file)))]
-        f_locs = [os.path.basename(o) for o in obs_meta["file_locations"]]
-        
-        image_urls = []
-        for file in files:
-            image_index = f_locs.index(os.path.basename(file))
-            image_info = obs_meta["documents"][image_index]
-            url = image_info["file_url"]
-            image_urls.append(url)
-            print(f"Found url: {url}\n")
-        
-        img["images"] = image_urls
-        response = requests.post(POSTURL, json = img)
+    response = requests.post(POSTURL, json = img)
     
     return response.json()
 

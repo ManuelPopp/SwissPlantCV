@@ -37,7 +37,7 @@ This repository comprises various subdirectories
 │   ├── 📂 requests/
 │   │   ├── authentication.py 'Load encrypted user credentials for some APIs.'
 │   │   ├── base.py 'Basic functions for coordinate conversion, EXIF handling, file encyption, etc.'
-│   │   ├── batchrequest_v201.py 'Provides BatchRequest class to send API requests and store responses.'
+│   │   ├── batchrequest_v201.py 'Provides Batchrequest class to send API requests and store responses.'
 │   │   ├── <identification provider>.py 'Functions to handle the request formats for the different APIs.'
 │   │   └── requirements.txt 'Python modules used during this step.'
 │   ├── 📂 sampling/
@@ -66,17 +66,17 @@ This repository comprises various subdirectories
 
 ## Workflow
 Data validation and analysis is conducted as an iterative process with several loops (Figure 1). The main reason for this are the need to manually check taxonomic mismatches, as well as the possibility of false species identifications in the InfoFlora Fieldbook.
-Plant photographs are taken in the field. They are annotated and uploaded to the InfoFlora Fieldbook via the FlorApp. The script infoflora.py is then used to download all labelled images via the InfoFlora API and store them locally with corresponding metadata. Subsequently, one or multiple BatchRequest objects are created. These point to the images and hold information about image location and metadata. The BatchRequests objects set up a connection to the identification providers via the respective APIs, send identification requests for each image, and store the response. Top taxon suggestions are then extracted in a standardised format and written to Responses.xlsx.
+Plant photographs are taken in the field. They are annotated and uploaded to the InfoFlora Fieldbook via the FlorApp. The script infoflora.py is then used to download all labelled images via the InfoFlora API and store them locally with corresponding metadata. Subsequently, one or multiple Batchrequest objects are created. These point to the images and hold information about image location and metadata. The Batchrequests objects set up a connection to the identification providers via the respective APIs, send identification requests for each image, and store the response. Top taxon suggestions are then extracted in a standardised format and written to Responses.xlsx.
 
 In the next step, the taxonomy.py is used to standardise the taxonomy bewteen different plant identification providers. To avoid having to store a data base of the entire world's plant taxonomic systems, the script only checks taxa that occur in the Responses.xlsx. If a name suggested by an identification provider does not match the name from the InfoFLora Fieldbook, the script sends an API request to WorlfFloraOnline (WFO) to check if the name is listed as a synonym. If the taxonomy cannot be resolved automatically, the user is asked to resolve the issue manually. We compared the taxon suggestion of the identification providers considering the respective taxonomic backbone and concepts of e.g. aggregates and used further taxonomic databases such as that of Kew Botanical Gardens. The script then creates Final.xlsx, which is used by Data_analysis.R. During data analysis, false identifications are flagged and exported to SingleImages.csv. This file is used by Check_misclassifications.py, which provides a GUI to explore the wrong identifications and search for obvious issus, e.g., photographs that were accidentially uploaded with the false observation. (I.e., errors from data entry in the field or any remaining unresolved taxonomy mismatches.)
 
-After such technical issues are resolved, SingleImages.csv was used to identify observations where additional expert validation was required. After resolving remaining issues, image metadata is updated within the BatchRequest object(s). Data_analysis.R then produces the final version of plots, statistics, and LaTeX tables.
+After such technical issues are resolved, SingleImages.csv was used to identify observations where additional expert validation was required. After resolving remaining issues, image metadata is updated within the Batchrequest object(s). Data_analysis.R then produces the final version of plots, statistics, and LaTeX tables.
 
 ```mermaid
 graph TD
     A[Field sampling] --> |FlorApp| B[(InfoFlora<br>Fieldbook)]
     B --> |infoflora.py| C[/Images + metadata/]
-    D[(<br>BatchRequest Object<br><i>batchrequest_v201.py</i>)] <--> E[Plant ID<br>service API]
+    D[(<br>Batchrequest Object<br><i>batchrequest_v201.py</i>)] <--> E[Plant ID<br>service API]
     C --> D
     D --> F[/Responses.xlsx/]
     F --> J[(Taxonomy<br>Database<br><i>taxonomy.py</i>)]
@@ -93,7 +93,7 @@ graph TD
     X --> Z[/Results<br>Plots, Statistics/]
 classDef empty width:0px,height:0px;
 ```
-**Figure 1:** Overview of the data collection and processing workflow. Additional steps involved manual insertion of Flora Incognita and FlorID "vision only" results into the BatchRequest objects, resp. the Responses.xlsx via additional scripts. This is due to the circumstance that Flora Incognita did not provide direct access to their API but ran the model locally and sent us the results as json. For the vision only version of FlorID, the information was separately extracted from the responses (already present in the Batchrequest objects, but not stored separately from the combined model output).
+**Figure 1:** Overview of the data collection and processing workflow. Additional steps involved manual insertion of Flora Incognita and FlorID "vision only" results into the Batchrequest objects, resp. the Responses.xlsx via additional scripts. This is due to the circumstance that Flora Incognita did not provide direct access to their API but ran the model locally and sent us the results as json. For the vision only version of FlorID, the information was separately extracted from the responses (already present in the Batchrequest objects, but not stored separately from the combined model output).
 
 ## Prerequisites
 ### General
@@ -119,20 +119,21 @@ Note that `requirements.txt` files within this repository specify a module versi
 Code has been tested with several Python versions 3.9.x, 3.11.x and 3.12.5. Important note: Geospatial analyses require proper setup of Python with GDAL bindings. Python was therefore installed using the [OSGeo4W](https://www.osgeo.org/projects/osgeo4w) installer. Note that all relevant parts (e.g. pip) of Python must be installed and set up correctly.
 
 ### R scripts
-The main R script is [Data_analysis.R](https://github.com/ManuelPopp/SwissPlantCV/blob/main/rsc/Data_analysis.R). It should automatically try to install all required packages. The script requires supplementing R scripts at the exact relative position as within this repo, since some sub-workflows were separated to enhance readability and limit the size of the main script. Moreover, the script reads in tables. If the R script is not called from within the common [RStudio](https://www.rstudio.org) IDE, make sure to search for where the `dir_main` variable is defined (`dir_main <-`) and set the value of this variable manually to the main directory of your local copy of this repo.
+The main R script is [Data_analysis.R](https://github.com/ManuelPopp/SwissPlantCV/blob/main/rsc/Data_analysis.R). It should automatically try to install all required packages. The script requires supplementing R scripts at the exact relative position as within this repo, since some sub-workflows were separated to enhance readability and limit the size of the main script. Moreover, the script reads in tables. If the R script is not called from within the common [RStudio](https://www.rstudio.org) IDE, make sure to search for where the ```dir_main```r variable is defined (```dir_main <-```r) and set the value of this variable manually to the main directory of your local copy of this repo.
 
 Code has been tested with R versions 4.4.0 and 4.4.1., as well as some older versions > 4.3.x.
 
 ### Obtaining image data
-API requests to the Info Flora Online Fieldbook are not necessary, since the full data set has already been compiled and made available in the data repository. Moreover, the fieldbook is only available to project members and curators.
+API requests to the Info Flora Online Fieldbook are not necessary, since the full data set has already been compiled and made available in the data repository. Moreover, the fieldbook is only available to project members and curators. All code related to obtaining curated image data from the web is only for documentation purpose.
 
 ## Disclaimer
-This repository contains code to send API requests to third-party plant species identification providers. These APIs **are not part of this project**. Owners and potential contributors of this repository cannot be assumed to be affiliated with any of these third-party providers.
+This repository contains code to send API requests to third-party plant species identification providers. These APIs **are not part of this project**, and, unless officially stated by a relevant authority, the owner of this repository and potential past, active, or fututure contributors **have no affiliation** with these third-party providers.
 
 Users should be aware that:
 
-- API requests to plant identification services **typically require authentication**. Users are responsible for obtaining any necessary login credentials from the respective providers.  
-- **The terms, conditions, and policies** governing the use of these APIs are set solely by their respective owners. I **do not control, endorse, or guarantee** the availability, reliability, or accuracy of these services.  
-- **Owners and potential contributers of this repository accept no liability** for any actions users take when interacting with these APIs, including but not limited to violations of third-party terms of service, rate limits, or misuse of the data retrieved.  
+- API requests to plant identification services **typically require authentication**. Users are responsible for obtaining any necessary login credentials from the respective providers.
+- **The terms, conditions, and policies** governing the use of these APIs are set solely by their respective owners. We (the owner and potential contributers of this repository) **do not control, endorse, or guarantee** the availability, reliability, or accuracy of these services.
+- The respective owners of the APIs may, at any time, with or without notice, make changes to their APIs in a way that changes the behaviour or output of their API, or that affects compatibility with code within this repository. They may also restrict access to, or entirely remove their APIs at any time. We do not guarantee future compatibility of the code within this repository with any of the APIs.
+- **We accept no liability** for any actions users take when interacting with these APIs, including but not limited to violations of third-party terms of service, rate limits, or misuse of the data retrieved.
 
 Users are advised to carefully review and comply with the respective API providers' policies before use.

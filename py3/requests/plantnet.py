@@ -24,14 +24,20 @@ __status__ = "Production"
 
 #-----------------------------------------------------------------------------|
 # Imports
-import os, json, time
+import os, json, time, warnings
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
 import authentication, requests
 
 #-----------------------------------------------------------------------------|
 # General settings/variables
-API_KEY = authentication.from_arbitrary_dict("PlantNet")["API_KEY"]
+try:
+    API_KEY = authentication.from_arbitrary_dict("PlantNet")["API_KEY"]
+except:
+    API_KEY = input(
+        "Please enter your PlantNet API key (leave empty if not required): "
+        )
+
 PROJECT = "k-middle-europe"# "k-middle-europe" or "all"
 TYPE = "kt"# "kt" or "legacy"# As of Oct 1st, 2023, "kt" is the default.
 

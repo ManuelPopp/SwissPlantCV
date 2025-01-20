@@ -23,7 +23,8 @@ from datetime import datetime, timedelta
 from alive_progress import alive_bar as pb
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
-import base, plantnet, inaturalistcv, florid, floraincognita
+import base
+import plantnet, inaturalistcv, florid, floraincognita
 from floraincognita import insert as insert_florinc
 
 #-----------------------------------------------------------------------------|
@@ -32,10 +33,16 @@ dir_py = os.path.dirname(os.getcwd())# for debugging in IDE
 dir_py = os.path.dirname(os.path.dirname(__file__))
 dir_main = os.path.dirname(dir_py)
 
-IMGDIR = "N:/prj/COMECO/img"
+if __name__ == "__main__":
+    IMGDIR = "N:/prj/COMECO/img"
+    MULTIIMG = ["florid", "floraincognita", "plantnet"]
+    MODELLIST = ["florid", "floraincognita", "inaturalist", "plantnet"]
+else:
+    IMGDIR = None
+    MULTIIMG = []
+    MODELLIST = []
+
 TAXONTABLE = os.path.join(dir_main, "dat", "Taxonomic_backbone_wHier_2022.csv")
-MULTIIMG = ["florid", "floraincognita", "plantnet"]
-MODELLIST = ["florid", "floraincognita", "inaturalist", "plantnet"]
 OUT = os.path.join(dir_main, "out")
 
 # Number of samples for multi-image predictions
@@ -232,15 +239,15 @@ class Batchrequest():
                     try:
                         exists = isinstance(
                             self.results[releve_name][observation_id] \
-                                [mode][cv_model],
-                                dict)
+                                [mode][cv_model], dict
+                            )
                         
                         if not exists:
                             p = "multi" if mode == "multi" else part
-                            pending.append(
-                                [releve_name, observation_id, mode, p,
-                                 cv_model]
-                                )
+                            pending.append([
+                                releve_name, observation_id, mode, p,
+                                cv_model
+                                ])
                     
                     except:
                         p = "multi" if mode == "multi" else part
@@ -310,6 +317,16 @@ class Batchrequest():
         with open(os.path.join(self.image_dir, "RELEVE.dict"), "rb") as f:
             relevedict = pk.load(f)
         
+        for obs in metadata.values():
+            obs["file_locations"] = [
+                os.path.join(
+                    self.image_dir,
+                    os.path.basename(os.path.dirname(os.path.dirname(path))),
+                    os.path.basename(os.path.dirname(path)),
+                    os.path.basename(path)
+                    ) for path in obs["file_locations"]
+                ]
+        
         return metadata, relevedict
     
     def translate_id(self, infoflora_id, id_table = TAXONTABLE):
@@ -376,7 +393,7 @@ class Batchrequest():
                              releve_name,
                              releve_id,
                              observation_id,
-                             true_taxon_id
+                             true_taxon_id = 1037510
                              ):
         '''
         Send API request using a single image.
@@ -977,7 +994,6 @@ class Batchrequest():
             ids = inaturalistcv.species_ranking(response, n = return_n)
         
         elif cv_model == "florid":
-            ### Translate InfoFlora ID to FlorID ID
             response = florid.post_image(image_path, coordinates, date,
                                          true_id = req_id
                                          )
@@ -1253,19 +1269,20 @@ class Batchrequest():
                 os.path.basename(imf)
                 ) for imf in image_files
             ]
-        image_names = [os.path.splitext(
-            os.path.split(p.replace("\\", "/"))[-1]
-            )[0] for p in image_files]
+        image_names = [
+            os.path.splitext(
+                os.path.split(p.replace("\\", "/"))[-1]
+                )[0] for p in image_files
+            ]
         
         image_types = self._image_meta[observation_id]["img_types"]
         
         details = [{"disc_location" : p, "organ" : o} for p, o in \
                    zip(image_files, image_types)]
         
-        out_dict = {key : value for key, value in zip(
-            image_names,
-            details
-            )}
+        out_dict = {
+            key : value for key, value in zip(image_names, details)
+            }
         
         return out_dict
     

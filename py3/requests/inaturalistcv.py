@@ -31,7 +31,12 @@ import authentication
 POSTURL = "https://visionapi.p.rapidapi.com/v1/rapidapi/score_image"
 APPSCRTNAME = "iNaturalistCV"
 
-HEADER = authentication.from_arbitrary_dict(APPSCRTNAME)
+try:
+    HEADER = authentication.from_arbitrary_dict(APPSCRTNAME)
+except:
+    HEADER = input(
+        "Please enter your iNaturalistCV API key (leave empty if not required): "
+        )
 
 # In order to return only taxa below phylum Tracheophyta (vascular plants)
 # -> set TAXONFROM = 211194

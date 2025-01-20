@@ -21,6 +21,7 @@ import pandas as pd
 from PIL import Image
 from dateutil import parser
 from fractions import Fraction
+from warnings import warn
 
 #-----------------------------------------------------------------------------|
 # Settings
@@ -176,12 +177,13 @@ def add_coords(path, coordinates, replace = False):
         thumb_im.save(o, "jpeg")
         thumbnail = o.getvalue()
         
-        exif_dict = {"0th" : {},
-                     "Exif" : {},
-                     "GPS" : {},
-                     "1st" : {},
-                     "thumbnail" : thumbnail
-                     }
+        exif_dict = {
+            "0th" : {},
+            "Exif" : {},
+            "GPS" : {},
+            "1st" : {},
+            "thumbnail" : thumbnail
+            }
     
     if exif_dict["GPS"] == {} or replace:
         exif_dict["GPS"] = {}
@@ -190,13 +192,19 @@ def add_coords(path, coordinates, replace = False):
         lat_deg, lat_min, lat_sec = dec_to_dms(coordinates[0])
         lon_deg, lon_min, lon_sec = dec_to_dms(coordinates[1])
         
-        lat_deg, lat_min, lat_sec = [(Fraction(str(i)).numerator,
-                                      Fraction(str(i)).denominator) for i in \
-                                     [lat_deg, lat_min, lat_sec]]
+        lat_deg, lat_min, lat_sec = [
+            (
+                Fraction(str(i)).numerator,
+                Fraction(str(i)).denominator
+                ) for i in [lat_deg, lat_min, lat_sec]
+            ]
         
-        lon_deg, lon_min, lon_sec = [(Fraction(str(i)).numerator,
-                                      Fraction(str(i)).denominator) for i in \
-                                     [lon_deg, lon_min, lon_sec]]
+        lon_deg, lon_min, lon_sec = [
+            (
+                Fraction(str(i)).numerator,
+                Fraction(str(i)).denominator
+                ) for i in [lon_deg, lon_min, lon_sec]
+            ]
         
         exif_dict["GPS"][piexif.GPSIFD.GPSLatitudeRef] = "N" \
             if coordinates[0] >= 0 else "S"
@@ -358,6 +366,15 @@ def add_creation_time(path, date_time, replace = False):
     
     return
 
+def load_image_pil(path):
+    try:
+        img = Image.open(path).convert("RGB")
+        img = np.array(img, dtype = np.uint8)
+        return cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+    except Exception as e:
+        warn(f"Error loading image {path}: {e}")
+        return None
+
 def image_file_to_b64(path):
     '''
     Convert image to base64 encoded string.
@@ -376,9 +393,10 @@ def image_file_to_b64(path):
         encoded_string = base64.b64encode(f.read())
     
     code = encoded_string.decode("utf8")
+    
     return code
 
-def image_to_b64(path, max_size):
+def image_crop_to_b64(path, max_size):
     '''
     Convert image to base64 encoded string and crop it to a maximum size in
     case this size is exceeded.
@@ -393,28 +411,26 @@ def image_to_b64(path, max_size):
     
     Returns
     -------
-    code : str
+    str
         Encoded string.
     '''
-    img = cv2.imread(path)
+    img = load_image_pil(path)
     h, w = img.shape[:2]
     
     if w * h > max_size:
-        SCALE = max_size / (w * h)
-        WIDTH, HEIGHT = w * SCALE ** 0.5, h * SCALE ** 0.5
-        WIDTH, HEIGHT = int(WIDTH), int(HEIGHT)
+        SCALE = (max_size / (w * h)) ** 0.5
+        WIDTH, HEIGHT = int(w * SCALE), int(h * SCALE)
         
-        img_resized = cv2.resize(img,
-                                 (WIDTH, HEIGHT),
-                                 interpolation = cv2.INTER_CUBIC
-                                 )
+        img = cv2.resize(
+            img, (WIDTH, HEIGHT), interpolation = cv2.INTER_CUBIC
+            )
         
-        rv, img = cv2.imencode(".jpg", img_resized)
+    rv, img = cv2.imencode(".jpg", img)
     
-    encoded_string = base64.b64encode(img)
+    if not rv:
+        raise ValueError(f"Encoding failed for image: {path}")
     
-    code = encoded_string.decode("utf8")
-    return code
+    return base64.b64encode(img).decode("utf8")
 
 def load_meta(meta_file):
     '''
