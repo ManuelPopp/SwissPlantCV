@@ -478,7 +478,7 @@ df$plant_organ[which(df$growth_form == "Fern")] <- gsub(
 
 # Add full plant organ names
 plant_organ_names <- c(
-  "Inflorescense", "Infructescense", "Vegetative", "Trunk", "Several"
+  "Inflorescence", "Infructescence", "Vegetative", "Trunk", "Several"
 )
 df$plant_organ_name <- plant_organ_names[
   match(df$plant_organ, c("i", "f", "v", "t", "s"))
