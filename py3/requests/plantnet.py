@@ -44,13 +44,14 @@ TYPE = "kt"# "kt" or "legacy"# As of Oct 1st, 2023, "kt" is the default.
 POSTURL = f"https://my-api.plantnet.org/v2/identify/{PROJECT}?" + \
     f"type={TYPE}&api-key={API_KEY}"
 
-organs_dict = {"i" : "flower",
-               "v" : "leaf",
-               "f" : "fruit",
-               "t" : "bark",
-               "s" : "auto",
-               "Unknown" : "auto"
-               }
+organs_dict = {
+    "i" : "flower",
+    "v" : "leaf",
+    "f" : "fruit",
+    "t" : "bark",
+    "s" : "auto",
+    "Unknown" : "auto"
+    }
 
 #-----------------------------------------------------------------------------|
 # Functions
@@ -61,7 +62,7 @@ def convert_organ_id(organ):
     
 def post_image(files, organs = "auto"):
     '''
-    Post image to Plant Net.
+    Post image to PlantNet.
     
     Parameters
     ----------
@@ -88,10 +89,9 @@ def post_image(files, organs = "auto"):
         "organs" : plant_organs
         }
     
-    req = requests.Request("POST",
-                           url = POSTURL,
-                           files = img_files,
-                           data = data)
+    req = requests.Request(
+        "POST", url = POSTURL, files = img_files, data = data
+        )
     
     prepared_req = req.prepare()
     
@@ -123,8 +123,9 @@ def post_image(files, organs = "auto"):
     else:
         try:
             remaining_ids = json_result["remainingIdentificationRequests"]
-            print("Remaining PlantNet IDs for today: {0}\n" \
-                  .format(remaining_ids))
+            print(
+                "Remaining PlantNet IDs for today: {0}\n".format(remaining_ids)
+                )
         
         except:
             Warning("Failed to get number of remaining PlantNet IDs.")

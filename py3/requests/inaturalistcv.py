@@ -93,8 +93,9 @@ def post_image(image_path, coordinates):
             seconds = int(response.headers["x-ratelimit-requests-reset"])
             )
         
-        end_of_period = datetime.strftime(now + remaining_time,
-                                          format = "%Y-%m-%d %H:%M:%S")
+        end_of_period = datetime.strftime(
+            now + remaining_time, format = "%Y-%m-%d %H:%M:%S"
+            )
         
         mssg = "iNaturalist VisionAPI quota limit ({0} requests per month)" + \
             " reached. The current payment period ends on {1}."

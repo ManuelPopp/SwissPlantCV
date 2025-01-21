@@ -15,6 +15,7 @@ __status__ = "Development"
 # Sources
 #Test version: https://comeco-api.bitpilots.ch/openapi/#/
 #V1: https://florid.infoflora.ch/api/v1/openapi
+#WSL API: https://speciesid.wsl.ch/florid
 
 #-----------------------------------------------------------------------------|
 # Imports

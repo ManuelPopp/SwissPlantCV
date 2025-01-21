@@ -102,7 +102,7 @@ Script files within this repository cannot be executed as standalone scripts. Th
 ### Data
 Derived data are stored along with code in this repository. This includes tables used in data analyses, as well as some intermetiate files exported from within Python scripts (pickled versions of attributes for some instances of custom classes which hold methods to load such files and, in doing so, restore a previous state).
 
-Image data, however, are stored in an accompanying data repository and must be downloaded separately.
+Image data, however, are stored in an [accompanying data repository](https://www.doi.org/10.16904/envidat.578) and must be downloaded separately.
 
 **Metadata:** The data repository contains metadata files. These files hold information on all images, as well as on the location where they were stored.
 
