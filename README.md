@@ -7,7 +7,7 @@ Python scripts are stored in subdirectories of [./py3](https://github.com/Manuel
 R scripts were used for analysis of the final data and plotting. The main R script is [./rsc/Data_analysis.R](https://github.com/ManuelPopp/SwissPlantCV/blob/main/rsc/Data_analysis.R), which is set up to install missing requirements automatically.
 
 ## Repository organisation
-This repository comprises various subdirectories
+This repository comprises a [Wiki](https://github.com/ManuelPopp/SwissPlantCV/wiki) and the following subdirectories:
 ```r
 📂 SwissPlantCV/
 ├── 📂 bat/
