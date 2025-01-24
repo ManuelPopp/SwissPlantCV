@@ -16,7 +16,7 @@
 #>----------------------------------------------------------------------------<|
 #> Install/load packages
 packages <- c(
-    "rstudioapi", "dplyr", "readxl", "xlsx", "dplyr", "sf", "cols4all",
+    "rstudioapi", "dplyr", "readxl", "xlsx", "dplyr", "sf",# "cols4all",
     "xtable"
 )
 
@@ -58,7 +58,7 @@ dir_this_file <- get_file_location()
 
 dir_main <- dirname(dir_this_file)
 dir_dat <- file.path(dir_main, "dat")
-dir_fig <- file.path(dir_main, "pub", "fig")
+dir_fig <- file.path(dir_main)
 dir_tab <- file.path(dir_main, "pub", "tab")
 p_habitats_table <- file.path(dir_dat, "Habitats.xlsx")
 
@@ -118,9 +118,9 @@ habitats[which(habitats$name == "0"), 2] <- c(
   )
 
 # Get list of finished habitats
-kml_file <- file.path(dir_main, "spl", "Completed_habitats.kml")
+kml_file <- file.path(dir_main, "dat", "Completed_habitats.kml")
 biogeo_file <- file.path(
-    dir_main, "gis", "shp", "BiogeographischeRegionen",
+    dir_main, "dat", "BioGeoRegionen", "BiogeographischeRegionen",
     "N2020_Revision_BiogeoRegion.shp"
     )
 
@@ -213,12 +213,12 @@ file.copy(
 
 # Export map
 main_regions <- regions %>%
-  group_by(RegionNumm) %>%
-  summarise(geometry = sf::st_union(geometry))
+  dplyr::group_by(RegionNumm) %>%
+  dplyr::summarise(geometry = sf::st_union(geometry))
 
 outline <- sf::st_union(sf::st_geometry(regions))
 
-cols <- cols4all::c4a("brewer.pastel1", length(unique(main_regions$RegionNumm)))
+#cols <- cols4all::c4a("brewer.pastel1", length(unique(main_regions$RegionNumm)))
 
 # I changed the colour palette for the other graphics, so I need to adjust it
 # here, too:
@@ -231,11 +231,23 @@ cols1 <- adjustcolor(cols, alpha.f = 0.15)
 cols2 <- c4a("brewer.dark2", length(unique(substr(joined$Description, 1, 1))))
 cols2 <- safe_colorblind_palette
 col_habitats <- cols2[c(1, 5, 12, 3, 6, 4, 2)]
-pch_habitats <- c(0, 4, 3, 5, 1, 2, 6, 7)
+#pch_habitats <- c(0, 4, 3, 5, 1, 2, 6, 7)
+pch_habitats <- c(15, 4, 3, 18, 16, 17, 25, 7)
+cex_dict <- c(
+  "15" = 1,
+  "4" = 0.7,
+  "3" = 0.7,
+  "18" = 1.2,
+  "16" = 1,
+  "17" = 0.9,
+  "25" = 0.7,
+  "6" = 0.7,
+  "7" = 1
+)
 
 plot(
-    rep(1, 7) ~ seq(1:7), col = col_habitats, pch = pch_habitats,
-     xaxt = "n", cex = 1.2, lwd = 3
+    rep(1, 7) ~ seq(1:7), col = col_habitats, bg = col_habitats,
+    pch = pch_habitats, xaxt = "n", cex = cex_dict, lwd = 1
     )
 axis(
     1, at = seq(1:7),
@@ -244,8 +256,191 @@ axis(
       )
     )
 
-# Get longitude and latitude axis tick labels (more useful to readers)
+# Get non-overlapping label positions-------------------------------------------
 
+## Function to generate non-overlapping labels
+# optimise_label_positions <- function(
+#     points, label_diameter = 12000, max_distance = 20000
+#     ) {
+#   label_radius <- label_diameter / 2
+#   clusters <- sf::st_buffer(points, dist = label_radius) %>%
+#     sf::st_union() %>%
+#     sf::st_cast("POLYGON")
+#   
+#   # Sort decreasing so the ones with fewer points are clipped by
+#   # the ones with more points.
+#   clusters <- clusters[
+#     order(lengths(sf::st_intersects(clusters, points)), decreasing = TRUE),
+#     ]
+#   
+#   search_buffers <- sf::st_buffer(
+#     clusters, dist = max_distance - label_diameter
+#     ) %>%
+#     sf::st_difference()
+#   
+#   # Loop through buffers. Start with the small ones and resize them
+#   # in case they contain only one point.
+#   out <- sf::st_sfc(crs = sf::st_crs(points)) %>%
+#     sf::st_cast("POINT") %>%
+#     sf::st_sf()
+#   
+#   cluster_df <- data.frame()
+#   for (i in length(search_buffers):1) {
+#     buffer <- search_buffers[i, ]
+#     
+#     idx_points <- which(sf::st_intersects(points, buffer, sparse = FALSE))
+#     n_points <- length(idx_points)
+#     cluster_df <- rbind(
+#       cluster_df, data.frame(buff_id = rep(i, n_points), point_id = idx_points)
+#     )
+#     
+#     if (n_points == 1) {
+#       anchor_points <- sf::st_intersection(points, buffer)
+#       search_buffers[i] <- sf::st_buffer(
+#         anchor_points, dist = label_radius * 1.25
+#         )
+#       sf::st_crs(anchor_points) <- sf::st_crs(points)
+#       new_points <- sf::st_cast(anchor_points, "POINT") %>% sf::st_sf()
+#       if (any(sf::st_is_empty(new_points))) {
+#         new_points <- new_points[-which(sf::st_is_empty(new_points)), ]
+#       }
+#       out <- rbind(out, new_points)
+#     } else {
+#       cluster <- sf::st_intersection(clusters, buffer)
+#       outlines <- sf::st_cast(buffer, "LINESTRING") %>%
+#         sf::st_difference(
+#           search_buffers[-i, ] %>%
+#             sf::st_union()
+#         ) %>%
+#         st_cast("LINESTRING")
+#       
+#       seg_lengths <- as.numeric(sf::st_length(outlines))
+#       tot_length <- sum(seg_lengths)
+#       n_per_seg <- round(n_points / tot_length * seg_lengths)
+#       
+#       while (sum(n_per_seg) < n_points) {
+#         max_idx <- which(seg_lengths == max(seg_lengths))
+#         n_per_seg[max_idx] <- n_per_seg[max_idx] + 1
+#         seg_lengths[max_idx] <- 0
+#       }
+#       
+#       while (sum(n_per_seg) > n_points) {
+#         max_idx <- which(n_per_seg == max(n_per_seg))
+#         n_per_seg[max_idx] <- n_per_seg[max_idx] - 1
+#       }
+#       
+#       for (j in 1:length(outlines)) {
+#         outline <- outlines[[j]]
+#         N <- n_per_seg[j]
+#         anchor_points <- sf::st_line_sample(outline, n = N, type = "regular")
+#         sf::st_crs(anchor_points) <- sf::st_crs(points)
+#         new_points <- sf::st_cast(anchor_points, "POINT") %>% sf::st_sf()
+#         if (any(sf::st_is_empty(new_points))) {
+#           new_points <- new_points[-which(sf::st_is_empty(new_points)), ]
+#         }
+#         out <- rbind(out, new_points)
+#       }
+#     }
+#   }
+#   
+#   # Get index of closest point
+#   out$join_id <- rep(NA, nrow(out))
+#   for (i in 1:length(search_buffers)) {
+#     in_idxs <- cluster_df$point_id[which(cluster_df$buff_id == i)]
+#     opt_idxs <- which(cluster_df$buff_id == i)
+#     
+#     in_to_match <- points[in_idxs, ]
+#     opt_to_match <- out[opt_idxs, ]
+#     
+#     distances <- sf::st_distance(opt_to_match, in_to_match)
+#     max_order <- order(
+#       apply(X = distances, MARGIN = 1, FUN = min, na.rm = TRUE),
+#       decreasing = FALSE
+#       )
+#     distances_remaining <- distances
+#     idxs <- c()
+#     for (j in max_order) {
+#       if (!is.null(ncol(distances_remaining))) {
+#         idx <- which(distances[j,] == min(distances_remaining[j,]))
+#         idy <- which(distances_remaining[j,] == min(distances_remaining[j,]))
+#         distances_remaining <- distances_remaining[, -idy]
+#       } else {
+#         idx <- which(!1:ncol(distances) %in% idxs)
+#       }
+#       
+#       idxs <- c(idxs, idx)
+#     }
+#     out$join_id[opt_idxs] <- in_idxs[idxs]
+#   }
+#   return(out)
+# }
+# 
+# optimised <- optimise_label_positions(
+#   points = sf::st_geometry(joined),
+#   label_diameter = 12000, max_distance = 20000
+#   )
+# optimised <- optimised[order(optimised$join_id),]
+# optimised$Description <- joined$Description
+# 
+# callouts <- list()
+# for (i in 1:nrow(optimised)) {
+#   start <- sf::st_coordinates(optimised[i, ])
+#   end <- sf::st_coordinates(joined[i, ])
+#   line <- sf::st_linestring(rbind(start[, c(1, 2)], end[, c(1, 2)]))
+#   callouts[[i]] <- line
+# }
+# 
+# callouts <- sf::st_sfc(callouts)
+# sf::st_crs(callouts) <- sf::st_crs(joined)
+
+## Newer version: Arrange clustered locations in grids
+grid_label_positions <- function(
+    points, label_diameter = 8000, spacing = 5000, rotate = c()
+) {
+  label_radius <- label_diameter / 2
+  clusters <- sf::st_buffer(points, dist = label_radius) %>%
+    sf::st_union() %>%
+    sf::st_cast("POLYGON")
+  
+  cluster_df <- data.frame()
+  for (i in 1:length(clusters)) {
+    cluster <- clusters[i, ]
+    centroid <- sf::st_centroid(cluster)
+    idx_points <- which(sf::st_intersects(points, cluster, sparse = FALSE))
+    n_points <- length(idx_points)
+    
+    if (!i %in% rotate) {
+      rows <- floor(sqrt(n_points))
+      cols <- ceiling(n_points / rows)
+    } else {
+      cols <- floor(sqrt(n_points))
+      rows <- ceiling(n_points / cols)
+    }
+    
+    left <- sf::st_coordinates(centroid)[1] - spacing * (cols - 1) / 2
+    top <- sf::st_coordinates(centroid)[2] + spacing * (rows - 1) / 2
+    
+    df_grid <- expand.grid(
+      x = (0:(cols - 1)) * spacing + left,
+      y = top - (0:(rows - 1)) * spacing
+    )[1:n_points, ]
+    
+    df_grid$Description <- sort(points$Description[idx_points])
+    
+    cluster_df <- rbind(cluster_df, df_grid)
+  }
+  
+  grid <- sf::st_as_sf(
+    cluster_df, coords = c("x", "y"), crs = sf::st_crs(points)
+  )
+  return(grid)
+}
+
+optimised <- grid_label_positions(
+  points = joined,
+  label_diameter = 8000, spacing = 7000, rotate = c(6, 13, 21, 28, 29)
+)
+#-------------------------------------------------------------------------------
 
 plot_axes = FALSE
 if (plot_axes) {
@@ -269,14 +464,20 @@ if (plot_axes) {
   box()
 }
 
-plot(sf::st_geometry(outline), add = TRUE, lty = 1, lwd = 1.5)
+#plot(callouts, col = "gray", add = TRUE)
+idxs <- as.numeric(substr(optimised$Description, 1, 1))
+lwds <- rep(0, length(idxs))
+lwds[which(idxs %in% c(2, 3))] <- 1
 plot(
-  st_geometry(joined), col = col_habitats[
-    as.numeric(substr(joined$Description, 1, 1))
-    ],
-  pch = pch_habitats[as.numeric(substr(joined$Description, 1, 1))],
-  lwd = 1.5,
-  add = TRUE, cex = 1.2
+  sf::st_geometry(optimised),
+  col = col_habitats[idxs],
+  bg = col_habitats[idxs],
+  pch = pch_habitats[idxs],
+  lwd = lwds,
+  add = TRUE,
+  cex = cex_dict[
+    as.character(pch_habitats[as.numeric(substr(optimised$Description, 1, 1))])
+    ] * 0.7
   )
 dev.off()
 
