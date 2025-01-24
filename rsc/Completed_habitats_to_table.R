@@ -458,7 +458,7 @@ if (plot_axes) {
   par(mar = c(0, 0, 0, 0), mgp = c(3, 0.5, 0))
   plot(
     sf::st_geometry(main_regions), main = NA,
-    col = cols1[main_regions$RegionNumm], lty = 3, lwd = 0.5,
+    col = cols1[main_regions$RegionNumm], lty = 1, lwd = 0.5,
     axes = FALSE
   )
   box()
