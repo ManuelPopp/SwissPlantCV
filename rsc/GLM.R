@@ -309,7 +309,7 @@ combined <- combined[order(combined$Contrast0, combined$Contrast1), ]
 emm_df <- as.data.frame(emm)
 emm_df <- emm_df %>%
   dplyr::mutate(
-    biogeo_en = recode(
+    biogeo_en = dplyr::recode(
       biogeo_region,
       "Alpennordflanke" = "Northern Alps",
       "Alpensüdflanke" = "Southern Alps",
@@ -351,7 +351,7 @@ ggglmm <- ggplot(
 
 if (save_plots) {
   f_out <- file.path(dir_fig, "GLMM_biogeo_model.pdf")
-  pdf(file = f_out, height = 6, width = 9)
+  pdf(file = f_out, height = 4, width = 9)
   print(ggglmm)
   dev.off()
   file.copy(f_out, dir_fig_online, overwrite = TRUE)
