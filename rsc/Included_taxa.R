@@ -54,20 +54,20 @@ cv_fid <- data.frame(
   cv_included = florid_fails_ids %in% fid_tbb[, 1])
 
 # iNaturalist
-source(file.path(dir_main, "rsc", "Taxon_in_inat_cv.R"))
-inat_fails <- sort(
-  unique(
-    df[which(df$cv_model == "inaturalist"), ] %>%
-      group_by(Name) %>%
-      summarize(matched_once = max(Top3)) %>%
-      filter(matched_once < 1) %>%
-      pull(Name)
-  )
-)
-
 f_inat_table <- file.path(dir_main, "dat", "inat_cv.rda")
 
 if (!file.exists(f_inat_table)) {
+  source(file.path(dir_main, "rsc", "Taxon_in_inat_cv.R"))
+  inat_fails <- sort(
+    unique(
+      df[which(df$cv_model == "inaturalist"), ] %>%
+        group_by(Name) %>%
+        summarize(matched_once = max(Top3)) %>%
+        filter(matched_once < 1) %>%
+        pull(Name)
+    )
+  )
+  
   cv_inat <- inat_taxa_included(inat_fails)
   cv_inat$original <- inat_fails
   save(cv_inat, file = f_inat_table)
@@ -76,36 +76,36 @@ if (!file.exists(f_inat_table)) {
 }
 
 # PlantNet
-plantnet_fails <- sort(
-  unique(
-    df[which(df$cv_model == "plantnet"), ] %>%
-      group_by(Name) %>%
-      summarize(matched_once = max(Top3)) %>%
-      filter(matched_once < 1) %>%
-      pull(Name)
-  )
-)
-
-## Load PlantNet included taxa via API
-api_key_file <- file.path(dirname(dir_main), "prv", "sec", "PlantNet")
-if (Sys.info()[1] == "Linux") {
-  python <- "python3"
-} else {
-  python <- "py"
-}
-ak <- system(
-  paste(
-    python,
-    file.path(dir_main, "py3", "misc", "print_key_for_R.py")
-  ),
-  intern = TRUE
-)
-
-source(file.path(dir_main, "rsc", "Taxon_in_pnet_cv.R"))
-
 f_pnet_table <- file.path(dir_main, "dat", "pnet_cv.rda")
 
 if (!file.exists(f_pnet_table)) {
+  plantnet_fails <- sort(
+    unique(
+      df[which(df$cv_model == "plantnet"), ] %>%
+        group_by(Name) %>%
+        summarize(matched_once = max(Top3)) %>%
+        filter(matched_once < 1) %>%
+        pull(Name)
+    )
+  )
+  
+  ## Load PlantNet included taxa via API
+  api_key_file <- file.path(dirname(dir_main), "prv", "sec", "PlantNet")
+  if (Sys.info()[1] == "Linux") {
+    python <- "python3"
+  } else {
+    python <- "py"
+  }
+  ak <- system(
+    paste(
+      python,
+      file.path(dir_main, "py3", "misc", "print_key_for_R.py")
+    ),
+    intern = TRUE
+  )
+  
+  source(file.path(dir_main, "rsc", "Taxon_in_pnet_cv.R"))
+  
   pnet_tbb <- check_pnet(ak)
   cv_pnet <- pnet_taxa_included(plantnet_fails, pnet_tbb)
   save(cv_pnet, file = f_pnet_table)
@@ -122,8 +122,9 @@ not_in_finc <- c(
   "Hieracium murorum aggr.", "Hieracium prenanthoides aggr.",
   "Centaurea valesiaca (DC.) Jord."
   )
+
 df[
-  df$true_taxon_name %in% not_in_finc & df$cv_model == "floraincognita"
+  df$true_taxon_name %in% not_in_finc & df$cv_model == "floraincognita",
 ]$cv_included <- FALSE
 
 ## Add info for FlorID

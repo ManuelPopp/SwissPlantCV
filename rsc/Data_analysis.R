@@ -895,7 +895,7 @@ df_multi <- df_multi[which(df_multi$cv_model != "florvision"), ]
 #>----------------------------------------------------------------------------<|
 #> Add information on whether a taxon is included in a CV model
 setwd(file.path(dir_main, "rsc"))
-source("Included_taxa.R")
+#source("Included_taxa.R")
 
 #>----------------------------------------------------------------------------<|
 #> Summarise data set

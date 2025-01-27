@@ -58,9 +58,9 @@ ideal_df$no_cv_model <- !(ideal_df$cv_included)
 #   scale_fill_manual(name = legend_title, values = safe_colorblind_palette) +
 #   guides(title = legend_title, overwrite.aes = list(fill = c()))
 
-ideal_gg <- ggplot(
+ideal_gg <- ggplot2::ggplot(
   data = ideal_df,
-  aes(
+  ggplot2::aes(
     x = cv_model_name,
     y = count,
     fill = level,
@@ -68,16 +68,20 @@ ideal_gg <- ggplot(
     ),
   pattern = "stripe", pattern_angle = 0
 ) +
-  geom_bar(position = "stack", stat = "identity") +
-  xlab("Identification provider") +
-  ylab("Number of species") +
-  scale_fill_manual("Best match", values = safe_colorblind_palette) +
-  scale_alpha_manual("CV model included", values = c(0.5, 1)) +
+  ggplot2::geom_bar(position = "stack", stat = "identity") +
+  ggplot2::xlab("Identification provider") +
+  ggplot2::ylab("Number of species") +
+  ggplot2::scale_fill_manual("Best match", values = safe_colorblind_palette) +
+  ggplot2::scale_alpha_manual("CV model included", values = c(0.5, 1)) +
   scale_y_break(c(100, 400)) +
-  scale_x_discrete(
+  ggplot2::scale_x_discrete(
     labels = c("Flora\nIncognita", "FlorID", "iNaturalist", "Pl@ntNet")
     ) +
-  theme_bw()
+  ggplot2::theme_bw() +
+  ggplot2::theme(
+    axis.text.x.top = element_blank(),
+    axis.ticks.x.top = element_blank()
+  )
 
 ideal_gg
 
