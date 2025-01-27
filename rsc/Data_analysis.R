@@ -927,16 +927,20 @@ if (save_plots) {
   pdf(f_out, width = 10, height = 5)
   grid.arrange(
     gg_obslvl_single +
-      xlab("(a) By observation"),
+      ggplot2::xlab("(a) By observation") +
+      ggplot2::theme(
+        axis.title.x = element_text(size = 12),
+        axis.title.y = element_text(size = 12)
+        ),
     gg_hablvl_single +
-      theme(
-        # axis.title.x = element_blank(),
+      ggplot2::theme(
+        axis.title.x = element_text(size = 12),
         axis.title.y = element_blank(),
         axis.text.y = element_blank(),
         axis.ticks.y = element_blank()
       ) +
-      xlab("(b) By habitat type"),
-    ncol = 2, bottom = "Identification provider",
+      ggplot2::xlab("(b) By habitat type"),
+    ncol = 2, bottom = textGrob("Identification provider", gp = gpar(fontsize = 12)),
     widths = c(1, 0.92)
   )
   dev.off()
