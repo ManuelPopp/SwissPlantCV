@@ -12,7 +12,7 @@ observation_level_single <- df_single %>%
   ) %>%
   gather(
     key = "Measure", value = "Accuracy", -observation_id, -cv_model_name
-    ) %>%
+  ) %>%
   mutate(Aggregate = stringr::str_ends(Measure, "_hl")) %>%
   mutate(Top1 = stringr::str_starts(Measure, "Top1"))
 
@@ -216,10 +216,10 @@ observation_level_single$labels <- lettering[
     paste(
       observation_level_single$cv_model_name,
       observation_level_single$Aggregate
-      ),
+    ),
     paste(cv_mods, rep(c(FALSE, TRUE), length(cv_mods) / 2))
-    )
-  ]
+  )
+]
 
 gg_obslvl_single <- ggplot(
   data = observation_level_single[which(observation_level_single$Top1),],
@@ -237,7 +237,10 @@ gg_obslvl_single <- ggplot(
   xlab("Identification provider") +
   ylab("Top 1 accuracy") +
   theme_bw() +
-  theme(legend.position = "None")
+  theme(
+    legend.position = "None",
+    axis.text.x = element_text(size = 11)
+  )
 
 gg_obslvl_single
 

@@ -234,6 +234,9 @@ gg_hablvl_single <- ggplot(
   xlab("Identification provider") +
   ylab("Top 1 accuracy") +
   theme_bw() +
-  theme(legend.position = "None")
+  theme(
+    legend.position = "None",
+    axis.text.x = element_text(size = 11)
+  )
 
 gg_hablvl_single
