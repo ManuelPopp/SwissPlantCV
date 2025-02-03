@@ -124,7 +124,24 @@ biogeo_file <- file.path(
     "N2020_Revision_BiogeoRegion.shp"
     )
 
-completed <- sf::st_read(kml_file)
+if (exists("df")) {
+  completed <- df %>%
+    mutate(
+      geometry = stringr::str_remove_all(location, "[()]"),
+      lat = as.numeric(stringr::str_split_fixed(geometry, ", ", 2)[,1]),
+      lon = as.numeric(stringr::str_split_fixed(geometry, ", ", 2)[,2])
+    ) %>%
+    dplyr::group_by(releve_id) %>%
+    dplyr::summarise(
+      Name = first(releve_id), Description = first(habitat),
+      lat = first(lat),
+      lon = first(lon)
+    ) %>%
+    sf::st_as_sf(coords = c("lon", "lat"), crs = 4326)
+} else {
+  completed <- sf::st_read(kml_file)
+}
+
 biogeo <- sf::st_read(biogeo_file)
 regions <- biogeo[1]
 
@@ -163,15 +180,17 @@ xlsx::write.xlsx(
 habitat_export <- habitats[, c(1, 2, 5, 3, 4, 8, 6, 7, 9)]
 names(habitat_export) <- c("ID", "Name", names_eng, "Sum")
 
-print(xtable(habitat_export, type = "latex",
-             digits = rep(0, ncol(habitat_export) + 1),
-             caption = "Number of sampling plots for each habitat type and biogeographic region. Habitat types were classified following TypoCH. Biogeographic regions were assigned according to the 2022 six-region classification by the Swiss Federal Office for the Environment (FOEN).",
-             label = "tab:sampledhabitats"
-             ),
-      file = file.path(dir_tab, "Sampled_habitats.tex"),
-      booktabs = TRUE, sanitize.text.function = identity,
-      include.rownames = FALSE,
-      caption.placement = "top"
+print(
+  xtable(
+    habitat_export, type = "latex",
+    digits = rep(0, ncol(habitat_export) + 1),
+    caption = "Number of sampling plots for each habitat type and biogeographic region. Habitat types were classified following TypoCH. Biogeographic regions were assigned according to the 2022 six-region classification by the Swiss Federal Office for the Environment (FOEN).",
+    label = "tab:sampledhabitats"
+    ),
+  file = file.path(dir_tab, "Sampled_habitats.tex"),
+  booktabs = TRUE, sanitize.text.function = identity,
+  include.rownames = FALSE,
+  caption.placement = "top"
 )
 
 # Sampling per region
@@ -195,14 +214,16 @@ export <- bioregions[, c(4, 2, 3)]#, 4)]
 export$Area = round(export$Area / 10^6, 0)
 
 names(export) <- c("Biogeographic region", "Area in km\\textsuperscript{2}", "N")#, "Plots per tsd km\\textsuperscript{2}")
-print(xtable(export, type = "latex", digits = c(0, 0, 0, 0),#, 2),
-             caption = "Sampling sites per biogeographic region. N is the number of sampling plots within the respective region.",
-             label = "tab:samplingbyregion"
-             ),
-      file = file.path(dir_tab, "Sampling_summary.tex"),
-      booktabs = TRUE, sanitize.text.function = identity,
-      include.rownames = FALSE,
-      caption.placement = "top"
+print(
+  xtable(
+    export, type = "latex", digits = c(0, 0, 0, 0),#, 2),
+    caption = "Sampling sites per biogeographic region. N is the number of sampling plots within the respective region.",
+    label = "tab:samplingbyregion"
+    ),
+  file = file.path(dir_tab, "Sampling_summary.tex"),
+  booktabs = TRUE, sanitize.text.function = identity,
+  include.rownames = FALSE,
+  caption.placement = "top"
 )
 
 file.copy(

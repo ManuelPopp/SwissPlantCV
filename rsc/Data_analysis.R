@@ -669,9 +669,6 @@ df <- df %>%
   rowwise() %>%
   mutate(Top3 = any(match_first <= 0, match_second <= 0, match_third <= 0))
 
-df_single <- df %>% filter(question_type == "single_image")
-df_multi <- df %>% filter(question_type == "multi_image")
-
 # Top 1 and top 3 matches including higher-level matches, i.e., allow aggregates
 # instead of species-level matches only.
 df$Top1_hl <- df$match_first <= 2

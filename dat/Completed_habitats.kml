@@ -1,1076 +1,1217 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
-    <Document id="887">
-        <Placemark id="889">
-            <name>2962842</name>
-            <description>621</description>
-            <Point id="888">
-                <coordinates>8.533857181978002,47.5630298639031,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="891">
-            <name>2962857</name>
-            <description>511</description>
-            <Point id="890">
-                <coordinates>8.53110059778993,47.562289316383996,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="893">
-            <name>2962865</name>
-            <description>424</description>
-            <Point id="892">
-                <coordinates>8.53070841270517,47.56159604345489,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="895">
-            <name>2962866</name>
-            <description>424</description>
-            <Point id="894">
-                <coordinates>8.530792515097662,47.562060617959084,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="897">
-            <name>2962867</name>
-            <description>621</description>
-            <Point id="896">
-                <coordinates>8.534080043710818,47.563062473817574,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="899">
-            <name>2962977</name>
-            <description>451</description>
-            <Point id="898">
-                <coordinates>8.363437576874082,47.361257911021134,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="901">
-            <name>2963070</name>
-            <description>451</description>
-            <Point id="900">
-                <coordinates>8.47966425,47.37298577,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="903">
-            <name>2963346</name>
-            <description>623</description>
-            <Point id="902">
-                <coordinates>8.474616989988188,47.37254862710749,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="905">
-            <name>2963349</name>
-            <description>232</description>
-            <Point id="904">
-                <coordinates>8.37177943,47.31746455,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="907">
-            <name>2963350</name>
-            <description>711</description>
-            <Point id="906">
-                <coordinates>8.36545748515691,47.324672163645296,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="909">
-            <name>2963442</name>
-            <description>232</description>
-            <Point id="908">
-                <coordinates>8.56822325842315,47.04278572684451,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="911">
-            <name>2963445</name>
-            <description>625</description>
-            <Point id="910">
-                <coordinates>8.56653177,47.04651404,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="913">
-            <name>2963446</name>
-            <description>2211</description>
-            <Point id="912">
-                <coordinates>8.56507558,47.04621568,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="915">
-            <name>2963591</name>
-            <description>453</description>
-            <Point id="914">
-                <coordinates>8.481027163494428,47.373266697737016,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="917">
-            <name>2963593</name>
-            <description>515</description>
-            <Point id="916">
-                <coordinates>8.450622081755697,47.35801053032489,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="919">
-            <name>2964002</name>
-            <description>621</description>
-            <Point id="918">
-                <coordinates>8.945773983163017,47.332268178724725,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="921">
-            <name>2964003</name>
-            <description>232</description>
-            <Point id="920">
-                <coordinates>8.96594256,47.33656876,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="923">
-            <name>2964005</name>
-            <description>453</description>
-            <Point id="922">
-                <coordinates>8.95696999,47.34339544,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="925">
-            <name>2965938</name>
-            <description>431</description>
-            <Point id="924">
-                <coordinates>9.17112934,47.0706675,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="927">
-            <name>2965939</name>
-            <description>662</description>
-            <Point id="926">
-                <coordinates>9.19604959,47.07060687,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="929">
-            <name>2966159</name>
-            <description>721</description>
-            <Point id="928">
-                <coordinates>7.09312462,47.06513923,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="931">
-            <name>2966218</name>
-            <description>424</description>
-            <Point id="930">
-                <coordinates>7.06425224,47.06757726,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="933">
-            <name>2966219</name>
-            <description>223</description>
-            <Point id="932">
-                <coordinates>7.11521517,47.05274294,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="935">
-            <name>2966220</name>
-            <description>2212</description>
-            <Point id="934">
-                <coordinates>7.11406547,47.05205368,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="937">
-            <name>2966221</name>
-            <description>621</description>
-            <Point id="936">
-                <coordinates>7.07376626,47.03848553,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="939">
-            <name>2966351</name>
-            <description>453</description>
-            <Point id="938">
-                <coordinates>6.74436327,46.92811928,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="941">
-            <name>2966352</name>
-            <description>624</description>
-            <Point id="940">
-                <coordinates>6.76923929,46.93164665,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="943">
-            <name>2966353</name>
-            <description>114</description>
-            <Point id="942">
-                <coordinates>6.84427920683792,46.95242821748454,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="945">
-            <name>2966354</name>
-            <description>521</description>
-            <Point id="944">
-                <coordinates>6.79331157,46.93374672,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="947">
-            <name>2973471</name>
-            <description>621</description>
-            <Point id="946">
-                <coordinates>8.037855442213983,47.5088707744556,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="949">
-            <name>2973472</name>
-            <description>641</description>
-            <Point id="948">
-                <coordinates>8.099953864658652,47.49838440765216,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="951">
-            <name>2973473</name>
-            <description>532</description>
-            <Point id="950">
-                <coordinates>8.103053156292548,47.49830042704875,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="953">
-            <name>2974657</name>
-            <description>451</description>
-            <Point id="952">
-                <coordinates>8.251403540034403,46.67816274840751,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="955">
-            <name>2974658</name>
-            <description>631</description>
-            <Point id="954">
-                <coordinates>8.25063884,46.67760638,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="957">
-            <name>2974659</name>
-            <description>222</description>
-            <Point id="956">
-                <coordinates>8.32421663,46.6003558,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="959">
-            <name>2974660</name>
-            <description>546</description>
-            <Point id="958">
-                <coordinates>8.34465902,46.55986543,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="961">
-            <name>2974661</name>
-            <description>544</description>
-            <Point id="960">
-                <coordinates>8.34418042,46.5611386,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="963">
-            <name>2974662</name>
-            <description>662</description>
-            <Point id="962">
-                <coordinates>8.15275141,46.68024029,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="965">
-            <name>2974663</name>
-            <description>539</description>
-            <Point id="964">
-                <coordinates>8.12056834,46.6804381,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="967">
-            <name>2974664</name>
-            <description>545</description>
-            <Point id="966">
-                <coordinates>8.11159719,46.67734908,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="969">
-            <name>2974665</name>
-            <description>717</description>
-            <Point id="968">
-                <coordinates>8.09843014,46.67260899,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="971">
-            <name>2974666</name>
-            <description>222</description>
-            <Point id="970">
-                <coordinates>8.0960429,46.65964431,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="973">
-            <name>2974667</name>
-            <description>435</description>
-            <Point id="972">
-                <coordinates>8.09662119,46.65987772,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="975">
-            <name>2974668</name>
-            <description>454</description>
-            <Point id="974">
-                <coordinates>8.15472558,46.67930836,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="977">
-            <name>2974928</name>
-            <description>2121</description>
-            <Point id="976">
-                <coordinates>8.50021902,47.43465684,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="979">
-            <name>2974929</name>
-            <description>2121</description>
-            <Point id="978">
-                <coordinates>8.48632987,47.43037716,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="981">
-            <name>2974930</name>
-            <description>224</description>
-            <Point id="980">
-                <coordinates>8.49733061,47.43147641,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="983">
-            <name>2974931</name>
-            <description>2211</description>
-            <Point id="982">
-                <coordinates>8.4936585,47.431456,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="985">
-            <name>2974953</name>
-            <description>241</description>
-            <Point id="984">
-                <coordinates>8.79795696,47.30394353,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="987">
-            <name>2974954</name>
-            <description>114</description>
-            <Point id="986">
-                <coordinates>8.79805888,47.3040939,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="989">
-            <name>2975262</name>
-            <description>233</description>
-            <Point id="988">
-                <coordinates>8.36811905,47.32962191,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="991">
-            <name>2975614</name>
-            <description>423</description>
-            <Point id="990">
-                <coordinates>8.884927862762693,45.96216134506006,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="993">
-            <name>2975615</name>
-            <description>635</description>
-            <Point id="992">
-                <coordinates>8.87581461,45.96088059,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="995">
-            <name>2975616</name>
-            <description>638</description>
-            <Point id="994">
-                <coordinates>8.87317096,45.96427748,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="997">
-            <name>2975617</name>
-            <description>632</description>
-            <Point id="996">
-                <coordinates>8.874658116877217,45.966125811234804,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="999">
-            <name>2975620</name>
-            <description>721</description>
-            <Point id="998">
-                <coordinates>8.946040226156951,46.00353772657627,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1001">
-            <name>2975732</name>
-            <description>614</description>
-            <Point id="1000">
-                <coordinates>8.924302224374612,45.99374639946799,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1003">
-            <name>2975733</name>
-            <description>2121</description>
-            <Point id="1002">
-                <coordinates>8.926684938046403,45.994360435838935,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1005">
-            <name>2975734</name>
-            <description>534</description>
-            <Point id="1004">
-                <coordinates>8.945445699296103,45.976516781140326,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1007">
-            <name>2975735</name>
-            <description>3412</description>
-            <Point id="1006">
-                <coordinates>8.947078622708222,45.978082644048214,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1009">
-            <name>2975736</name>
-            <description>422</description>
-            <Point id="1008">
-                <coordinates>8.9477383291157,45.978190396916354,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1011">
-            <name>2975881</name>
-            <description>223</description>
-            <Point id="1010">
-                <coordinates>8.965831407649084,46.105322068001726,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1013">
-            <name>2975882</name>
-            <description>222</description>
-            <Point id="1012">
-                <coordinates>8.96648371599449,46.105258252783905,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1015">
-            <name>2975883</name>
-            <description>622</description>
-            <Point id="1014">
-                <coordinates>8.969372499436565,46.10840343029328,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1017">
-            <name>2975884</name>
-            <description>525</description>
-            <Point id="1016">
-                <coordinates>8.969768614580097,46.10898036424714,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1019">
-            <name>2975885</name>
-            <description>639</description>
-            <Point id="1018">
-                <coordinates>8.931562205444788,46.097251687137394,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1021">
-            <name>2975886</name>
-            <description>451</description>
-            <Point id="1020">
-                <coordinates>8.934606166350253,46.06612079464494,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1023">
-            <name>2975961</name>
-            <description>414</description>
-            <Point id="1022">
-                <coordinates>8.72355633,46.48148324,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1025">
-            <name>2975962</name>
-            <description>539</description>
-            <Point id="1024">
-                <coordinates>8.72372154,46.47725918,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1027">
-            <name>2975963</name>
-            <description>524</description>
-            <Point id="1026">
-                <coordinates>8.72572197,46.48070502,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1029">
-            <name>2975965</name>
-            <description>664</description>
-            <Point id="1028">
-                <coordinates>8.72505544,46.48193574,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1031">
-            <name>2976068</name>
-            <description>623</description>
-            <Point id="1030">
-                <coordinates>8.503320879700267,47.35100397411499,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1033">
-            <name>2976538</name>
-            <description>612</description>
-            <Point id="1032">
-                <coordinates>8.60125205,47.59339093,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1035">
-            <name>2976539</name>
-            <description>634</description>
-            <Point id="1034">
-                <coordinates>8.61386673,47.76179141,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1037">
-            <name>2976540</name>
-            <description>639</description>
-            <Point id="1036">
-                <coordinates>8.59718263,47.672018,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1039">
-            <name>2976541</name>
-            <description>613</description>
-            <Point id="1038">
-                <coordinates>8.60202536,47.5924693,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1041">
-            <name>2976542</name>
-            <description>614</description>
-            <Point id="1040">
-                <coordinates>8.59790406,47.59220506,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1043">
-            <name>2976543</name>
-            <description>231</description>
-            <Point id="1042">
-                <coordinates>8.59636431,47.59043912,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1045">
-            <name>2976688</name>
-            <description>623</description>
-            <Point id="1044">
-                <coordinates>9.54504864,46.96489559,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1047">
-            <name>2976689</name>
-            <description>612</description>
-            <Point id="1046">
-                <coordinates>9.541700432701452,46.9435999563607,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1049">
-            <name>2976690</name>
-            <description>614</description>
-            <Point id="1048">
-                <coordinates>9.54200484,46.94091413,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1051">
-            <name>2976691</name>
-            <description>536</description>
-            <Point id="1050">
-                <coordinates>9.5414352,46.94756621,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1053">
-            <name>2976692</name>
-            <description>451</description>
-            <Point id="1052">
-                <coordinates>9.54108549,46.95708829,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1055">
-            <name>2976889</name>
-            <description>665</description>
-            <Point id="1054">
-                <coordinates>10.29103031,46.63880741,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1057">
-            <name>2976890</name>
-            <description>432</description>
-            <Point id="1056">
-                <coordinates>10.28399605,46.63551458,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1059">
-            <name>2976891</name>
-            <description>3312</description>
-            <Point id="1058">
-                <coordinates>10.27624103,46.63000252,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1061">
-            <name>2976892</name>
-            <description>545</description>
-            <Point id="1060">
-                <coordinates>10.26012759,46.63485815,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1063">
-            <name>2976893</name>
-            <description>424</description>
-            <Point id="1062">
-                <coordinates>10.32765311,46.63126994,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1065">
-            <name>2976894</name>
-            <description>223</description>
-            <Point id="1064">
-                <coordinates>10.33068479,46.63003887,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1067">
-            <name>2976895</name>
-            <description>222</description>
-            <Point id="1066">
-                <coordinates>9.947411105640713,46.74971051940801,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1069">
-            <name>2976896</name>
-            <description>644</description>
-            <Point id="1068">
-                <coordinates>10.08941,46.74847405,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1071">
-            <name>2976897</name>
-            <description>661</description>
-            <Point id="1070">
-                <coordinates>10.08366304,46.73633358,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1073">
-            <name>2976898</name>
-            <description>3322</description>
-            <Point id="1072">
-                <coordinates>9.94745468,46.7464994,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1075">
-            <name>2977130</name>
-            <description>717</description>
-            <Point id="1074">
-                <coordinates>9.8406243,46.51905675,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1077">
-            <name>2977131</name>
-            <description>539</description>
-            <Point id="1076">
-                <coordinates>9.84283947,46.51810134,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1079">
-            <name>2977132</name>
-            <description>435</description>
-            <Point id="1078">
-                <coordinates>9.82125515,46.51597175,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1081">
-            <name>2977133</name>
-            <description>434</description>
-            <Point id="1080">
-                <coordinates>9.7911523,46.51104189,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1083">
-            <name>2977134</name>
-            <description>3322</description>
-            <Point id="1082">
-                <coordinates>9.78555361,46.50631366,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1085">
-            <name>2977382</name>
-            <description>3211</description>
-            <Point id="1084">
-                <coordinates>7.488409850527973,46.04399998693825,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1087">
-            <name>2977383</name>
-            <description>717</description>
-            <Point id="1086">
-                <coordinates>7.45046459,46.10703948,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1089">
-            <name>2977384</name>
-            <description>223</description>
-            <Point id="1088">
-                <coordinates>7.451042918335134,46.116302492983486,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1091">
-            <name>2977385</name>
-            <description>536</description>
-            <Point id="1090">
-                <coordinates>7.4944944,46.10913119,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1093">
-            <name>2977386</name>
-            <description>542</description>
-            <Point id="1092">
-                <coordinates>7.73311554,46.32582199,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1095">
-            <name>2977387</name>
-            <description>4211</description>
-            <Point id="1094">
-                <coordinates>7.56046409,46.29352954,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1097">
-            <name>2977388</name>
-            <description>634</description>
-            <Point id="1096">
-                <coordinates>7.7312716,46.32634871,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1099">
-            <name>2977389</name>
-            <description>511</description>
-            <Point id="1098">
-                <coordinates>7.73090866,46.32650156,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1101">
-            <name>2977650</name>
-            <description>539</description>
-            <Point id="1100">
-                <coordinates>7.75384859,46.00465676,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1103">
-            <name>2977651</name>
-            <description>663</description>
-            <Point id="1102">
-                <coordinates>7.75242627,46.00433577,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1105">
-            <name>2977652</name>
-            <description>225</description>
-            <Point id="1104">
-                <coordinates>7.76270332,45.98364308,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1107">
-            <name>2977653</name>
-            <description>431</description>
-            <Point id="1106">
-                <coordinates>7.78208152,45.97942073,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1109">
-            <name>2977654</name>
-            <description>3322</description>
-            <Point id="1108">
-                <coordinates>7.79119076,45.98414652,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1111">
-            <name>2977655</name>
-            <description>4212</description>
-            <Point id="1110">
-                <coordinates>7.7780396,46.01083636,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1113">
-            <name>2977656</name>
-            <description>2211</description>
-            <Point id="1112">
-                <coordinates>7.77272095,46.01477434,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1115">
-            <name>2977657</name>
-            <description>544</description>
-            <Point id="1114">
-                <coordinates>7.77678399,46.01830086,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1117">
-            <name>2977658</name>
-            <description>3313</description>
-            <Point id="1116">
-                <coordinates>7.79961839,46.02237074,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1119">
-            <name>2977659</name>
-            <description>437</description>
-            <Point id="1118">
-                <coordinates>7.78889417,46.01773232,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1121">
-            <name>2978080</name>
-            <description>653</description>
-            <Point id="1120">
-                <coordinates>7.05422547,47.23921332,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1123">
-            <name>2978081</name>
-            <description>652</description>
-            <Point id="1122">
-                <coordinates>7.05449511,47.23954218,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1125">
-            <name>2978082</name>
-            <description>652</description>
-            <Point id="1124">
-                <coordinates>7.05659285,47.24119707,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1127">
-            <name>2978083</name>
-            <description>241</description>
-            <Point id="1126">
-                <coordinates>7.05760371,47.24151046,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1129">
-            <name>2978084</name>
-            <description>711</description>
-            <Point id="1128">
-                <coordinates>7.19591676,47.22571506,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1131">
-            <name>2978136</name>
-            <description>652</description>
-            <Point id="1130">
-                <coordinates>9.249976453597723,47.29089112673368,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1133">
-            <name>2978137</name>
-            <description>514</description>
-            <Point id="1132">
-                <coordinates>9.28999756,47.25031276,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1135">
-            <name>2978138</name>
-            <description>223</description>
-            <Point id="1134">
-                <coordinates>9.265356704415675,47.229350390157016,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1137">
-            <name>2978139</name>
-            <description>114</description>
-            <Point id="1136">
-                <coordinates>8.85356259,47.20137795,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1139">
-            <name>2978140</name>
-            <description>121</description>
-            <Point id="1138">
-                <coordinates>8.85348002,47.20084579,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1141">
-            <name>2978200</name>
-            <description>613</description>
-            <Point id="1140">
-                <coordinates>9.29738455,47.26206893,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1143">
-            <name>2978201</name>
-            <description>441</description>
-            <Point id="1142">
-                <coordinates>9.35694676,47.25923605,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1145">
-            <name>2978202</name>
-            <description>653</description>
-            <Point id="1144">
-                <coordinates>9.25063433,47.29088156,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1147">
-            <name>2978613</name>
-            <description>521</description>
-            <Point id="1146">
-                <coordinates>8.49447973280525,47.3598622951096,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1149">
-            <name>2978943</name>
-            <description>642</description>
-            <Point id="1148">
-                <coordinates>9.52663838,47.31227625,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1151">
-            <name>2979285</name>
-            <description>433</description>
-            <Point id="1150">
-                <coordinates>7.932669102629264,46.66437364235386,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1153">
-            <name>2979286</name>
-            <description>431</description>
-            <Point id="1152">
-                <coordinates>7.94602761,46.66726238,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1155">
-            <name>2979288</name>
-            <description>3312</description>
-            <Point id="1154">
-                <coordinates>7.99208407,46.67295717,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1157">
-            <name>2979289</name>
-            <description>442</description>
-            <Point id="1156">
-                <coordinates>7.99040409,46.67288191,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1159">
-            <name>2979290</name>
-            <description>441</description>
-            <Point id="1158">
-                <coordinates>8.00453246,46.67310901,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1161">
-            <name>2979291</name>
-            <description>124</description>
-            <Point id="1160">
-                <coordinates>8.02298279,46.66724235,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1163">
-            <name>2979292</name>
-            <description>132</description>
-            <Point id="1162">
-                <coordinates>8.04283816,46.66229404,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1165">
-            <name>2979463</name>
-            <description>532</description>
-            <Point id="1164">
-                <coordinates>6.47168655,46.6807215,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1167">
-            <name>2979464</name>
-            <description>422</description>
-            <Point id="1166">
-                <coordinates>6.471591,46.68071182,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1169">
-            <name>2979465</name>
-            <description>634</description>
-            <Point id="1168">
-                <coordinates>6.48402932,46.66919491,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1171">
-            <name>2979466</name>
-            <description>721</description>
-            <Point id="1170">
-                <coordinates>6.515383,46.6604771,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1173">
-            <name>2979467</name>
-            <description>413</description>
-            <Point id="1172">
-                <coordinates>6.55100542,46.66560918,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1175">
-            <name>2979476</name>
-            <description>716</description>
-            <Point id="1174">
-                <coordinates>6.99200593,46.29992996,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1177">
-            <name>2979477</name>
-            <description>3315</description>
-            <Point id="1176">
-                <coordinates>6.9920988,46.29986274,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1179">
-            <name>2979478</name>
-            <description>431</description>
-            <Point id="1178">
-                <coordinates>6.9808383,46.43573221,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1181">
-            <name>2979479</name>
-            <description>3314</description>
-            <Point id="1180">
-                <coordinates>6.97693913,46.43129127,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1183">
-            <name>2979480</name>
-            <description>524</description>
-            <Point id="1182">
-                <coordinates>6.97718471,46.43209669,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1185">
-            <name>2979512</name>
-            <description>411</description>
-            <Point id="1184">
-                <coordinates>7.08224206,46.12559455,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1187">
-            <name>2979513</name>
-            <description>643</description>
-            <Point id="1186">
-                <coordinates>7.56166253,46.29396192,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1189">
-            <name>2979514</name>
-            <description>511</description>
-            <Point id="1188">
-                <coordinates>7.07192939,46.12219434,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1191">
-            <name>2979515</name>
-            <description>4211</description>
-            <Point id="1190">
-                <coordinates>7.08276752,46.12545842,0.0</coordinates>
-            </Point>
-        </Placemark>
-        <Placemark id="1193">
-            <name>2979516</name>
-            <description>461</description>
-            <Point id="1192">
-                <coordinates>7.0727322,46.10726797,0.0</coordinates>
-            </Point>
-        </Placemark>
-    </Document>
-</kml>
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document id="root_doc">
+<Schema name="Completed_habitats.kml" id="Completed_habitats.kml">
+	<SimpleField name="releve_id" type="float"></SimpleField>
+</Schema>
+<Folder><name>Completed_habitats.kml</name>
+  <Placemark>
+	<name>2962567</name>
+	<description>623</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2962567</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.50332087970027,47.351003974115</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2962829</name>
+	<description>424</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2962829</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.53083356471094,47.5616142009979</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2962830</name>
+	<description>621</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2962830</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.53404932122141,47.5630290356786</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2962841</name>
+	<description>511</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2962841</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.53110059778993,47.562289316384</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2962843</name>
+	<description>424</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2962843</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.53079212761419,47.5620611612746</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2962976</name>
+	<description>451</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2962976</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.3634449913858,47.3612732329828</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2963071</name>
+	<description>451</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2963071</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.47962571496833,47.373009731926</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2963285</name>
+	<description>711</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2963285</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.36550561838488,47.3247090150314</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2963347</name>
+	<description>623</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2963347</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.4746874829707,47.3725035599916</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2963348</name>
+	<description>232</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2963348</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.37180655926328,47.3174501104031</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2963404</name>
+	<description>232</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2963404</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.56830615522536,47.0427538761072</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2963441</name>
+	<description>2211</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2963441</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.50021991813547,47.3849592664984</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2963444</name>
+	<description>625</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2963444</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.56659134269094,47.0466130149049</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2963590</name>
+	<description>453</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2963590</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.48102819973657,47.373265519031</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2963592</name>
+	<description>515</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2963592</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.45069778200314,47.3580513330818</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2964004</name>
+	<description>621</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2964004</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.94577434906291,47.3322811282942</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2964006</name>
+	<description>232</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2964006</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.96591785446794,47.3365776644278</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2964007</name>
+	<description>453</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2964007</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.95686645797896,47.3434302305715</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2965918</name>
+	<description>661</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2965918</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>9.19605408393015,47.07061747544</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2965940</name>
+	<description>431</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2965940</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>9.17113949,47.07067353</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2966160</name>
+	<description>721</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2966160</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.09305639033807,47.0650661666988</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2966181</name>
+	<description>621</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2966181</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.07372110774095,47.0384919465955</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2966195</name>
+	<description>2212</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2966195</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.11392297,47.05206916</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2966197</name>
+	<description>223</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2966197</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.11521729,47.05274842</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2966222</name>
+	<description>424</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2966222</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.06426264305651,47.0675516035765</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2966245</name>
+	<description>521</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2966245</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>6.79323904290086,46.9337703384734</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2966350</name>
+	<description>624</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2966350</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>6.76922137003019,46.9315973267454</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2966361</name>
+	<description>114</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2966361</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>6.84435295158082,46.952495078057</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2971563</name>
+	<description>453</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2971563</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>6.74435554977526,46.9281089710846</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2973449</name>
+	<description>621</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2973449</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.03775505988243,47.5087741561831</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2973450</name>
+	<description>641</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2973450</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.09992031141535,47.4983650822569</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2973451</name>
+	<description>532</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2973451</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.10311090892259,47.4983019836735</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2974638</name>
+	<description>451</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2974638</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.25143006782441,46.6782316513427</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2974639</name>
+	<description>631</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2974639</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.25060077239948,46.6776283992525</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2974640</name>
+	<description>222</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2974640</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.32422191750047,46.6003507800793</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2974641</name>
+	<description>662</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2974641</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.15309794221652,46.6803894856339</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2974642</name>
+	<description>539</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2974642</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.12051204078495,46.680482113538</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2974643</name>
+	<description>222</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2974643</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.09601144166848,46.6596230172524</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2974644</name>
+	<description>435</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2974644</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.09663264292989,46.6598846344332</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2974648</name>
+	<description>546</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2974648</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.34468063134636,46.5598483626929</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2974653</name>
+	<description>544</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2974653</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.34421354268507,46.561112344637</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2974654</name>
+	<description>545</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2974654</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.11159834749949,46.6773597693233</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2974655</name>
+	<description>717</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2974655</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.09842628735452,46.672603993013</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2974656</name>
+	<description>454</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2974656</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.15470539562253,46.6792955580304</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2974925</name>
+	<description>2121</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2974925</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.48935692197425,47.4291926929586</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2974926</name>
+	<description>224</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2974926</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.4971949728498,47.431347936</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2974927</name>
+	<description>2211</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2974927</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.49366526366043,47.4314706268761</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2974956</name>
+	<description>241</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2974956</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.79793132669502,47.3039826974125</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2974957</name>
+	<description>114</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2974957</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.79805720848822,47.3041115641399</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2975261</name>
+	<description>233</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2975261</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.37081883625875,47.3284082416103</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2975609</name>
+	<description>423</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2975609</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.88499896029325,45.9621472039531</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2975610</name>
+	<description>635</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2975610</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.87583992622737,45.9608606186903</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2975611</name>
+	<description>638</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2975611</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.87318593133877,45.9644946249363</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2975612</name>
+	<description>632</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2975612</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.87471935953946,45.9661487804852</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2975619</name>
+	<description>721</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2975619</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.94598820402229,46.0035333845567</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2975737</name>
+	<description>614</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2975737</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.92430235559898,45.9938271938411</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2975738</name>
+	<description>2122</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2975738</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.92667457814892,45.9943592234046</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2975739</name>
+	<description>534</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2975739</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.94542011340938,45.9764921114521</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2975740</name>
+	<description>3412</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2975740</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.94704668468267,45.9780616588869</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2975741</name>
+	<description>422</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2975741</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.94775803741938,45.9781142849591</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2975872</name>
+	<description>451</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2975872</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.93463030418454,46.066105448585</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2975873</name>
+	<description>525</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2975873</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.96979503443907,46.1090459565763</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2975874</name>
+	<description>622</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2975874</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.9694425413909,46.1082121833834</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2975875</name>
+	<description>222</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2975875</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.9663716923393,46.1052117249767</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2975876</name>
+	<description>223</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2975876</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.96668125995219,46.1052179653744</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2975878</name>
+	<description>639</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2975878</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.93151663900595,46.0972643478826</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2975968</name>
+	<description>524</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2975968</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.72588241406435,46.480779318464</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2975969</name>
+	<description>414</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2975969</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.72358658980963,46.4815263934564</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2975970</name>
+	<description>539</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2975970</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.72367308969736,46.4772300369761</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2975971</name>
+	<description>664</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2975971</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.72502233687462,46.4819587393577</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2976544</name>
+	<description>634</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2976544</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.61384104817772,47.7617229950323</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2976545</name>
+	<description>612</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2976545</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.6012579473062,47.5933748258386</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2976546</name>
+	<description>614</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2976546</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.59790396863289,47.5922032628231</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2976548</name>
+	<description>231</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2976548</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.59635899594946,47.5904747772561</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2976549</name>
+	<description>639</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2976549</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.59716373842311,47.6720446158853</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2976550</name>
+	<description>613</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2976550</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.60204852438094,47.5923909942284</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2976683</name>
+	<description>612</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2976683</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>9.54163152459502,46.9436152590352</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2976684</name>
+	<description>614</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2976684</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>9.54197000974726,46.9409147368369</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2976685</name>
+	<description>536</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2976685</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>9.54155401354685,46.9475217674467</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2976686</name>
+	<description>451</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2976686</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>9.54108992280769,46.9571328982979</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2976687</name>
+	<description>623</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2976687</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>9.54502105205748,46.9647804217922</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2976750</name>
+	<description>644</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2976750</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>10.089597042913,46.7484129475109</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2976751</name>
+	<description>661</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2976751</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>10.0837184295117,46.7363355063724</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2976752</name>
+	<description>222</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2976752</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>9.94741248798917,46.7497683621808</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2976903</name>
+	<description>665</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2976903</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>10.291020524285,46.6387663446852</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2976904</name>
+	<description>432</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2976904</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>10.2840200631329,46.6355149184397</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2976905</name>
+	<description>545</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2976905</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>10.2601448801863,46.634868698198</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2976906</name>
+	<description>424</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2976906</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>10.3276256189326,46.631329570328</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2976907</name>
+	<description>223</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2976907</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>10.3306838366303,46.6301005654019</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2976925</name>
+	<description>3312</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2976925</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>10.2762768977138,46.6300094142757</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2976926</name>
+	<description>3322</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2976926</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>9.94753949023983,46.746621066311</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2977065</name>
+	<description>3322</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2977065</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>9.78554486351085,46.5063093011165</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2977066</name>
+	<description>434</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2977066</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>9.79105880495421,46.5110706782027</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2977067</name>
+	<description>435</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2977067</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>9.82123460324875,46.5159773724957</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2977068</name>
+	<description>717</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2977068</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>9.84063264801919,46.5190580205192</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2977129</name>
+	<description>539</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2977129</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>9.84281974686894,46.5182119105082</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2977391</name>
+	<description>3211</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2977391</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.48842303346669,46.0440073572324</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2977392</name>
+	<description>717</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2977392</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.45050853046698,46.1070195355561</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2977395</name>
+	<description>223</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2977395</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.45099246873905,46.1162913443045</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2977396</name>
+	<description>536</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2977396</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.49452606779654,46.1091988284633</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2977397</name>
+	<description>511</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2977397</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.73084730031097,46.3265028963297</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2977398</name>
+	<description>634</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2977398</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.73120108059665,46.326345193074</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2977399</name>
+	<description>542</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2977399</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.73310919231314,46.3258048561868</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2977400</name>
+	<description>4211</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2977400</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.56039681059323,46.2935151039281</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2977427</name>
+	<description>437</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2977427</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.78886975521889,46.0177006672565</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2977526</name>
+	<description>4212</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2977526</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.77801103136566,46.0108519911194</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2977527</name>
+	<description>2211</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2977527</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.77272773754292,46.0148023517417</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2977528</name>
+	<description>544</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2977528</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.77677788013328,46.0182733226037</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2977529</name>
+	<description>3313</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2977529</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.79966485256775,46.0223615678625</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2977669</name>
+	<description>3322</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2977669</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.7910402331922,45.9842274810852</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2977670</name>
+	<description>431</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2977670</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.78205432166757,45.9794146920462</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2977671</name>
+	<description>225</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2977671</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.76264974974425,45.9836460619836</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2977672</name>
+	<description>663</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2977672</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.75244461660735,46.0043066943913</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2977803</name>
+	<description>539</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2977803</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.75383880037124,46.0047357247369</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2978075</name>
+	<description>653</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2978075</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.05418105189822,47.2391652684877</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2978076</name>
+	<description>652</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2978076</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.05448021166505,47.2395839799202</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2978077</name>
+	<description>652</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2978077</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.05654732797118,47.2412177241993</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2978078</name>
+	<description>241</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2978078</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.05766477974875,47.2415024188762</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2978079</name>
+	<description>711</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2978079</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.19587327919421,47.2257531430265</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2978132</name>
+	<description>652</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2978132</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>9.2498734659292,47.2909268431561</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2978133</name>
+	<description>514</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2978133</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>9.29003685207513,47.2503250324698</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2978134</name>
+	<description>223</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2978134</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>9.26739606641357,47.2254412001935</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2978135</name>
+	<description>114</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2978135</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.85379396515565,47.2016177088396</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2978197</name>
+	<description>3312</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2978197</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>9.34361665313601,47.2536930215438</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2978198</name>
+	<description>441</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2978198</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>9.35693984691243,47.2592179669824</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2978199</name>
+	<description>613</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2978199</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>9.29740620533358,47.2620642849352</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2978203</name>
+	<description>653</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2978203</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>9.25056108927029,47.2908689800129</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2978595</name>
+	<description>521</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2978595</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.49447973280525,47.3598622951096</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2978944</name>
+	<description>642</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2978944</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>9.52697180312212,47.3122351855689</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2979089</name>
+	<description>433</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2979089</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.93270290906962,46.6643982347308</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2979090</name>
+	<description>431</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2979090</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.94603240501413,46.6673013759221</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2979091</name>
+	<description>442</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2979091</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.99039894138161,46.6728937937806</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2979092</name>
+	<description>3312</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2979092</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.99205280335201,46.6729313913587</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2979093</name>
+	<description>441</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2979093</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.00457101403071,46.6730807156631</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2979094</name>
+	<description>124</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2979094</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.02297040295129,46.6672401705104</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2979095</name>
+	<description>132</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2979095</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>8.04288305355979,46.6623189429493</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2979458</name>
+	<description>422</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2979458</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>6.47159703545938,46.6806767629384</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2979459</name>
+	<description>532</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2979459</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>6.47164800262419,46.6807210971776</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2979460</name>
+	<description>634</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2979460</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>6.48410053733987,46.6692618185922</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2979461</name>
+	<description>721</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2979461</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>6.51534505277735,46.6604440934425</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2979462</name>
+	<description>413</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2979462</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>6.55087285380041,46.6656395715177</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2979487</name>
+	<description>3315</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2979487</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>6.99215260712625,46.2999613702718</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2979488</name>
+	<description>716</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2979488</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>6.99197611364765,46.2999272080019</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2979489</name>
+	<description>431</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2979489</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>6.98084056791871,46.4357543596382</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2979490</name>
+	<description>3314</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2979490</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>6.97697696610889,46.4312783665276</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2979491</name>
+	<description>524</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2979491</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>6.97720553250994,46.4321062654807</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2979507</name>
+	<description>643</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2979507</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.56167583879306,46.2939645290775</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2979508</name>
+	<description>511</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2979508</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.0718926693756,46.1221666888083</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2979509</name>
+	<description>411</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2979509</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.08226157707463,46.1256071192453</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2979510</name>
+	<description>4211</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2979510</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.08284308575538,46.1254551356914</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<name>2979511</name>
+	<description>461</description>
+	<ExtendedData><SchemaData schemaUrl="#Completed_habitats.kml">
+		<SimpleData name="releve_id">2979511</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>7.0727149188094,46.1072901287219</coordinates></Point>
+  </Placemark>
+</Folder>
+</Document></kml>
