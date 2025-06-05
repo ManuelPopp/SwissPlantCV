@@ -907,6 +907,10 @@ if (save_plots) {
   f_out <- file.path(dir_fig, "Acc_by_observation.pdf")
   ggsave(f_out, plot = gg_obslvl_single, width = 5, height = 5)
   file.copy(f_out, dir_fig_online, overwrite = TRUE)
+  
+  f_out <- file.path(dir_fig, "Acc_by_observation_vp.pdf")
+  ggsave(f_out, plot = gg_obslvl_single_vp, width = 5, height = 5)
+  file.copy(f_out, dir_fig_online, overwrite = TRUE)
 }
 
 ### Habitat-level accuracy
@@ -915,6 +919,10 @@ source("Habitat_level_accuracy.R")
 if (save_plots) {
   f_out <- file.path(dir_fig, "Acc_by_habitat.pdf")
   ggsave(f_out, plot = gg_hablvl_single, width = 5, height = 5)
+  file.copy(f_out, dir_fig_online, overwrite = TRUE)
+  
+  f_out <- file.path(dir_fig, "Acc_by_habitat_vp.pdf")
+  ggsave(f_out, plot = gg_hablvl_single_vp, width = 5, height = 5)
   file.copy(f_out, dir_fig_online, overwrite = TRUE)
 }
 
