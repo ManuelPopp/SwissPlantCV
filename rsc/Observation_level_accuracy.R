@@ -244,15 +244,30 @@ gg_obslvl_single <- ggplot(
 
 gg_obslvl_single
 
-gg_obslvl_single_v <- ggplot(
+# Violin plot
+gg_obslvl_single_vp <- ggplot(
   data = observation_level_single[which(observation_level_single$Top1),],
   aes(x = cv_model_name, y = Accuracy, fill = Aggregate)
 ) +
   geom_violin() +
-  geom_boxplot(width = 0.9, alpha = 0) +
+  ggforce::geom_sina() +
+  stat_summary(
+    fun = function(x) max(x, na.rm = TRUE),
+    geom = "text",
+    aes(label = labels, group = Aggregate),
+    position = position_dodge(width = 0.8),
+    vjust = -0.5,
+    show.legend = FALSE
+  ) +
   xlab("Identification provider") +
   ylab("Top 1 accuracy") +
-  theme_bw()
+  theme_bw() +
+  theme(
+    legend.position = "None",
+    axis.text.x = element_text(size = 11)
+  )
+
+gg_obslvl_single_vp
 
 ## Multi
 gg_obslvl_multi <- ggplot(
