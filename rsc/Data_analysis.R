@@ -950,6 +950,26 @@ if (save_plots) {
   )
   dev.off()
   file.copy(f_out, dir_fig_online, overwrite = TRUE)
+
+  # Violin plots
+  f_out <- file.path(dir_fig, "Acc_comb_obs_hab_vp.pdf")
+  pdf(f_out, width = 10, height = 5)
+  grid.arrange(
+    gg_obslvl_single_vp +
+      xlab("(a) By observation"),
+    gg_hablvl_single_vp +
+      theme(
+        # axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank()
+      ) +
+      xlab("(b) By habitat type"),
+    ncol = 2, bottom = "Identification provider",
+    widths = c(1, 0.92)
+  )
+  dev.off()
+  file.copy(f_out, dir_fig_online, overwrite = TRUE)
 }
 
 ## Regional/habitat level accuracy
