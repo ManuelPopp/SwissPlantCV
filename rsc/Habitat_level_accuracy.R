@@ -240,3 +240,27 @@ gg_hablvl_single <- ggplot(
   )
 
 gg_hablvl_single
+
+gg_hablvl_single_vp <- ggplot(
+  data = habitat_level_single,
+  aes(x = cv_model_name, y = Accuracy, fill = Aggregate)
+) +
+  geom_violin() +
+  ggforce::geom_sina() +
+  stat_summary(
+    fun = function(x) max(x, na.rm = TRUE),
+    geom = "text",
+    aes(label = labels, group = Aggregate),
+    position = position_dodge(width = 0.8),
+    vjust = -0.5,
+    show.legend = FALSE
+  ) +
+  xlab("Identification provider") +
+  ylab("Top 1 accuracy") +
+  theme_bw() +
+  theme(
+    legend.position = "None",
+    axis.text.x = element_text(size = 11)
+  )
+
+gg_hablvl_single_vp
