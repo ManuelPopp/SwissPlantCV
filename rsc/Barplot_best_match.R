@@ -65,22 +65,25 @@ ideal_gg <- ggplot2::ggplot(
     y = count,
     fill = level,
     alpha = as.factor(cv_included)
-    ),
+  ),
   pattern = "stripe", pattern_angle = 0
 ) +
   ggplot2::geom_bar(position = "stack", stat = "identity") +
   ggplot2::xlab("Identification provider") +
   ggplot2::ylab("Number of species") +
-  ggplot2::scale_fill_manual("Best match", values = safe_colorblind_palette) +
+  ggplot2::scale_fill_manual(
+    "Best match", values = safe_colorblind_palette[c(2, 3, 1, 5, 4)]
+    ) +
   ggplot2::scale_alpha_manual("CV model included", values = c(0.5, 1)) +
   scale_y_break(c(100, 400)) +
   ggplot2::scale_x_discrete(
     labels = c("Flora\nIncognita", "FlorID", "iNaturalist", "Pl@ntNet")
-    ) +
+  ) +
   ggplot2::theme_bw() +
   ggplot2::theme(
-    axis.text.x.top = element_blank(),
-    axis.ticks.x.top = element_blank()
+    axis.text.x.top = ggplot2::element_blank(),
+    axis.ticks.x.top = ggplot2::element_blank(),
+    axis.text.x = ggplot2::element_text(face = "bold")
   )
 
 ideal_gg
