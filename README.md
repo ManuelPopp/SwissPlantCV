@@ -1,5 +1,5 @@
 # SwissPlantCV
-Testing state-of-the-art vascular plant species identification computer vision models for Swiss vascular plants.
+Testing state-of-the-art vascular plant species identification computer vision models for Swiss vascular plants. This repository accompanies the publication by [Popp, Brun & Zimmermann (2025)](https://doi.org/10.1016/j.ecoinf.2025.103316).
 
 ## Dependencies
 Script files within this repo are separated by programming language (Python and R) and stage of the project.
