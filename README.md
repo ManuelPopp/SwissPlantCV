@@ -21,6 +21,7 @@ This repository comprises a [Wiki](https://github.com/ManuelPopp/SwissPlantCV/wi
 │   ├── growth_form_info.csv 'Growth form by species for plants within the data set.'
 │   ├── Habitats.xlsx 'TypoCH habitat types, manually compiled following Delarze et al., 2015; see manuscript.'
 │   ├── Releve_info.csv 'Information on sampling plots (releves) containing releve ID and location.'
+│   ├── ConfirmedObs.csv 'Metadata on independently reviewed observations.'
 │   ├── Synonyms.db 'Database to translate between taxonomic backbones.'
 │   │                'Pickled instance of class SynonymDatabase (py3/analyses/taxonomy.py),'
 │   │                'compiled via WFO API and manual resolving.'
